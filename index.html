@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>JEANS CLUB UGANDA • NOTAM System • Est. 2000</title>
+    <style>
+        /* AVIATION INSPIRED TYPOGRAPHY - Mobile First */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: #0b1a2f;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 15px 10px;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* HEADER - Fixed sizes */
+        .header {
+            background: linear-gradient(135deg, #001529 0%, #002b4a 100%);
+            border: 2px solid #ffd700;
+            border-radius: 12px 12px 0 0;
+            padding: 12px 15px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .header::before {
+            content: '✈︎ NOTAM • JEANS CLUB';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #ffd700;
+            color: #001529;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 2px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        @media (min-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+        
+        .club-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffd700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: 'Space Mono', monospace;
+            line-height: 1.2;
+        }
+        
+        .club-tagline {
+            font-size: 9px;
+            color: #8b9bb5;
+            font-family: 'Space Mono', monospace;
+            margin-top: 2px;
+        }
+        
+        .notam-code {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid #ffd700;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-family: 'Space Mono', monospace;
+            color: #ffd700;
+            font-size: 12px;
+            font-weight: 700;
+            align-self: flex-start;
+        }
+        
+        .notam-code span {
+            color: #8b9bb5;
+            font-size: 10px;
+            margin-right: 5px;
+        }
+        
+        /* BRANCH MANAGEMENT CARD */
+        .branch-card {
+            background: rgba(0,30,50,0.95);
+            border: 1px solid #ffd700;
+            border-radius: 12px;
+            padding: 15px 12px;
+            backdrop-filter: blur(10px);
+            margin: 12px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .branch-card::before {
+            content: '⚡ MANAGER ACCESS';
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #ffd700;
+            color: #001529;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            color: #ffd700;
+            font-size: 16px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,215,0,0.3);
+            padding-bottom: 6px;
+        }
+        
+        .password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        @media (min-width: 480px) {
+            .password-form {
+                flex-direction: row;
+            }
+        }
+        
+        .password-input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            font-size: 14px;
+            width: 100%;
+        }
+        
+        .branch-management {
+            display: none;
+        }
+        
+        .branch-management.visible {
+            display: block;
+        }
+        
+        .branch-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        @media (min-width: 480px) {
+            .branch-form {
+                flex-direction: row;
+            }
+        }
+        
+        .branch-input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            font-size: 14px;
+            width: 100%;
+        }
+        
+        /* FIXED BUTTON SIZES - Normal size, not too big */
+        .btn-gold {
+            background: #ffd700;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+            color: #001529;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #ffd700;
+            width: auto;
+            min-width: 80px;
+            touch-action: manipulation;
+        }
+        
+        .btn-gold:hover {
+            background: transparent;
+            color: #ffd700;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #ffd700;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-family: 'Space Mono', monospace;
+            color: #ffd700;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: auto;
+            touch-action: manipulation;
+        }
+        
+        .branches-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        
+        .branch-tag {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid #ffd700;
+            border-radius: 30px;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+        
+        .branch-tag span {
+            color: white;
+            font-family: 'Space Mono', monospace;
+        }
+        
+        .delete-branch {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 0 3px;
+            touch-action: manipulation;
+        }
+        
+        /* MAIN GRID */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 12px 0;
+        }
+        
+        @media (min-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
+        }
+        
+        /* NOTAM FORM */
+        .notam-card {
+            background: rgba(0,30,50,0.95);
+            border: 1px solid #ffd700;
+            border-radius: 12px;
+            padding: 18px 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .notam-card::before {
+            content: '✈︎ NOTAM FORM';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #ffd700;
+            color: #001529;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-label {
+            display: block;
+            font-family: 'Space Mono', monospace;
+            color: #ffd700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        
+        .form-control {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            font-size: 14px;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        select.form-control {
+            background: #0b1a2f;
+            color: #ffd700;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ffd700' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 35px;
+        }
+        
+        textarea.form-control {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        /* QR CODE SECTION */
+        .qr-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 12px 0;
+        }
+        
+        @media (min-width: 640px) {
+            .qr-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .qr-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .qr-card {
+            background: rgba(0,30,50,0.95);
+            border: 1px solid #ffd700;
+            border-radius: 10px;
+            padding: 15px 12px;
+            text-align: center;
+        }
+        
+        .qr-card h3 {
+            color: #ffd700;
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            margin-bottom: 12px;
+            word-break: break-word;
+        }
+        
+        .qr-code-container {
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        
+        .qr-code-container canvas {
+            width: 140px;
+            height: 140px;
+        }
+        
+        .qr-link {
+            color: #8b9bb5;
+            font-size: 9px;
+            word-break: break-all;
+            font-family: 'Space Mono', monospace;
+            margin: 8px 0;
+            padding: 5px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 4px;
+        }
+        
+        /* QUERIES LIST */
+        .queries-card {
+            background: rgba(0,30,50,0.95);
+            border: 1px solid #ffd700;
+            border-radius: 12px;
+            padding: 18px 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            margin-top: 12px;
+        }
+        
+        .queries-card::before {
+            content: '📋 ACTIVE NOTAMS';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #ffd700;
+            color: #001529;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .query-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .query-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed rgba(255,215,0,0.3);
+        }
+        
+        .query-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            color: #8b9bb5;
+            font-size: 10px;
+        }
+        
+        .query-badge {
+            background: #ffd700;
+            color: #001529;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        
+        .query-title {
+            color: #ffd700;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            word-break: break-word;
+        }
+        
+        .query-content {
+            color: white;
+            font-size: 12px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+        
+        .query-footer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: space-between;
+            align-items: center;
+            color: #8b9bb5;
+            font-size: 9px;
+        }
+        
+        .btn-save {
+            background: transparent;
+            border: 1px solid #4caf50;
+            border-radius: 4px;
+            padding: 4px 8px;
+            color: #4caf50;
+            font-size: 9px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            touch-action: manipulation;
+        }
+        
+        /* REPORT SECTION */
+        .report-card {
+            background: linear-gradient(135deg, #001f3f 0%, #00355e 100%);
+            border: 2px solid #ffd700;
+            border-radius: 12px;
+            padding: 18px 15px;
+            margin-top: 15px;
+            position: relative;
+        }
+        
+        .report-card::before {
+            content: '📊 WEEKLY SUMMARY';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #ffd700;
+            color: #001529;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .report-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        @media (min-width: 480px) {
+            .report-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+        
+        .report-title {
+            font-size: 16px;
+            font-family: 'Space Mono', monospace;
+            color: #ffd700;
+        }
+        
+        .report-period {
+            background: rgba(255,215,0,0.1);
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-family: 'Space Mono', monospace;
+            color: #ffd700;
+            font-size: 10px;
+            align-self: flex-start;
+        }
+        
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        @media (min-width: 480px) {
+            .report-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .stat-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffd700;
+            font-family: 'Space Mono', monospace;
+        }
+        
+        .share-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        @media (min-width: 480px) {
+            .share-buttons {
+                flex-direction: row;
+                justify-content: flex-end;
+            }
+        }
+        
+        .btn-whatsapp, .btn-email {
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 13px;
+            width: 100%;
+            touch-action: manipulation;
+        }
+        
+        @media (min-width: 480px) {
+            .btn-whatsapp, .btn-email {
+                width: auto;
+                padding: 10px 20px;
+            }
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+        }
+        
+        .btn-email {
+            background: #1a73e8;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .modal-content {
+            max-width: 100%;
+            margin: 15px auto;
+            background: #0b1a2f;
+            border: 2px solid #ffd700;
+            border-radius: 12px;
+            padding: 18px;
+        }
+        
+        @media (min-width: 768px) {
+            .modal-content {
+                max-width: 700px;
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ffd700;
+            padding-bottom: 10px;
+        }
+        
+        .modal-header h2 {
+            color: #ffd700;
+            font-family: 'Space Mono', monospace;
+            font-size: 16px;
+            word-break: break-word;
+        }
+        
+        .close-modal {
+            color: #ffd700;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 8px;
+        }
+        
+        /* Sync Status */
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255,215,0,0.1);
+            border-radius: 30px;
+            font-size: 10px;
+            color: #8b9bb5;
+            margin-bottom: 8px;
+        }
+        
+        .sync-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .toast {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            left: 15px;
+            background: #ffd700;
+            color: #001529;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            text-align: center;
+            font-size: 13px;
+        }
+        
+        @media (min-width: 480px) {
+            .toast {
+                left: auto;
+                width: auto;
+                min-width: 250px;
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sync Status -->
+        <div class="sync-status" id="syncStatus">
+            <span class="sync-dot"></span>
+            <span id="syncText">Syncing across all devices...</span>
+        </div>
+        
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-content">
+                <div class="club-title">
+                    <div class="club-name">JEANS CLUB UGANDA</div>
+                    <div class="club-tagline">EST. 2000 • SINCE 2000</div>
+                </div>
+                <div class="notam-code" id="headerNotamCode">
+                    <span>NOTAM</span> JCU-A0001
+                </div>
+            </div>
+        </div>
+        
+        <!-- BRANCH MANAGEMENT -->
+        <div class="branch-card">
+            <div class="section-title">✈︎ BRANCH CONTROL</div>
+            <div class="password-form">
+                <input type="password" id="managerPassword" class="password-input" placeholder="Manager password">
+                <button onclick="verifyManager()" class="btn-gold">UNLOCK</button>
+            </div>
+            
+            <div id="branchManagement" class="branch-management">
+                <div class="branch-form">
+                    <input type="text" id="newBranchName" class="branch-input" placeholder="New branch name">
+                    <button onclick="addBranch()" class="btn-gold">ADD</button>
+                </div>
+                <div id="branchesList" class="branches-list"></div>
+            </div>
+        </div>
+        
+        <!-- MAIN GRID -->
+        <div class="main-grid">
+            <!-- NOTAM Form -->
+            <div class="notam-card">
+                <div class="section-title">FILE NOTAM</div>
+                
+                <div class="form-group">
+                    <label class="form-label">YOUR NAME</label>
+                    <input type="text" id="staffName" class="form-control" placeholder="e.g., OKELLO JOHN">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">BRANCH</label>
+                    <select id="branchSelect" class="form-control"></select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">TITLE</label>
+                    <input type="text" id="queryTitle" class="form-control" placeholder="e.g., DEBTOR ALERT">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">DETAILS</label>
+                    <textarea id="queryDetails" class="form-control" placeholder="Describe the issue..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">URGENCY</label>
+                    <select id="queryUrgency" class="form-control">
+                        <option value="LOW">LOW</option>
+                        <option value="MEDIUM" selected>MEDIUM</option>
+                        <option value="HIGH">HIGH</option>
+                        <option value="CRITICAL">CRITICAL</option>
+                    </select>
+                </div>
+                
+                <button onclick="submitQuery()" class="btn-gold" style="width: 100%;">FILE NOTAM</button>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="notam-card">
+                <div class="section-title">SUMMARY</div>
+                
+                <div style="margin-bottom: 15px; text-align: center;">
+                    <div style="color: #8b9bb5; font-size: 11px;">ACTIVE NOTAMS</div>
+                    <div id="activeNotamsCount" style="font-size: 36px; color: #ffd700; font-family: 'Space Mono';">0</div>
+                </div>
+                
+                <div style="margin-bottom: 15px; text-align: center;">
+                    <div style="color: #8b9bb5; font-size: 11px;">BRANCHES</div>
+                    <div id="branchesCount" style="font-size: 20px; color: white; font-family: 'Space Mono';">0</div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <div style="color: #8b9bb5; font-size: 11px;">LATEST NOTAM</div>
+                    <div id="latestNotam" style="color: white; font-size: 12px; background: rgba(255,215,0,0.1); padding: 8px; border-radius: 5px;">
+                        None
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- QR CODES -->
+        <div class="queries-card">
+            <div class="section-title">📱 BRANCH QR CODES</div>
+            <div id="qrGrid" class="qr-grid">
+                <div style="color: #8b9bb5; text-align: center; padding: 20px;">Loading QR codes...</div>
+            </div>
+        </div>
+        
+        <!-- ACTIVE NOTAMS -->
+        <div class="queries-card">
+            <div class="section-title">✈︎ ACTIVE NOTAMS</div>
+            <div id="queriesList"></div>
+        </div>
+        
+        <!-- WEEKLY REPORT -->
+        <div class="report-card">
+            <div class="report-header">
+                <div class="report-title">WEEKLY SUMMARY</div>
+                <div class="report-period" id="reportPeriod"></div>
+            </div>
+            
+            <div class="report-grid" id="reportStats"></div>
+            
+            <div id="weeklyReportContent" style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; color: white; font-family: 'Space Mono'; font-size: 11px; margin-bottom: 15px; max-height: 250px; overflow-y: auto;"></div>
+            
+            <div class="share-buttons">
+                <button onclick="shareViaWhatsApp()" class="btn-whatsapp">📱 WHATSAPP</button>
+                <button onclick="shareViaEmail()" class="btn-email">✉️ EMAIL</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div id="branchModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalBranchName">Branch NOTAMs</h2>
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="modalQueriesList" style="color: white; font-family: 'Space Mono'; font-size: 12px;"></div>
+        </div>
+    </div>
+    
+    <script>
+        // ========== GLOBAL SYNC SYSTEM ==========
+        const SYNC_KEY = 'jeans_club_global_data';
+        const SYNC_VERSION = '1.0';
+        
+        // Default data
+        const DEFAULT_BRANCHES = ['KAMPALA ROAD', 'ENTEBBE', 'JINJA', 'MBALE', 'LIRA'];
+        const DEFAULT_QUERIES = [
+            {
+                id: 1705312230001,
+                notamNumber: 'JCU-AB1234',
+                staffName: 'OKELLO JOHN',
+                branch: 'KAMPALA ROAD',
+                title: 'DEBTOR ALERT • MR. SSALI',
+                details: 'Mr. Ssali owes 150,000 UGX for tailored jeans. Do not release items until full payment.',
+                urgency: 'HIGH',
+                category: 'DEBTOR ALERT',
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleString('en-UG', { dateStyle: 'full', timeStyle: 'short' })
+            }
+        ];
+        
+        // Initialize or load global data
+        function initGlobalData() {
+            let globalData = localStorage.getItem(SYNC_KEY);
+            
+            if (!globalData) {
+                globalData = {
+                    version: SYNC_VERSION,
+                    lastUpdated: new Date().toISOString(),
+                    branches: DEFAULT_BRANCHES,
+                    queries: DEFAULT_QUERIES
+                };
+                localStorage.setItem(SYNC_KEY, JSON.stringify(globalData));
+            } else {
+                globalData = JSON.parse(globalData);
+            }
+            
+            localStorage.setItem('branches', JSON.stringify(globalData.branches));
+            localStorage.setItem('queries', JSON.stringify(globalData.queries));
+            
+            return globalData;
+        }
+        
+        // Save to global sync
+        function saveToGlobalSync() {
+            const branches = JSON.parse(localStorage.getItem('branches')) || DEFAULT_BRANCHES;
+            const queries = JSON.parse(localStorage.getItem('queries')) || DEFAULT_QUERIES;
+            
+            const globalData = {
+                version: SYNC_VERSION,
+                lastUpdated: new Date().toISOString(),
+                branches: branches,
+                queries: queries
+            };
+            
+            localStorage.setItem(SYNC_KEY, JSON.stringify(globalData));
+            localStorage.setItem('sync_broadcast', Date.now().toString());
+            
+            document.getElementById('syncText').textContent = 'Synced at ' + new Date().toLocaleTimeString();
+        }
+        
+        // Listen for changes from other devices/tabs
+        window.addEventListener('storage', function(e) {
+            if (e.key === SYNC_KEY || e.key === 'sync_broadcast') {
+                const globalData = JSON.parse(localStorage.getItem(SYNC_KEY));
+                if (globalData) {
+                    localStorage.setItem('branches', JSON.stringify(globalData.branches));
+                    localStorage.setItem('queries', JSON.stringify(globalData.queries));
+                    
+                    loadBranches();
+                    loadQueries();
+                    updateStats();
+                    generateWeeklyReport();
+                    generateBranchQRCodes();
+                    
+                    showToast('✓ Data synced from another device');
+                }
+            }
+        });
+        
+        initGlobalData();
+        
+        // ========== MANAGER AUTHENTICATION ==========
+        function verifyManager() {
+            const password = document.getElementById('managerPassword').value;
+            if (password === 'jeansclub2024') {
+                document.getElementById('branchManagement').classList.add('visible');
+                document.getElementById('managerPassword').value = '';
+                showToast('✓ Manager access granted');
+            } else {
+                showToast('⚠️ Incorrect password');
+            }
+        }
+        
+        // ========== BRANCH MANAGEMENT ==========
+        function loadBranches() {
+            const branches = JSON.parse(localStorage.getItem('branches')) || DEFAULT_BRANCHES;
+            const branchesList = document.getElementById('branchesList');
+            const branchSelect = document.getElementById('branchSelect');
+            
+            branchesList.innerHTML = '';
+            branches.forEach(branch => {
+                const tag = document.createElement('div');
+                tag.className = 'branch-tag';
+                tag.innerHTML = `
+                    <span>✈︎ ${branch}</span>
+                    <button class="delete-branch" onclick="deleteBranch('${branch}')">✕</button>
+                `;
+                branchesList.appendChild(tag);
+            });
+            
+            branchSelect.innerHTML = '';
+            branches.forEach(branch => {
+                const option = document.createElement('option');
+                option.value = branch;
+                option.textContent = branch;
+                branchSelect.appendChild(option);
+            });
+            
+            document.getElementById('branchesCount').textContent = branches.length;
+            saveToGlobalSync();
+        }
+        
+        function addBranch() {
+            const newBranch = document.getElementById('newBranchName').value.trim().toUpperCase();
+            if (!newBranch) {
+                showToast('⚠️ Enter branch name');
+                return;
+            }
+            
+            const branches = JSON.parse(localStorage.getItem('branches')) || DEFAULT_BRANCHES;
+            branches.push(newBranch);
+            localStorage.setItem('branches', JSON.stringify(branches));
+            
+            document.getElementById('newBranchName').value = '';
+            loadBranches();
+            generateBranchQRCodes();
+            showToast(`✓ Branch ${newBranch} added`);
+        }
+        
+        function deleteBranch(branch) {
+            if (!confirm(`Delete branch ${branch}?`)) return;
+            
+            let branches = JSON.parse(localStorage.getItem('branches')) || DEFAULT_BRANCHES;
+            branches = branches.filter(b => b !== branch);
+            localStorage.setItem('branches', JSON.stringify(branches));
+            
+            loadBranches();
+            generateBranchQRCodes();
+            showToast(`✕ Branch ${branch} removed`);
+        }
+        
+        // ========== QR CODE GENERATION ==========
+        function generateBranchQRCodes() {
+            const branches = JSON.parse(localStorage.getItem('branches')) || DEFAULT_BRANCHES;
+            const qrGrid = document.getElementById('qrGrid');
+            
+            if (branches.length === 0) {
+                qrGrid.innerHTML = '<div style="color: #8b9bb5; text-align: center; padding: 20px;">No branches yet</div>';
+                return;
+            }
+            
+            qrGrid.innerHTML = '';
+            
+            branches.forEach(branch => {
+                const baseUrl = window.location.href.split('#')[0];
+                // Add timestamp to force fresh data on every scan
+                const timestamp = Date.now();
+                const branchUrl = baseUrl + `?t=${timestamp}#branch=${encodeURIComponent(branch)}`;
+                
+                const card = document.createElement('div');
+                card.className = 'qr-card';
+                
+                const canvasId = `qr-${branch.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}-${timestamp}`;
+                
+                card.innerHTML = `
+                    <h3>✈︎ ${branch}</h3>
+                    <div class="qr-code-container">
+                        <canvas id="${canvasId}" width="140" height="140"></canvas>
+                    </div>
+                    <div class="qr-link">Scan for latest ${branch} NOTAMs</div>
+                    <button onclick="viewBranchQueries('${branch}')" class="btn-outline" style="margin-top: 8px;">VIEW NOTAMS</button>
+                `;
+                
+                qrGrid.appendChild(card);
+                
+                setTimeout(() => {
+                    const canvas = document.getElementById(canvasId);
+                    if (canvas) {
+                        QRCode.toCanvas(canvas, branchUrl, {
+                            width: 140,
+                            margin: 1,
+                            color: { dark: '#000000', light: '#ffffff' }
+                        });
+                    }
+                }, 100);
+            });
+        }
+        
+        // ========== BRANCH QUERIES VIEW ==========
+        function viewBranchQueries(branch) {
+            // Always get fresh data from global sync
+            const globalData = JSON.parse(localStorage.getItem(SYNC_KEY));
+            const queries = globalData ? globalData.queries : JSON.parse(localStorage.getItem('queries')) || [];
+            
+            const branchQueries = queries.filter(q => q.branch === branch);
+            
+            document.getElementById('modalBranchName').textContent = `✈︎ ${branch} NOTAMS`;
+            
+            let html = '';
+            if (branchQueries.length === 0) {
+                html = '<p style="text-align: center; padding: 20px; color: #8b9bb5;">No NOTAMS for this branch</p>';
+            } else {
+                branchQueries.forEach(query => {
+                    const urgencyColor = {
+                        'LOW': '#4caf50',
+                        'MEDIUM': '#ffc107',
+                        'HIGH': '#ff9800',
+                        'CRITICAL': '#f44336'
+                    }[query.urgency] || '#ffd700';
+                    
+                    html += `
+                        <div style="border: 1px solid #ffd700; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                <span style="color: #ffd700; font-size: 11px;">${query.notamNumber}</span>
+                                <span style="color: ${urgencyColor}; font-size: 10px;">● ${query.urgency}</span>
+                            </div>
+                            <div style="font-weight: 700; margin-bottom: 6px; font-size: 13px;">${query.title}</div>
+                            <div style="margin-bottom: 8px; color: #8b9bb5; font-size: 11px;">${query.details}</div>
+                            <div style="color: #8b9bb5; font-size: 9px;">${query.staffName} • ${query.date}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            document.getElementById('modalQueriesList').innerHTML = html;
+            document.getElementById('branchModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('branchModal').style.display = 'none';
+        }
+        
+        // ========== QUERY SYSTEM ==========
+        function submitQuery() {
+            const staffName = document.getElementById('staffName').value.trim();
+            const branch = document.getElementById('branchSelect').value;
+            const title = document.getElementById('queryTitle').value.trim();
+            const details = document.getElementById('queryDetails').value.trim();
+            const urgency = document.getElementById('queryUrgency').value;
+            
+            if (!staffName || !title || !details) {
+                showToast('⚠️ Fill all fields');
+                return;
+            }
+            
+            const query = {
+                id: Date.now(),
+                notamNumber: 'JCU-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
+                staffName: staffName.toUpperCase(),
+                branch: branch,
+                title: title.toUpperCase(),
+                details: details,
+                urgency: urgency,
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleString('en-UG', { dateStyle: 'full', timeStyle: 'short' })
+            };
+            
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            queries.unshift(query);
+            localStorage.setItem('queries', JSON.stringify(queries));
+            
+            saveToGlobalSync();
+            
+            document.getElementById('queryTitle').value = '';
+            document.getElementById('queryDetails').value = '';
+            
+            loadQueries();
+            updateStats();
+            generateWeeklyReport();
+            generateBranchQRCodes();
+            
+            showToast(`✓ NOTAM filed`);
+        }
+        
+        function saveQueryToDevice(queryId) {
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const query = queries.find(q => q.id === queryId);
+            
+            if (!query) return;
+            
+            const text = `JEANS CLUB UGANDA NOTAM\n${query.notamNumber}\n${query.title}\n${query.details}\nReported by: ${query.staffName}\n${query.date}`;
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `NOTAM-${query.notamNumber}.txt`;
+            a.click();
+            
+            showToast('✓ Saved to device');
+        }
+        
+        function loadQueries() {
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const list = document.getElementById('queriesList');
+            
+            if (queries.length === 0) {
+                list.innerHTML = '<div style="text-align: center; padding: 20px; color: #8b9bb5;">NO ACTIVE NOTAMS</div>';
+                return;
+            }
+            
+            list.innerHTML = '';
+            queries.slice(0, 10).forEach(query => {
+                const urgencyColor = {
+                    'LOW': '#4caf50',
+                    'MEDIUM': '#ffc107',
+                    'HIGH': '#ff9800',
+                    'CRITICAL': '#f44336'
+                }[query.urgency] || '#ffd700';
+                
+                list.innerHTML += `
+                    <div class="query-item">
+                        <div class="query-header">
+                            <span class="query-badge">${query.notamNumber}</span>
+                            <span style="color: ${urgencyColor}; font-size: 10px;">● ${query.urgency}</span>
+                        </div>
+                        <div class="query-title">${query.title}</div>
+                        <div class="query-content">${query.details}</div>
+                        <div class="query-footer">
+                            <span>✈︎ ${query.branch} • 👤 ${query.staffName}</span>
+                            <button onclick="saveQueryToDevice(${query.id})" class="btn-save">💾 SAVE</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        // ========== WEEKLY REPORT ==========
+        function generateWeeklyReport() {
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            
+            const weekly = queries.filter(q => new Date(q.timestamp) >= oneWeekAgo);
+            
+            const start = oneWeekAgo.toLocaleDateString();
+            const end = new Date().toLocaleDateString();
+            document.getElementById('reportPeriod').textContent = `${start} - ${end}`;
+            
+            let html = '';
+            if (weekly.length === 0) {
+                html = '<div style="text-align: center;">NO NOTAMS THIS WEEK</div>';
+            } else {
+                const byBranch = {};
+                weekly.forEach(q => {
+                    if (!byBranch[q.branch]) byBranch[q.branch] = [];
+                    byBranch[q.branch].push(q);
+                });
+                
+                for (const [branch, branchQueries] of Object.entries(byBranch)) {
+                    html += `<div style="margin-bottom: 12px;"><span style="color: #ffd700;">✈︎ ${branch}</span> (${branchQueries.length})<br>`;
+                    branchQueries.forEach(q => {
+                        html += `<div style="margin-left: 8px; font-size: 10px;">• ${q.title.substring(0, 25)}...</div>`;
+                    });
+                    html += '</div>';
+                }
+            }
+            
+            document.getElementById('weeklyReportContent').innerHTML = html;
+            
+            document.getElementById('reportStats').innerHTML = `
+                <div class="stat-box"><div class="stat-number">${weekly.length}</div><div style="font-size: 10px;">TOTAL</div></div>
+                <div class="stat-box"><div class="stat-number">${weekly.filter(q => q.urgency === 'CRITICAL').length}</div><div style="font-size: 10px;">CRITICAL</div></div>
+                <div class="stat-box"><div class="stat-number">${new Set(weekly.map(q => q.branch)).size}</div><div style="font-size: 10px;">BRANCHES</div></div>
+            `;
+        }
+        
+        // ========== SHARE ==========
+        function shareViaWhatsApp() {
+            const text = document.getElementById('weeklyReportContent').innerText;
+            const period = document.getElementById('reportPeriod').innerText;
+            window.open(`https://wa.me/?text=${encodeURIComponent('JEANS CLUB WEEKLY REPORT\n' + period + '\n' + text)}`);
+        }
+        
+        function shareViaEmail() {
+            const text = document.getElementById('weeklyReportContent').innerText;
+            const period = document.getElementById('reportPeriod').innerText;
+            window.location.href = `mailto:?subject=JEANS CLUB WEEKLY REPORT&body=${encodeURIComponent(period + '\n' + text)}`;
+        }
+        
+        // ========== UTILITIES ==========
+        function updateStats() {
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            
+            document.getElementById('activeNotamsCount').textContent = queries.filter(q => new Date(q.timestamp) >= oneWeekAgo).length;
+            
+            if (queries.length > 0) {
+                document.getElementById('latestNotam').textContent = queries[0].title.substring(0, 25) + '...';
+            }
+        }
+        
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+        
+        // ========== CHECK URL PARAMETERS ==========
+        function checkForBranchInUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hash = window.location.hash.substring(1);
+            
+            // Force refresh data from global sync
+            const globalData = JSON.parse(localStorage.getItem(SYNC_KEY));
+            if (globalData) {
+                localStorage.setItem('branches', JSON.stringify(globalData.branches));
+                localStorage.setItem('queries', JSON.stringify(globalData.queries));
+            }
+            
+            if (hash.startsWith('branch=')) {
+                const branch = decodeURIComponent(hash.replace('branch=', ''));
+                setTimeout(() => viewBranchQueries(branch), 300);
+            }
+        }
+        
+        // ========== INIT ==========
+        window.onload = function() {
+            loadBranches();
+            loadQueries();
+            updateStats();
+            generateWeeklyReport();
+            generateBranchQRCodes();
+            checkForBranchInUrl();
+            
+            setInterval(saveToGlobalSync, 30000);
+            setInterval(generateBranchQRCodes, 60000);
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('branchModal');
+            if (event.target === modal) modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
