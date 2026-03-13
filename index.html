@@ -58,8 +58,10 @@
         
         .header-content {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
         }
         
         @media (min-width: 768px) {
@@ -769,7 +771,7 @@
         <!-- Sync Status -->
         <div class="sync-status" id="syncStatus">
             <span class="sync-dot"></span>
-            <span id="syncText">Syncing across all devices...</span>
+            <span id="syncText">GitHub Gist • Connecting...</span>
         </div>
         
         <!-- HEADER -->
@@ -908,9 +910,15 @@
     </div>
     
     <script>
+        // ========== GITHUB GIST CONFIGURATION ==========
+        // YOUR ACTUAL GIST DETAILS
+        const GIST_URL = 'https://gist.githubusercontent.com/elijah787/816bd5f569c087f6a7f6d2077e60347a/raw/jeans-club-data.json';
+        const GIST_API = 'https://api.github.com/gists/816bd5f569c087f6a7f6d2077e60347a';
+        const GITHUB_TOKEN = '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';
+        
         // ========== GLOBAL SYNC SYSTEM ==========
         const SYNC_KEY = 'jeans_club_global_data';
-        const SYNC_VERSION = '1.0';
+        const SYNC_VERSION = '2.0';
         
         // Default data
         const DEFAULT_BRANCHES = ['KAMPALA ROAD', 'ENTEBBE', 'JINJA', 'MBALE', 'LIRA'];
@@ -923,7 +931,6 @@
                 title: 'DEBTOR ALERT • MR. SSALI',
                 details: 'Mr. Ssali owes 150,000 UGX for tailored jeans. Do not release items until full payment.',
                 urgency: 'HIGH',
-                category: 'DEBTOR ALERT',
                 timestamp: new Date().toISOString(),
                 date: new Date().toLocaleString('en-UG', { dateStyle: 'full', timeStyle: 'short' })
             }
@@ -951,22 +958,104 @@
             return globalData;
         }
         
-        // Save to global sync
-        function saveToGlobalSync() {
-            const branches = JSON.parse(localStorage.getItem('branches')) || DEFAULT_BRANCHES;
-            const queries = JSON.parse(localStorage.getItem('queries')) || DEFAULT_QUERIES;
+        // ========== GITHUB GIST SYNC FUNCTIONS ==========
+        
+        // Load from GitHub Gist
+        async function loadFromGist() {
+            try {
+                showToast('📡 Syncing from GitHub Gist...');
+                document.getElementById('syncText').textContent = 'GitHub • Loading...';
+                
+                // Add timestamp to prevent caching
+                const response = await fetch(GIST_URL + '?t=' + Date.now());
+                const cloudData = await response.json();
+                
+                // Update localStorage with cloud data
+                localStorage.setItem('branches', JSON.stringify(cloudData.branches));
+                localStorage.setItem('queries', JSON.stringify(cloudData.queries));
+                localStorage.setItem('lastSync', cloudData.lastSync);
+                
+                // Update global sync
+                const globalData = {
+                    version: SYNC_VERSION,
+                    lastUpdated: new Date().toISOString(),
+                    branches: cloudData.branches,
+                    queries: cloudData.queries
+                };
+                localStorage.setItem(SYNC_KEY, JSON.stringify(globalData));
+                
+                // Reload UI
+                loadBranches();
+                loadQueries();
+                updateStats();
+                generateWeeklyReport();
+                generateBranchQRCodes();
+                
+                showToast('✅ Synced from GitHub Gist');
+                document.getElementById('syncText').textContent = 'GitHub • Synced';
+                
+            } catch (error) {
+                console.log('GitHub Gist unavailable, using local:', error);
+                document.getElementById('syncText').textContent = 'GitHub • Offline';
+                showToast('⚠️ Using local data');
+            }
+        }
+        
+        // Save to GitHub Gist
+        async function saveToGist() {
+            const branches = JSON.parse(localStorage.getItem('branches')) || [];
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
             
-            const globalData = {
+            const data = {
                 version: SYNC_VERSION,
-                lastUpdated: new Date().toISOString(),
+                lastSync: new Date().toISOString(),
                 branches: branches,
                 queries: queries
             };
             
-            localStorage.setItem(SYNC_KEY, JSON.stringify(globalData));
-            localStorage.setItem('sync_broadcast', Date.now().toString());
-            
-            document.getElementById('syncText').textContent = 'Synced at ' + new Date().toLocaleTimeString();
+            try {
+                showToast('☁️ Saving to GitHub Gist...');
+                document.getElementById('syncText').textContent = 'GitHub • Saving...';
+                
+                const response = await fetch(GIST_API, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        files: {
+                            'jeans-club-data.json': {
+                                content: JSON.stringify(data, null, 2)
+                            }
+                        }
+                    })
+                });
+                
+                if (response.ok) {
+                    showToast('✅ Saved to GitHub Gist');
+                    document.getElementById('syncText').textContent = 'GitHub • Saved';
+                    
+                    // Update global sync
+                    const globalData = {
+                        version: SYNC_VERSION,
+                        lastUpdated: new Date().toISOString(),
+                        branches: branches,
+                        queries: queries
+                    };
+                    localStorage.setItem(SYNC_KEY, JSON.stringify(globalData));
+                    localStorage.setItem('sync_broadcast', Date.now().toString());
+                    
+                } else {
+                    showToast('⚠️ Save failed');
+                    document.getElementById('syncText').textContent = 'GitHub • Save Failed';
+                }
+                
+            } catch (error) {
+                showToast('❌ GitHub connection error');
+                document.getElementById('syncText').textContent = 'GitHub • Error';
+                console.error(error);
+            }
         }
         
         // Listen for changes from other devices/tabs
@@ -1028,10 +1117,9 @@
             });
             
             document.getElementById('branchesCount').textContent = branches.length;
-            saveToGlobalSync();
         }
         
-        function addBranch() {
+        async function addBranch() {
             const newBranch = document.getElementById('newBranchName').value.trim().toUpperCase();
             if (!newBranch) {
                 showToast('⚠️ Enter branch name');
@@ -1045,10 +1133,14 @@
             document.getElementById('newBranchName').value = '';
             loadBranches();
             generateBranchQRCodes();
+            
+            // Save to GitHub Gist
+            await saveToGist();
+            
             showToast(`✓ Branch ${newBranch} added`);
         }
         
-        function deleteBranch(branch) {
+        async function deleteBranch(branch) {
             if (!confirm(`Delete branch ${branch}?`)) return;
             
             let branches = JSON.parse(localStorage.getItem('branches')) || DEFAULT_BRANCHES;
@@ -1057,6 +1149,10 @@
             
             loadBranches();
             generateBranchQRCodes();
+            
+            // Save to GitHub Gist
+            await saveToGist();
+            
             showToast(`✕ Branch ${branch} removed`);
         }
         
@@ -1074,7 +1170,6 @@
             
             branches.forEach(branch => {
                 const baseUrl = window.location.href.split('#')[0];
-                // Add timestamp to force fresh data on every scan
                 const timestamp = Date.now();
                 const branchUrl = baseUrl + `?t=${timestamp}#branch=${encodeURIComponent(branch)}`;
                 
@@ -1152,7 +1247,7 @@
         }
         
         // ========== QUERY SYSTEM ==========
-        function submitQuery() {
+        async function submitQuery() {
             const staffName = document.getElementById('staffName').value.trim();
             const branch = document.getElementById('branchSelect').value;
             const title = document.getElementById('queryTitle').value.trim();
@@ -1180,7 +1275,8 @@
             queries.unshift(query);
             localStorage.setItem('queries', JSON.stringify(queries));
             
-            saveToGlobalSync();
+            // Save to GitHub Gist
+            await saveToGist();
             
             document.getElementById('queryTitle').value = '';
             document.getElementById('queryDetails').value = '';
@@ -1320,6 +1416,19 @@
             setTimeout(() => toast.remove(), 2000);
         }
         
+        // Add Sync button to header
+        function addSyncButton() {
+            const header = document.querySelector('.header-content');
+            if (header) {
+                const syncBtn = document.createElement('button');
+                syncBtn.className = 'btn-outline';
+                syncBtn.innerHTML = '🔄 GITHUB SYNC';
+                syncBtn.onclick = loadFromGist;
+                syncBtn.style.marginLeft = 'auto';
+                header.appendChild(syncBtn);
+            }
+        }
+        
         // ========== CHECK URL PARAMETERS ==========
         function checkForBranchInUrl() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -1339,16 +1448,31 @@
         }
         
         // ========== INIT ==========
-        window.onload = function() {
+        window.onload = async function() {
+            // Load from GitHub Gist first
+            await loadFromGist();
+            
+            // Then load from localStorage as fallback
             loadBranches();
             loadQueries();
             updateStats();
             generateWeeklyReport();
             generateBranchQRCodes();
             checkForBranchInUrl();
+            addSyncButton();
             
-            setInterval(saveToGlobalSync, 30000);
-            setInterval(generateBranchQRCodes, 60000);
+            // Auto-sync from GitHub every 5 minutes
+            setInterval(loadFromGist, 5 * 60 * 1000);
+            
+            // Auto-save to GitHub every 30 seconds if there are changes
+            setInterval(async function() {
+                const lastSync = localStorage.getItem('lastSync');
+                const lastUpdate = localStorage.getItem('lastUpdate');
+                
+                if (lastUpdate && lastSync && lastUpdate > lastSync) {
+                    await saveToGist();
+                }
+            }, 30000);
         }
         
         window.onclick = function(event) {
