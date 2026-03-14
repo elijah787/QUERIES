@@ -225,6 +225,13 @@
             color: #ffd700;
         }
         
+        .btn-gold:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #8b9bb5;
+            border-color: #8b9bb5;
+        }
+        
         .btn-outline {
             background: transparent;
             border: 1px solid #ffd700;
@@ -237,6 +244,13 @@
             transition: all 0.3s;
             width: auto;
             touch-action: manipulation;
+        }
+        
+        .btn-outline:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #8b9bb5;
+            color: #8b9bb5;
         }
         
         .branches-list {
@@ -336,6 +350,11 @@
             font-size: 14px;
             -webkit-appearance: none;
             appearance: none;
+        }
+        
+        .form-control:disabled {
+            opacity: 0.5;
+            background: rgba(0,0,0,0.3);
         }
         
         select.form-control {
@@ -503,6 +522,13 @@
             touch-action: manipulation;
         }
         
+        .btn-save:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #8b9bb5;
+            color: #8b9bb5;
+        }
+        
         .report-card {
             background: linear-gradient(135deg, #001f3f 0%, #00355e 100%);
             border: 2px solid #ffd700;
@@ -616,6 +642,11 @@
             touch-action: manipulation;
         }
         
+        .btn-whatsapp:disabled, .btn-email:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
         @media (min-width: 480px) {
             .btn-whatsapp, .btn-email {
                 width: auto;
@@ -708,6 +739,16 @@
             100% { opacity: 1; }
         }
         
+        .offline-banner {
+            background: #ff6b6b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
         .toast {
             position: fixed;
             top: 15px;
@@ -766,7 +807,13 @@
     <div class="container">
         <div class="sync-status" id="syncStatus">
             <span class="sync-dot"></span>
-            <span id="syncText">GitHub Gist • Connecting...</span>
+            <span id="syncText">Checking connection...</span>
+        </div>
+        
+        <div id="offlineBanner" style="display: none;" class="offline-banner">
+            <strong>⚠️ NO INTERNET CONNECTION</strong><br>
+            This system requires internet to work.<br>
+            Please check your connection and refresh the page.
         </div>
         
         <div class="header">
@@ -785,13 +832,13 @@
             <div class="section-title">✈︎ BRANCH CONTROL</div>
             <div class="password-form">
                 <input type="password" id="managerPassword" class="password-input" placeholder="Manager password">
-                <button onclick="verifyManager()" class="btn-gold">UNLOCK</button>
+                <button onclick="verifyManager()" class="btn-gold" id="unlockBtn">UNLOCK</button>
             </div>
             
             <div id="branchManagement" class="branch-management">
                 <div class="branch-form">
                     <input type="text" id="newBranchName" class="branch-input" placeholder="New branch name (e.g., KAMPALA ROAD)">
-                    <button onclick="addBranch()" class="btn-gold">ADD BRANCH</button>
+                    <button onclick="addBranch()" class="btn-gold" id="addBranchBtn">ADD BRANCH</button>
                 </div>
                 <div id="branchesList" class="branches-list"></div>
                 <p style="color: #8b9bb5; font-size: 10px; margin-top: 10px;">⚠️ Only managers can add/delete branches</p>
@@ -834,7 +881,7 @@
                     </select>
                 </div>
                 
-                <button onclick="submitQuery()" class="btn-gold" style="width: 100%;">FILE NOTAM</button>
+                <button onclick="submitQuery()" class="btn-gold" style="width: 100%;" id="fileNotamBtn">FILE NOTAM</button>
             </div>
             
             <div class="notam-card">
@@ -927,8 +974,8 @@
             <div id="weeklyReportContent" style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; color: white; font-family: 'Space Mono'; font-size: 11px; margin-bottom: 15px; max-height: 250px; overflow-y: auto;"></div>
             
             <div class="share-buttons">
-                <button onclick="shareViaWhatsApp()" class="btn-whatsapp">📱 WHATSAPP</button>
-                <button onclick="shareViaEmail()" class="btn-email">✉️ EMAIL</button>
+                <button onclick="shareViaWhatsApp()" class="btn-whatsapp" id="whatsappBtn">📱 WHATSAPP</button>
+                <button onclick="shareViaEmail()" class="btn-email" id="emailBtn">✉️ EMAIL</button>
             </div>
         </div>
     </div>
@@ -958,6 +1005,9 @@
         
         // Default query (will only be used if no data exists)
         const DEFAULT_QUERIES = [];
+        
+        // Track online status
+        let isOnline = navigator.onLine;
         
         // ========== NOTAM STATUS SYSTEM ==========
         const NOTAM_STATUS = {
@@ -991,35 +1041,78 @@
             }
         };
         
-        // ========== INITIALIZE ==========
-        function initGlobalData() {
-            let globalData = localStorage.getItem(SYNC_KEY);
-            
-            if (!globalData) {
-                globalData = {
-                    version: SYNC_VERSION,
-                    lastUpdated: new Date().toISOString(),
-                    branches: DEFAULT_BRANCHES,
-                    queries: DEFAULT_QUERIES
-                };
-                localStorage.setItem(SYNC_KEY, JSON.stringify(globalData));
-            } else {
-                globalData = JSON.parse(globalData);
+        // ========== ONLINE CHECK FUNCTION ==========
+        function requireOnline() {
+            if (!navigator.onLine) {
+                showToast('❌ Internet required for this action');
+                return false;
+            }
+            return true;
+        }
+        
+        // ========== DISABLE ALL INPUTS ==========
+        function disableAllInputs(disabled = true) {
+            const inputs = document.querySelectorAll('input, select, textarea, button');
+            inputs.forEach(el => {
+                el.disabled = disabled;
+            });
+        }
+        
+        // ========== SHOW OFFLINE BANNER ==========
+        function showOfflineBanner(show) {
+            const banner = document.getElementById('offlineBanner');
+            if (banner) {
+                banner.style.display = show ? 'block' : 'none';
             }
             
-            localStorage.setItem('branches', JSON.stringify(globalData.branches));
-            localStorage.setItem('queries', JSON.stringify(globalData.queries));
+            const syncStatus = document.getElementById('syncStatus');
+            const syncText = document.getElementById('syncText');
             
-            return globalData;
+            if (show) {
+                syncStatus.style.background = 'rgba(255,107,107,0.2)';
+                syncText.textContent = '❌ OFFLINE - No Connection';
+                syncText.style.color = '#ff6b6b';
+                disableAllInputs(true);
+            } else {
+                syncStatus.style.background = 'rgba(255,215,0,0.1)';
+                syncText.style.color = '#8b9bb5';
+                disableAllInputs(false);
+            }
         }
+        
+        // ========== CONNECTION MONITOR ==========
+        window.addEventListener('online', function() {
+            isOnline = true;
+            showOfflineBanner(false);
+            showToast('📶 Connection restored - Refreshing...');
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        });
+        
+        window.addEventListener('offline', function() {
+            isOnline = false;
+            showOfflineBanner(true);
+            showToast('❌ Internet lost - System disabled');
+        });
         
         // ========== GITHUB GIST FUNCTIONS ==========
         async function loadFromGist() {
+            if (!requireOnline()) {
+                showOfflineBanner(true);
+                return;
+            }
+            
             try {
-                showToast('📡 Syncing from GitHub Gist...');
-                document.getElementById('syncText').textContent = 'GitHub • Loading...';
+                showToast('📡 Connecting to server...');
+                document.getElementById('syncText').textContent = 'Checking connection...';
                 
                 const response = await fetch(GIST_URL + '?t=' + Date.now());
+                
+                if (!response.ok) {
+                    throw new Error('Cannot reach server');
+                }
+                
                 const cloudData = await response.json();
                 
                 localStorage.setItem('branches', JSON.stringify(cloudData.branches || []));
@@ -1039,17 +1132,24 @@
                 generateWeeklyReport();
                 generateBranchQRCodes();
                 
-                showToast('✅ Synced from GitHub Gist');
-                document.getElementById('syncText').textContent = 'GitHub • Synced';
+                showToast('✅ Connected - System ready');
+                document.getElementById('syncText').textContent = 'ONLINE • Connected';
+                document.getElementById('syncText').style.color = '#4caf50';
                 
             } catch (error) {
-                console.log('GitHub Gist unavailable:', error);
-                document.getElementById('syncText').textContent = 'GitHub • Offline';
-                showToast('⚠️ Using local data');
+                console.error('Connection error:', error);
+                document.getElementById('syncText').textContent = '❌ CONNECTION FAILED';
+                document.getElementById('syncText').style.color = '#ff6b6b';
+                showOfflineBanner(true);
+                showToast('❌ Cannot connect to server');
             }
         }
         
         async function saveToGist() {
+            if (!requireOnline()) {
+                return;
+            }
+            
             const branches = JSON.parse(localStorage.getItem('branches')) || [];
             const queries = JSON.parse(localStorage.getItem('queries')) || [];
             
@@ -1061,7 +1161,7 @@
             };
             
             try {
-                document.getElementById('syncText').textContent = 'GitHub • Saving...';
+                document.getElementById('syncText').textContent = 'Saving...';
                 
                 const response = await fetch(GIST_API, {
                     method: 'PATCH',
@@ -1079,13 +1179,13 @@
                 });
                 
                 if (response.ok) {
-                    document.getElementById('syncText').textContent = 'GitHub • Saved';
+                    document.getElementById('syncText').textContent = 'ONLINE • Connected';
                 } else {
-                    document.getElementById('syncText').textContent = 'GitHub • Save Failed';
+                    document.getElementById('syncText').textContent = '❌ Save Failed';
                 }
                 
             } catch (error) {
-                document.getElementById('syncText').textContent = 'GitHub • Error';
+                document.getElementById('syncText').textContent = '❌ Error';
             }
         }
         
@@ -1095,6 +1195,8 @@
         }
         
         function verifyManager() {
+            if (!requireOnline()) return;
+            
             const password = document.getElementById('managerPassword').value;
             if (password === 'jeansclub2024') {
                 document.getElementById('branchManagement').classList.add('visible');
@@ -1151,6 +1253,7 @@
         }
         
         async function addBranch() {
+            if (!requireOnline()) return;
             if (!isManager()) {
                 showToast('⚠️ Only managers can add branches');
                 return;
@@ -1181,6 +1284,7 @@
         }
         
         async function deleteBranch(branch) {
+            if (!requireOnline()) return;
             if (!isManager()) {
                 showToast('⚠️ Only managers can delete branches');
                 return;
@@ -1242,6 +1346,8 @@
         }
         
         function viewBranchQueries(branch) {
+            if (!requireOnline()) return;
+            
             const queries = JSON.parse(localStorage.getItem('queries')) || [];
             const branchQueries = queries.filter(q => q.branch === branch);
             
@@ -1287,6 +1393,8 @@
         
         // ========== NOTAM FUNCTIONS ==========
         async function submitQuery() {
+            if (!requireOnline()) return;
+            
             const staffName = document.getElementById('staffName').value.trim();
             const branch = document.getElementById('branchSelect').value;
             const title = document.getElementById('queryTitle').value.trim();
@@ -1337,6 +1445,8 @@
         }
         
         async function staffResolveNotam(notamId) {
+            if (!requireOnline()) return;
+            
             const staffName = document.getElementById('staffName').value.trim() || 'STAFF';
             
             if (!confirm('Mark this issue as SOLVED at your branch?')) return;
@@ -1372,6 +1482,7 @@
         }
         
         async function managerConfirm(notamId) {
+            if (!requireOnline()) return;
             if (!isManager()) {
                 showToast('⚠️ Only managers can confirm resolution');
                 return;
@@ -1403,6 +1514,7 @@
         }
         
         async function reopenNotam(notamId) {
+            if (!requireOnline()) return;
             if (!isManager()) {
                 showToast('⚠️ Only managers can reopen');
                 return;
@@ -1432,6 +1544,7 @@
         }
         
         async function deleteNotam(notamId) {
+            if (!requireOnline()) return;
             if (!isManager()) {
                 showToast('⚠️ Only managers can delete');
                 return;
@@ -1451,6 +1564,8 @@
         }
         
         function saveQueryToDevice(notamId) {
+            if (!requireOnline()) return;
+            
             const queries = JSON.parse(localStorage.getItem('queries')) || [];
             const query = queries.find(q => q.id === notamId);
             
@@ -1490,13 +1605,10 @@ ${query.details}
             const showResolved = document.getElementById('showResolved')?.checked || false;
             const showAll = document.getElementById('showAll')?.checked || false;
             
-            // Filter queries
             let filteredQueries = queries.filter(q => {
-                // Status filter
                 if (!showResolved && q.status === 'RESOLVED' && !showAll) return false;
                 if (!showAll && q.status === 'RESOLVED' && !showResolved) return false;
                 
-                // Search filter
                 if (searchTerm) {
                     const matches = q.title.toLowerCase().includes(searchTerm) ||
                                    q.details.toLowerCase().includes(searchTerm) ||
@@ -1505,10 +1617,7 @@ ${query.details}
                     if (!matches) return false;
                 }
                 
-                // Branch filter
                 if (branchFilter && q.branch !== branchFilter) return false;
-                
-                // Urgency filter
                 if (urgencyFilter && q.urgency !== urgencyFilter) return false;
                 
                 return true;
@@ -1524,7 +1633,6 @@ ${query.details}
                 const status = NOTAM_STATUS[query.status] || NOTAM_STATUS.ACTIVE;
                 const urgencyCol = urgencyColor(query.urgency);
                 
-                // Calculate time left for pending
                 let timeLeftHtml = '';
                 if (query.status === 'AWAITING_CONFIRMATION' && query.managerReviewDeadline) {
                     const deadline = new Date(query.managerReviewDeadline);
@@ -1583,6 +1691,8 @@ ${query.details}
         
         // ========== AUTO-CONFIRM STALE RESOLUTIONS ==========
         async function autoConfirmStaleResolutions() {
+            if (!requireOnline()) return;
+            
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
             let changed = false;
             const now = new Date();
@@ -1682,12 +1792,16 @@ ${query.details}
         
         // ========== SHARE ==========
         function shareViaWhatsApp() {
+            if (!requireOnline()) return;
+            
             const text = document.getElementById('weeklyReportContent').innerText;
             const period = document.getElementById('reportPeriod').innerText;
             window.open(`https://wa.me/?text=${encodeURIComponent('JEANS CLUB WEEKLY REPORT\n' + period + '\n' + text)}`);
         }
         
         function shareViaEmail() {
+            if (!requireOnline()) return;
+            
             const text = document.getElementById('weeklyReportContent').innerText;
             const period = document.getElementById('reportPeriod').innerText;
             window.location.href = `mailto:?subject=JEANS CLUB WEEKLY REPORT&body=${encodeURIComponent(period + '\n' + text)}`;
@@ -1712,7 +1826,12 @@ ${query.details}
         
         // ========== INIT ==========
         window.onload = async function() {
-            initGlobalData();
+            // Check initial online status
+            if (!navigator.onLine) {
+                showOfflineBanner(true);
+                return;
+            }
+            
             await loadFromGist();
             
             loadBranches();
@@ -1732,7 +1851,6 @@ ${query.details}
             setInterval(autoConfirmStaleResolutions, 60 * 60 * 1000);
             setInterval(generateBranchQRCodes, 60 * 60 * 1000);
             
-            // Run auto-confirm on startup
             setTimeout(autoConfirmStaleResolutions, 5000);
         };
         
