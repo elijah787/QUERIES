@@ -991,10 +991,8 @@
     </div>
     
     <script>
-        // ========== GITHUB GIST CONFIGURATION ==========
-        const GIST_URL = 'https://gist.githubusercontent.com/elijah787/816bd5f569c087f6a7f6d2077e60347a/raw/jeans-club-data.json';
-        const GIST_API = 'https://api.github.com/gists/816bd5f569c087f6a7f6d2077e60347a';
-        const GITHUB_TOKEN ='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'
+        // ========== CLOUDFLARE WORKER CONFIGURATION ==========
+        const WORKER_URL = 'https://jeans-club-proxy.amanyakeith418.workers.dev';
         
         // ========== GLOBAL VARIABLES ==========
         const SYNC_KEY = 'jeans_club_global_data';
@@ -1096,7 +1094,7 @@
             showToast('❌ Internet lost - System disabled');
         });
         
-        // ========== GITHUB GIST FUNCTIONS ==========
+        // ========== CLOUDFLARE WORKER FUNCTIONS ==========
         async function loadFromGist() {
             if (!requireOnline()) {
                 showOfflineBanner(true);
@@ -1104,25 +1102,28 @@
             }
             
             try {
-                showToast('📡 Connecting to server...');
-                document.getElementById('syncText').textContent = 'Checking connection...';
+                showToast('📡 Loading from cloud...');
+                document.getElementById('syncText').textContent = 'Loading...';
                 
-                const response = await fetch(GIST_URL + '?t=' + Date.now());
+                const response = await fetch(WORKER_URL);
                 
                 if (!response.ok) {
                     throw new Error('Cannot reach server');
                 }
                 
-                const cloudData = await response.json();
+                const gistData = await response.json();
                 
-                localStorage.setItem('branches', JSON.stringify(cloudData.branches || []));
-                localStorage.setItem('queries', JSON.stringify(cloudData.queries || []));
+                // Extract the content from the Gist response
+                const content = JSON.parse(gistData.files['jeans-club-data.json'].content);
+                
+                localStorage.setItem('branches', JSON.stringify(content.branches || []));
+                localStorage.setItem('queries', JSON.stringify(content.queries || []));
                 
                 const globalData = {
                     version: SYNC_VERSION,
                     lastUpdated: new Date().toISOString(),
-                    branches: cloudData.branches || [],
-                    queries: cloudData.queries || []
+                    branches: content.branches || [],
+                    queries: content.queries || []
                 };
                 localStorage.setItem(SYNC_KEY, JSON.stringify(globalData));
                 
@@ -1163,10 +1164,9 @@
             try {
                 document.getElementById('syncText').textContent = 'Saving...';
                 
-                const response = await fetch(GIST_API, {
+                const response = await fetch(WORKER_URL, {
                     method: 'PATCH',
                     headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
@@ -1178,13 +1178,18 @@
                     })
                 });
                 
+                const result = await response.json();
+                
                 if (response.ok) {
                     document.getElementById('syncText').textContent = 'ONLINE • Connected';
+                    showToast('✅ Synced to cloud');
                 } else {
                     document.getElementById('syncText').textContent = '❌ Save Failed';
+                    console.error('Save failed:', result);
                 }
                 
             } catch (error) {
+                console.error('Save error:', error);
                 document.getElementById('syncText').textContent = '❌ Error';
             }
         }
