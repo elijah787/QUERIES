@@ -800,6 +800,38 @@
             font-size: 9px;
             font-weight: 700;
         }
+        
+        /* Branch-specific view styles */
+        .branch-view {
+            background: rgba(0,30,50,0.95);
+            border: 1px solid #ffd700;
+            border-radius: 12px;
+            padding: 18px 15px;
+            margin-top: 12px;
+        }
+        
+        .branch-view h2 {
+            color: #ffd700;
+            font-family: 'Space Mono', monospace;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .worker-name-input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #ffd700;
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .worker-name-input::placeholder {
+            color: #8b9bb5;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
@@ -921,61 +953,81 @@
             </div>
         </div>
         
-        <div class="queries-card">
-            <div class="section-title">✈︎ NOTAMS</div>
-            
-            <div class="filter-bar">
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                    <input type="text" id="searchNotams" placeholder="🔍 Search..." class="form-control" style="flex: 2;">
-                    
-                    <select id="filterBranch" class="form-control" style="flex: 1;">
-                        <option value="">ALL BRANCHES</option>
-                    </select>
-                    
-                    <select id="filterUrgency" class="form-control" style="flex: 1;">
-                        <option value="">ALL URGENCY</option>
-                        <option value="LOW">LOW</option>
-                        <option value="MEDIUM">MEDIUM</option>
-                        <option value="HIGH">HIGH</option>
-                        <option value="CRITICAL">CRITICAL</option>
-                    </select>
-                </div>
+        <!-- MANAGER VIEW - Only appears when logged in -->
+        <div id="managerView" style="display: none;">
+            <div class="queries-card">
+                <div class="section-title">✈︎ MANAGER NOTAMS</div>
                 
-                <div style="display: flex; gap: 15px; margin-top: 10px; flex-wrap: wrap;">
-                    <label style="color: white; display: flex; align-items: center; gap: 5px;">
-                        <input type="checkbox" id="showResolved" onchange="loadQueries()">
-                        <span style="font-size: 12px;">Show Resolved</span>
-                    </label>
+                <div class="filter-bar">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                        <input type="text" id="searchNotams" placeholder="🔍 Search..." class="form-control" style="flex: 2;">
+                        
+                        <select id="filterBranch" class="form-control" style="flex: 1;">
+                            <option value="">ALL BRANCHES</option>
+                        </select>
+                        
+                        <select id="filterUrgency" class="form-control" style="flex: 1;">
+                            <option value="">ALL URGENCY</option>
+                            <option value="LOW">LOW</option>
+                            <option value="MEDIUM">MEDIUM</option>
+                            <option value="HIGH">HIGH</option>
+                            <option value="CRITICAL">CRITICAL</option>
+                        </select>
+                    </div>
                     
-                    <label style="color: white; display: flex; align-items: center; gap: 5px;">
-                        <input type="checkbox" id="showAll" onchange="loadQueries()">
-                        <span style="font-size: 12px;">Show All (including old)</span>
-                    </label>
-                    
-                    <div style="margin-left: auto; display: flex; gap: 10px;">
-                        <span style="color: #4caf50; font-size: 10px;">🟢 Active</span>
-                        <span style="color: #ffd700; font-size: 10px;">⏳ Pending</span>
-                        <span style="color: #8b9bb5; font-size: 10px;">✅ Resolved</span>
+                    <div style="display: flex; gap: 15px; margin-top: 10px; flex-wrap: wrap;">
+                        <label style="color: white; display: flex; align-items: center; gap: 5px;">
+                            <input type="checkbox" id="showResolved" onchange="loadQueries()">
+                            <span style="font-size: 12px;">Show Resolved</span>
+                        </label>
+                        
+                        <label style="color: white; display: flex; align-items: center; gap: 5px;">
+                            <input type="checkbox" id="showAll" onchange="loadQueries()">
+                            <span style="font-size: 12px;">Show All (including old)</span>
+                        </label>
+                        
+                        <div style="margin-left: auto; display: flex; gap: 10px;">
+                            <span style="color: #4caf50; font-size: 10px;">🟢 Active</span>
+                            <span style="color: #ffd700; font-size: 10px;">⏳ Pending</span>
+                            <span style="color: #8b9bb5; font-size: 10px;">✅ Resolved</span>
+                        </div>
                     </div>
                 </div>
+                
+                <div id="queriesList"></div>
             </div>
             
-            <div id="queriesList"></div>
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-title">WEEKLY SUMMARY</div>
+                    <div class="report-period" id="reportPeriod"></div>
+                </div>
+                
+                <div class="report-grid" id="reportStats"></div>
+                
+                <div id="weeklyReportContent" style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; color: white; font-family: 'Space Mono'; font-size: 11px; margin-bottom: 15px; max-height: 250px; overflow-y: auto;"></div>
+                
+                <div class="share-buttons">
+                    <button onclick="shareViaWhatsApp()" class="btn-whatsapp" id="whatsappBtn">📱 WHATSAPP</button>
+                    <button onclick="shareViaEmail()" class="btn-email" id="emailBtn">✉️ EMAIL</button>
+                </div>
+            </div>
         </div>
         
-        <div class="report-card">
-            <div class="report-header">
-                <div class="report-title">WEEKLY SUMMARY</div>
-                <div class="report-period" id="reportPeriod"></div>
+        <!-- WORKER BRANCH VIEW (hidden by default, shown when QR scanned) -->
+        <div id="branchViewContainer" style="display: none;"></div>
+    </div>
+    
+    <!-- Worker Name Modal for Marking Solved -->
+    <div id="workerNameModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Enter Your Name</h2>
+                <span class="close-modal" onclick="closeWorkerNameModal()">&times;</span>
             </div>
-            
-            <div class="report-grid" id="reportStats"></div>
-            
-            <div id="weeklyReportContent" style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; color: white; font-family: 'Space Mono'; font-size: 11px; margin-bottom: 15px; max-height: 250px; overflow-y: auto;"></div>
-            
-            <div class="share-buttons">
-                <button onclick="shareViaWhatsApp()" class="btn-whatsapp" id="whatsappBtn">📱 WHATSAPP</button>
-                <button onclick="shareViaEmail()" class="btn-email" id="emailBtn">✉️ EMAIL</button>
+            <div style="padding: 20px;">
+                <input type="text" id="workerNameInput" class="form-control" placeholder="e.g., JOHN OKELLO" style="margin-bottom: 15px;">
+                <button onclick="confirmWorkerResolve()" class="btn-gold" style="width: 100%;">CONFIRM RESOLVE</button>
             </div>
         </div>
     </div>
@@ -1006,6 +1058,10 @@
         
         // Track online status
         let isOnline = navigator.onLine;
+        
+        // Current branch for worker view
+        let currentBranch = null;
+        let pendingResolveId = null;
         
         // ========== NOTAM STATUS SYSTEM ==========
         const NOTAM_STATUS = {
@@ -1040,7 +1096,7 @@
         };
         
         // ========== EXPIRY CONFIGURATION ==========
-        const RESOLVED_EXPIRY_DAYS = 14; // ✅ 14 days after resolution
+        const RESOLVED_EXPIRY_DAYS = 14; // 14 days after resolution
         
         // ========== ONLINE CHECK FUNCTION ==========
         function requireOnline() {
@@ -1131,9 +1187,16 @@
                 localStorage.setItem(SYNC_KEY, JSON.stringify(globalData));
                 
                 loadBranches();
-                loadQueries();
-                updateStats();
-                generateWeeklyReport();
+                
+                // Only load queries if we're in manager view or branch view
+                if (isManager()) {
+                    loadQueries();
+                    updateStats();
+                    generateWeeklyReport();
+                } else if (currentBranch) {
+                    loadBranchQueries(currentBranch);
+                }
+                
                 generateBranchQRCodes();
                 
                 showToast('✅ Connected - System ready');
@@ -1210,9 +1273,15 @@
                 document.getElementById('branchManagement').classList.add('visible');
                 document.getElementById('managerPassword').value = '';
                 sessionStorage.setItem('isManager', 'true');
+                
+                // Show manager view
+                document.getElementById('managerView').style.display = 'block';
+                
                 showToast('✓ Manager access granted');
                 loadBranches();
                 loadQueries();
+                updateStats();
+                generateWeeklyReport();
             } else {
                 showToast('⚠️ Incorrect password');
             }
@@ -1247,14 +1316,14 @@
             }
             
             branchSelect.innerHTML = '<option value="">-- SELECT BRANCH --</option>';
-            filterBranch.innerHTML = '<option value="">ALL BRANCHES</option>';
+            if (filterBranch) filterBranch.innerHTML = '<option value="">ALL BRANCHES</option>';
             
             branches.forEach(branch => {
                 const option = document.createElement('option');
                 option.value = branch;
                 option.textContent = branch;
                 branchSelect.appendChild(option.cloneNode(true));
-                filterBranch.appendChild(option);
+                if (filterBranch) filterBranch.appendChild(option);
             });
             
             document.getElementById('branchesCount').textContent = branches.length;
@@ -1339,7 +1408,7 @@
                         <canvas id="${canvasId}" width="140" height="140"></canvas>
                     </div>
                     <div class="qr-link">Scan for ${branch} NOTAMs</div>
-                    <button onclick="viewBranchQueries('${branch}')" class="btn-outline">VIEW</button>
+                    <button onclick="viewBranchQueries('${branch}')" class="btn-outline">VIEW BRANCH</button>
                 `;
                 
                 qrGrid.appendChild(card);
@@ -1353,112 +1422,92 @@
             });
         }
         
+        // ========== BRANCH QUERIES VIEW (for workers) ==========
         function viewBranchQueries(branch) {
             if (!requireOnline()) return;
             
+            currentBranch = branch;
+            
             const queries = JSON.parse(localStorage.getItem('queries')) || [];
-            const branchQueries = queries.filter(q => q.branch === branch);
+            if (!Array.isArray(queries)) queries = [];
+            const branchQueries = queries.filter(q => q.branch === branch && q.status !== 'RESOLVED');
             
-            document.getElementById('modalBranchName').textContent = `✈︎ ${branch} NOTAMS`;
+            // Hide manager view if visible
+            document.getElementById('managerView').style.display = 'none';
             
-            let html = '';
+            // Create or update branch view
+            const container = document.getElementById('branchViewContainer');
+            container.style.display = 'block';
+            
+            let html = `
+                <div class="branch-view">
+                    <h2>✈︎ ${branch} NOTAMS</h2>
+                    <div id="branchQueriesList"></div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            const listDiv = document.getElementById('branchQueriesList');
+            
             if (branchQueries.length === 0) {
-                html = '<p style="text-align: center; padding: 20px; color: #8b9bb5;">No NOTAMS for this branch</p>';
-            } else {
-                branchQueries.slice(0, 20).forEach(query => {
-                    const status = NOTAM_STATUS[query.status] || NOTAM_STATUS.ACTIVE;
-                    html += `
-                        <div style="border: 1px solid ${status.color}; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
-                            <div style="display: flex; justify-content: space-between;">
-                                <span style="color: ${status.color};">${status.icon} ${query.status}</span>
-                                <span style="color: ${urgencyColor(query.urgency)};">● ${query.urgency}</span>
-                            </div>
-                            <div style="font-weight: 700; margin: 5px 0;">${query.title}</div>
-                            <div style="color: #8b9bb5; font-size: 11px;">${query.details}</div>
-                            <div style="font-size: 9px; color: #666; margin-top: 5px;">${query.staffName} • ${query.date}</div>
-                        </div>
-                    `;
-                });
-            }
-            
-            document.getElementById('modalQueriesList').innerHTML = html;
-            document.getElementById('branchModal').style.display = 'block';
-        }
-        
-        function closeModal() {
-            document.getElementById('branchModal').style.display = 'none';
-        }
-        
-        function urgencyColor(urgency) {
-            const colors = {
-                'LOW': '#4caf50',
-                'MEDIUM': '#ffc107',
-                'HIGH': '#ff9800',
-                'CRITICAL': '#f44336'
-            };
-            return colors[urgency] || '#ffd700';
-        }
-        
-        // ========== NOTAM FUNCTIONS ==========
-        async function submitQuery() {
-            if (!requireOnline()) return;
-            
-            const staffName = document.getElementById('staffName').value.trim();
-            const branch = document.getElementById('branchSelect').value;
-            const title = document.getElementById('queryTitle').value.trim();
-            const details = document.getElementById('queryDetails').value.trim();
-            const urgency = document.getElementById('queryUrgency').value;
-            
-            if (!staffName || !branch || !title || !details) {
-                showToast('⚠️ Fill all fields');
+                listDiv.innerHTML = '<p style="text-align: center; padding: 20px; color: #8b9bb5;">No active NOTAMS for this branch</p>';
                 return;
             }
             
-            const query = {
-                id: Date.now(),
-                notamNumber: 'JCU-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-                staffName: staffName.toUpperCase(),
-                branch: branch,
-                title: title.toUpperCase(),
-                details: details,
-                urgency: urgency,
+            listDiv.innerHTML = '';
+            branchQueries.slice(0, 20).forEach(query => {
+                const status = NOTAM_STATUS[query.status] || NOTAM_STATUS.ACTIVE;
+                const urgencyCol = urgencyColor(query.urgency);
                 
-                status: 'ACTIVE',
-                statusHistory: [{
-                    status: 'ACTIVE',
-                    timestamp: new Date().toISOString(),
-                    changedBy: staffName.toUpperCase()
-                }],
-                
-                createdAt: new Date().toISOString(),
-                createdBy: staffName.toUpperCase(),
-                date: new Date().toLocaleString('en-UG', { dateStyle: 'full', timeStyle: 'short' })
-            };
-            
-            let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            queries.unshift(query);
-            localStorage.setItem('queries', JSON.stringify(queries));
-            
-            await saveToGist();
-            
-            document.getElementById('queryTitle').value = '';
-            document.getElementById('queryDetails').value = '';
-            
-            loadQueries();
-            updateStats();
-            generateWeeklyReport();
-            generateBranchQRCodes();
-            
-            showToast(`✓ NOTAM filed`);
+                listDiv.innerHTML += `
+                    <div class="query-item" style="border-left: 4px solid ${status.color}; margin-bottom: 15px;">
+                        <div class="query-header">
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span class="query-badge">${query.notamNumber}</span>
+                                <span style="color: ${status.color}; font-size: 10px;">${status.icon} ${status.label}</span>
+                            </div>
+                            <span style="color: ${urgencyCol}; font-size: 10px;">● ${query.urgency}</span>
+                        </div>
+                        
+                        <div class="query-title">${query.title}</div>
+                        <div class="query-content">${query.details}</div>
+                        
+                        <div class="query-footer">
+                            <span>📅 ${new Date(query.createdAt).toLocaleDateString()}</span>
+                            ${query.status === 'ACTIVE' ? 
+                                `<button onclick="showWorkerNameModal(${query.id})" class="btn-save" style="border-color: #ffd700; color: #ffd700;">✅ MARK SOLVED</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
         }
         
-        async function staffResolveNotam(notamId) {
+        // ========== WORKER RESOLVE FUNCTIONS ==========
+        function showWorkerNameModal(notamId) {
+            pendingResolveId = notamId;
+            document.getElementById('workerNameModal').style.display = 'block';
+            document.getElementById('workerNameInput').value = '';
+        }
+        
+        function closeWorkerNameModal() {
+            document.getElementById('workerNameModal').style.display = 'none';
+            pendingResolveId = null;
+        }
+        
+        async function confirmWorkerResolve() {
+            const workerName = document.getElementById('workerNameInput').value.trim();
+            if (!workerName) {
+                showToast('⚠️ Please enter your name');
+                return;
+            }
+            
+            await staffResolveNotam(pendingResolveId, workerName);
+            closeWorkerNameModal();
+        }
+        
+        async function staffResolveNotam(notamId, workerName) {
             if (!requireOnline()) return;
-            
-            const staffName = document.getElementById('staffName').value.trim() || 'STAFF';
-            
-            if (!confirm('Mark this issue as SOLVED at your branch?')) return;
             
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
             if (!Array.isArray(queries)) queries = [];
@@ -1470,7 +1519,7 @@
                 deadline.setHours(deadline.getHours() + 48);
                 
                 queries[index].status = 'AWAITING_CONFIRMATION';
-                queries[index].resolvedByStaff = staffName;
+                queries[index].resolvedByStaff = workerName.toUpperCase();
                 queries[index].resolvedAtBranch = now.toISOString();
                 queries[index].managerReviewDeadline = deadline.toISOString();
                 
@@ -1478,20 +1527,23 @@
                 queries[index].statusHistory.push({
                     status: 'AWAITING_CONFIRMATION',
                     timestamp: now.toISOString(),
-                    changedBy: staffName,
+                    changedBy: workerName.toUpperCase(),
                     note: 'Marked as solved - awaiting manager'
                 });
                 
                 localStorage.setItem('queries', JSON.stringify(queries));
                 await saveToGist();
                 
-                loadQueries();
-                updateStats();
+                // Refresh current view
+                if (currentBranch) {
+                    viewBranchQueries(currentBranch);
+                }
                 
                 showToast(`✅ Marked solved - Manager has 48h to confirm`);
             }
         }
         
+        // ========== MANAGER CONFIRM FUNCTIONS ==========
         async function managerConfirm(notamId) {
             if (!requireOnline()) return;
             if (!isManager()) {
@@ -1581,76 +1633,12 @@
             showToast('🗑️ NOTAM deleted');
         }
         
-        function saveQueryToDevice(notamId) {
-            if (!requireOnline()) return;
-            
-            const queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            const query = queries.find(q => q.id === notamId);
-            
-            if (!query) return;
-            
-            const text = `JEANS CLUB UGANDA NOTAM
-═══════════════════════════
-NOTAM: ${query.notamNumber}
-Branch: ${query.branch}
-Staff: ${query.staffName}
-Date: ${query.date}
-Urgency: ${query.urgency}
-Status: ${query.status}
-Title: ${query.title}
-───────────────────────────
-${query.details}
-═══════════════════════════`;
-            
-            const blob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `NOTAM-${query.notamNumber}.txt`;
-            a.click();
-            
-            showToast('✓ Saved to device');
-        }
-        
-        // ========== CLEAN UP EXPIRED RESOLVED NOTAMS ==========
-        async function cleanExpiredResolvedNotams() {
-            if (!requireOnline()) return;
-            
-            let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            let changed = false;
-            const now = new Date();
-            
-            queries = queries.filter(query => {
-                // Keep ACTIVE and PENDING and REOPENED
-                if (query.status !== 'RESOLVED') return true;
-                
-                // Check if RESOLVED has expired
-                if (query.resolvedExpiryDate) {
-                    const expiryDate = new Date(query.resolvedExpiryDate);
-                    if (now > expiryDate) {
-                        changed = true;
-                        return false; // Remove expired
-                    }
-                }
-                return true;
-            });
-            
-            if (changed) {
-                localStorage.setItem('queries', JSON.stringify(queries));
-                await saveToGist();
-                loadQueries();
-                updateStats();
-                showToast('🧹 Cleaned up expired resolved NOTAMs');
-            }
-        }
-        
-        // ========== LOAD QUERIES WITH FILTERS ==========
+        // ========== MANAGER LOAD QUERIES ==========
         function loadQueries() {
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
             if (!Array.isArray(queries)) queries = [];
             const list = document.getElementById('queriesList');
+            if (!list) return;
             
             const searchTerm = document.getElementById('searchNotams')?.value.toLowerCase() || '';
             const branchFilter = document.getElementById('filterBranch')?.value || '';
@@ -1726,17 +1714,13 @@ ${query.details}
                             <div style="display: flex; gap: 5px; flex-wrap: wrap;">
                                 <button onclick="saveQueryToDevice(${query.id})" class="btn-save">💾 SAVE</button>
                                 
-                                ${query.status === 'ACTIVE' ? 
-                                    `<button onclick="staffResolveNotam(${query.id})" class="btn-save" style="border-color: #ffd700; color: #ffd700;">✅ MARK SOLVED</button>` : ''}
-                                
-                                ${query.status === 'AWAITING_CONFIRMATION' && isManager() ? 
+                                ${query.status === 'AWAITING_CONFIRMATION' ? 
                                     `<button onclick="managerConfirm(${query.id})" class="btn-save" style="border-color: #4caf50; color: #4caf50;">👔 CONFIRM</button>` : ''}
                                 
-                                ${isManager() && (query.status === 'RESOLVED' || query.status === 'REOPENED') ? 
+                                ${query.status === 'RESOLVED' || query.status === 'REOPENED' ? 
                                     `<button onclick="reopenNotam(${query.id})" class="btn-save" style="border-color: #ff9800; color: #ff9800;">🔄 REOPEN</button>` : ''}
                                 
-                                ${isManager() ? 
-                                    `<button onclick="deleteNotam(${query.id})" class="btn-save" style="border-color: #ff6b6b; color: #ff6b6b;">🗑️ DELETE</button>` : ''}
+                                <button onclick="deleteNotam(${query.id})" class="btn-save" style="border-color: #ff6b6b; color: #ff6b6b;">🗑️ DELETE</button>
                             </div>
                         </div>
                         
@@ -1749,6 +1733,83 @@ ${query.details}
                     </div>
                 `;
             });
+        }
+        
+        function saveQueryToDevice(notamId) {
+            if (!requireOnline()) return;
+            
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
+            const query = queries.find(q => q.id === notamId);
+            
+            if (!query) return;
+            
+            const text = `JEANS CLUB UGANDA NOTAM
+═══════════════════════════
+NOTAM: ${query.notamNumber}
+Branch: ${query.branch}
+Staff: ${query.staffName}
+Date: ${query.date}
+Urgency: ${query.urgency}
+Status: ${query.status}
+Title: ${query.title}
+───────────────────────────
+${query.details}
+═══════════════════════════`;
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `NOTAM-${query.notamNumber}.txt`;
+            a.click();
+            
+            showToast('✓ Saved to device');
+        }
+        
+        function urgencyColor(urgency) {
+            const colors = {
+                'LOW': '#4caf50',
+                'MEDIUM': '#ffc107',
+                'HIGH': '#ff9800',
+                'CRITICAL': '#f44336'
+            };
+            return colors[urgency] || '#ffd700';
+        }
+        
+        // ========== CLEAN UP EXPIRED RESOLVED NOTAMS ==========
+        async function cleanExpiredResolvedNotams() {
+            if (!requireOnline()) return;
+            
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
+            let changed = false;
+            const now = new Date();
+            
+            queries = queries.filter(query => {
+                // Keep ACTIVE and PENDING and REOPENED
+                if (query.status !== 'RESOLVED') return true;
+                
+                // Check if RESOLVED has expired
+                if (query.resolvedExpiryDate) {
+                    const expiryDate = new Date(query.resolvedExpiryDate);
+                    if (now > expiryDate) {
+                        changed = true;
+                        return false; // Remove expired
+                    }
+                }
+                return true;
+            });
+            
+            if (changed) {
+                localStorage.setItem('queries', JSON.stringify(queries));
+                await saveToGist();
+                if (isManager()) {
+                    loadQueries();
+                    updateStats();
+                }
+                showToast('🧹 Cleaned up expired resolved NOTAMs');
+            }
         }
         
         // ========== AUTO-CONFIRM STALE RESOLUTIONS ==========
@@ -1788,8 +1849,10 @@ ${query.details}
             if (changed) {
                 localStorage.setItem('queries', JSON.stringify(queries));
                 await saveToGist();
-                loadQueries();
-                updateStats();
+                if (isManager()) {
+                    loadQueries();
+                    updateStats();
+                }
                 showToast('🔄 Auto-confirmed stale resolutions');
             }
         }
@@ -1891,6 +1954,10 @@ ${query.details}
             }
         }
         
+        function closeModal() {
+            document.getElementById('branchModal').style.display = 'none';
+        }
+        
         // ========== INIT ==========
         window.onload = async function() {
             // Check initial online status
@@ -1902,21 +1969,13 @@ ${query.details}
             await loadFromGist();
             
             loadBranches();
-            loadQueries();
-            updateStats();
-            generateWeeklyReport();
             generateBranchQRCodes();
             checkForBranchInUrl();
-            
-            // Add event listeners for filters
-            document.getElementById('searchNotams')?.addEventListener('input', loadQueries);
-            document.getElementById('filterBranch')?.addEventListener('change', loadQueries);
-            document.getElementById('filterUrgency')?.addEventListener('change', loadQueries);
             
             // Auto processes
             setInterval(loadFromGist, 5 * 60 * 1000);
             setInterval(autoConfirmStaleResolutions, 60 * 60 * 1000);
-            setInterval(cleanExpiredResolvedNotams, 60 * 60 * 1000); // Check for expired resolved every hour
+            setInterval(cleanExpiredResolvedNotams, 60 * 60 * 1000);
             setInterval(generateBranchQRCodes, 60 * 60 * 1000);
             
             // Run cleanup on startup
@@ -1925,8 +1984,11 @@ ${query.details}
         };
         
         window.onclick = function(event) {
-            const modal = document.getElementById('branchModal');
-            if (event.target === modal) modal.style.display = 'none';
+            const modal = document.getElementById('workerNameModal');
+            if (event.target === modal) closeWorkerNameModal();
+            
+            const branchModal = document.getElementById('branchModal');
+            if (event.target === branchModal) closeModal();
         };
     </script>
 </body>
