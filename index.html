@@ -1021,14 +1021,14 @@
                 label: 'PENDING',
                 color: '#ffd700',
                 showInMain: true,
-                description: 'Staff marked solved - awaiting manager'
+                description: 'Staff marked solved - awaiting manager (48h)'
             },
             'RESOLVED': {
                 icon: '✅',
                 label: 'RESOLVED',
                 color: '#8b9bb5',
                 showInMain: false,
-                description: 'Issue resolved'
+                description: 'Issue resolved - auto-deletes after 14 days'
             },
             'REOPENED': {
                 icon: '🔄',
@@ -1038,6 +1038,9 @@
                 description: 'Reopened by manager'
             }
         };
+        
+        // ========== EXPIRY CONFIGURATION ==========
+        const RESOLVED_EXPIRY_DAYS = 14; // ✅ 14 days after resolution
         
         // ========== ONLINE CHECK FUNCTION ==========
         function requireOnline() {
@@ -1433,6 +1436,7 @@
             };
             
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             queries.unshift(query);
             localStorage.setItem('queries', JSON.stringify(queries));
             
@@ -1457,6 +1461,7 @@
             if (!confirm('Mark this issue as SOLVED at your branch?')) return;
             
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             const index = queries.findIndex(q => q.id === notamId);
             
             if (index !== -1) {
@@ -1469,6 +1474,7 @@
                 queries[index].resolvedAtBranch = now.toISOString();
                 queries[index].managerReviewDeadline = deadline.toISOString();
                 
+                if (!queries[index].statusHistory) queries[index].statusHistory = [];
                 queries[index].statusHistory.push({
                     status: 'AWAITING_CONFIRMATION',
                     timestamp: now.toISOString(),
@@ -1494,18 +1500,21 @@
             }
             
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             const index = queries.findIndex(q => q.id === notamId);
             
             if (index !== -1) {
                 queries[index].status = 'RESOLVED';
                 queries[index].resolvedByManager = 'MANAGER';
                 queries[index].resolvedAt = new Date().toISOString();
+                queries[index].resolvedExpiryDate = new Date(Date.now() + RESOLVED_EXPIRY_DAYS * 24 * 60 * 60 * 1000).toISOString();
                 
+                if (!queries[index].statusHistory) queries[index].statusHistory = [];
                 queries[index].statusHistory.push({
                     status: 'RESOLVED',
                     timestamp: new Date().toISOString(),
                     changedBy: 'MANAGER',
-                    note: 'Manager confirmed resolution'
+                    note: `Manager confirmed resolution (will auto-delete after ${RESOLVED_EXPIRY_DAYS} days)`
                 });
                 
                 localStorage.setItem('queries', JSON.stringify(queries));
@@ -1514,7 +1523,7 @@
                 loadQueries();
                 updateStats();
                 
-                showToast('👔 Manager confirmed - Issue resolved');
+                showToast(`👔 Manager confirmed - Issue resolved (auto-deletes in ${RESOLVED_EXPIRY_DAYS} days)`);
             }
         }
         
@@ -1526,11 +1535,14 @@
             }
             
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             const index = queries.findIndex(q => q.id === notamId);
             
             if (index !== -1) {
                 queries[index].status = 'REOPENED';
+                queries[index].resolvedExpiryDate = null;
                 
+                if (!queries[index].statusHistory) queries[index].statusHistory = [];
                 queries[index].statusHistory.push({
                     status: 'REOPENED',
                     timestamp: new Date().toISOString(),
@@ -1558,6 +1570,7 @@
             if (!confirm('Delete this NOTAM permanently?')) return;
             
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             queries = queries.filter(q => q.id !== notamId);
             localStorage.setItem('queries', JSON.stringify(queries));
             
@@ -1572,6 +1585,7 @@
             if (!requireOnline()) return;
             
             const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             const query = queries.find(q => q.id === notamId);
             
             if (!query) return;
@@ -1599,9 +1613,43 @@ ${query.details}
             showToast('✓ Saved to device');
         }
         
+        // ========== CLEAN UP EXPIRED RESOLVED NOTAMS ==========
+        async function cleanExpiredResolvedNotams() {
+            if (!requireOnline()) return;
+            
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
+            let changed = false;
+            const now = new Date();
+            
+            queries = queries.filter(query => {
+                // Keep ACTIVE and PENDING and REOPENED
+                if (query.status !== 'RESOLVED') return true;
+                
+                // Check if RESOLVED has expired
+                if (query.resolvedExpiryDate) {
+                    const expiryDate = new Date(query.resolvedExpiryDate);
+                    if (now > expiryDate) {
+                        changed = true;
+                        return false; // Remove expired
+                    }
+                }
+                return true;
+            });
+            
+            if (changed) {
+                localStorage.setItem('queries', JSON.stringify(queries));
+                await saveToGist();
+                loadQueries();
+                updateStats();
+                showToast('🧹 Cleaned up expired resolved NOTAMs');
+            }
+        }
+        
         // ========== LOAD QUERIES WITH FILTERS ==========
         function loadQueries() {
-            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             const list = document.getElementById('queriesList');
             
             const searchTerm = document.getElementById('searchNotams')?.value.toLowerCase() || '';
@@ -1615,10 +1663,10 @@ ${query.details}
                 if (!showAll && q.status === 'RESOLVED' && !showResolved) return false;
                 
                 if (searchTerm) {
-                    const matches = q.title.toLowerCase().includes(searchTerm) ||
-                                   q.details.toLowerCase().includes(searchTerm) ||
-                                   q.staffName.toLowerCase().includes(searchTerm) ||
-                                   q.notamNumber.toLowerCase().includes(searchTerm);
+                    const matches = q.title?.toLowerCase().includes(searchTerm) ||
+                                   q.details?.toLowerCase().includes(searchTerm) ||
+                                   q.staffName?.toLowerCase().includes(searchTerm) ||
+                                   q.notamNumber?.toLowerCase().includes(searchTerm);
                     if (!matches) return false;
                 }
                 
@@ -1650,13 +1698,22 @@ ${query.details}
                     }
                 }
                 
+                let expiryInfo = '';
+                if (query.status === 'RESOLVED' && query.resolvedExpiryDate) {
+                    const expiryDate = new Date(query.resolvedExpiryDate);
+                    const now = new Date();
+                    const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+                    expiryInfo = `<span style="color: #8b9bb5; font-size: 9px; margin-left: 5px;">🗑️ Auto-deletes in ${daysLeft} days</span>`;
+                }
+                
                 list.innerHTML += `
                     <div class="query-item" style="border-left: 4px solid ${status.color};">
                         <div class="query-header">
-                            <div style="display: flex; gap: 8px; align-items: center;">
+                            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
                                 <span class="query-badge">${query.notamNumber}</span>
                                 <span style="color: ${status.color}; font-size: 10px;">${status.icon} ${status.label}</span>
                                 ${timeLeftHtml}
+                                ${expiryInfo}
                             </div>
                             <span style="color: ${urgencyCol}; font-size: 10px;">● ${query.urgency}</span>
                         </div>
@@ -1675,7 +1732,7 @@ ${query.details}
                                 ${query.status === 'AWAITING_CONFIRMATION' && isManager() ? 
                                     `<button onclick="managerConfirm(${query.id})" class="btn-save" style="border-color: #4caf50; color: #4caf50;">👔 CONFIRM</button>` : ''}
                                 
-                                ${isManager() && query.status !== 'ACTIVE' ? 
+                                ${isManager() && (query.status === 'RESOLVED' || query.status === 'REOPENED') ? 
                                     `<button onclick="reopenNotam(${query.id})" class="btn-save" style="border-color: #ff9800; color: #ff9800;">🔄 REOPEN</button>` : ''}
                                 
                                 ${isManager() ? 
@@ -1699,6 +1756,7 @@ ${query.details}
             if (!requireOnline()) return;
             
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             let changed = false;
             const now = new Date();
             
@@ -1710,13 +1768,15 @@ ${query.details}
                         query.status = 'RESOLVED';
                         query.resolvedByManager = 'SYSTEM (auto)';
                         query.resolvedAt = now.toISOString();
+                        query.resolvedExpiryDate = new Date(Date.now() + RESOLVED_EXPIRY_DAYS * 24 * 60 * 60 * 1000).toISOString();
                         query.autoConfirmed = true;
                         
+                        if (!query.statusHistory) query.statusHistory = [];
                         query.statusHistory.push({
                             status: 'AUTO_CONFIRMED',
                             timestamp: now.toISOString(),
                             changedBy: 'SYSTEM',
-                            note: 'Auto-confirmed after 48h (no manager review)'
+                            note: `Auto-confirmed after 48h (no manager review) - will auto-delete after ${RESOLVED_EXPIRY_DAYS} days`
                         });
                         
                         changed = true;
@@ -1736,7 +1796,8 @@ ${query.details}
         
         // ========== STATS FUNCTIONS ==========
         function updateStats() {
-            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             
             const active = queries.filter(q => q.status === 'ACTIVE').length;
             const pending = queries.filter(q => q.status === 'AWAITING_CONFIRMATION').length;
@@ -1757,7 +1818,8 @@ ${query.details}
         
         // ========== WEEKLY REPORT ==========
         function generateWeeklyReport() {
-            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
             const oneWeekAgo = new Date();
             oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
             
@@ -1854,9 +1916,12 @@ ${query.details}
             // Auto processes
             setInterval(loadFromGist, 5 * 60 * 1000);
             setInterval(autoConfirmStaleResolutions, 60 * 60 * 1000);
+            setInterval(cleanExpiredResolvedNotams, 60 * 60 * 1000); // Check for expired resolved every hour
             setInterval(generateBranchQRCodes, 60 * 60 * 1000);
             
+            // Run cleanup on startup
             setTimeout(autoConfirmStaleResolutions, 5000);
+            setTimeout(cleanExpiredResolvedNotams, 10000);
         };
         
         window.onclick = function(event) {
