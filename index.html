@@ -1287,6 +1287,73 @@
             }
         }
         
+        // ========== SUBMIT QUERY FUNCTION (FIXES THE ERROR) ==========
+        async function submitQuery() {
+            if (!requireOnline()) return;
+            
+            const staffName = document.getElementById('staffName').value.trim();
+            const branch = document.getElementById('branchSelect').value;
+            const title = document.getElementById('queryTitle').value.trim();
+            const details = document.getElementById('queryDetails').value.trim();
+            const urgency = document.getElementById('queryUrgency').value;
+            
+            if (!staffName || !branch || !title || !details) {
+                showToast('⚠️ Please fill all fields');
+                return;
+            }
+            
+            // Generate NOTAM number
+            const date = new Date();
+            const year = date.getFullYear().toString().slice(-2);
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const random = Math.floor(Math.random() * 900 + 100);
+            const notamNumber = `JCU-${year}${month}${day}-${random}`;
+            
+            // Create query object
+            const newQuery = {
+                id: Date.now(),
+                notamNumber: notamNumber,
+                staffName: staffName,
+                branch: branch,
+                title: title,
+                details: details,
+                urgency: urgency,
+                status: 'ACTIVE',
+                createdAt: new Date().toISOString(),
+                statusHistory: [{
+                    status: 'ACTIVE',
+                    timestamp: new Date().toISOString(),
+                    changedBy: staffName,
+                    note: 'NOTAM filed'
+                }]
+            };
+            
+            // Save to localStorage
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            if (!Array.isArray(queries)) queries = [];
+            queries.unshift(newQuery); // Add to beginning
+            localStorage.setItem('queries', JSON.stringify(queries));
+            
+            // Sync to cloud
+            await saveToGist();
+            
+            // Clear form
+            document.getElementById('staffName').value = '';
+            document.getElementById('queryTitle').value = '';
+            document.getElementById('queryDetails').value = '';
+            document.getElementById('queryUrgency').value = 'MEDIUM';
+            
+            // Update UI
+            if (isManager()) {
+                loadQueries();
+                updateStats();
+                generateWeeklyReport();
+            }
+            
+            showToast(`✓ NOTAM filed: ${notamNumber}`);
+        }
+        
         // ========== BRANCH MANAGEMENT ==========
         function loadBranches() {
             let branches = JSON.parse(localStorage.getItem('branches'));
