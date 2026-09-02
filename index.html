@@ -386,9 +386,9 @@
         const WORKER_URL = 'https://jeans-club-proxy.amanyakeith418.workers.dev';
         const SYNC_KEY = 'jeans_club_global_data';
         const SYNC_VERSION = '4.0';
-        const RESOLVED_EXPIRY_STORE = 14;   // days
-        const RESOLVED_EXPIRY_INTERNAL = 30;
-        const RESOLVED_EXPIRY_EXTERNAL = 30;
+        const RESOLVED_EXPIRY_STORE = 1;   // days
+        const RESOLVED_EXPIRY_INTERNAL = 1;
+        const RESOLVED_EXPIRY_EXTERNAL = 1;
         const PENDING_EXPIRY_HOURS = 48;
         const REPORTED_REVIEW_HOURS = 24;
         const AWAITING_RESPONSE_INTERNAL = 48; // hours
@@ -778,7 +778,7 @@
                     <div class="query-footer"><span>✈︎ ${q.branch} • 👤 ${q.staffName}</span>
                     <div style="display:flex; gap:5px; flex-wrap:wrap;">
                         <button onclick="saveQueryToDevice(${q.id})" class="btn-save">💾 SAVE</button>
-                        ${q.status === 'AWAITING_CONFIRMATION' ? `<button onclick="managerConfirm(${q.id})" class="btn-save" style="border-color:#4caf50; color:#4caf50;">👔 CONFIRM</button>` : ''}
+                        ${q.status === 'AWAITING_CONFIRMATION' ? `<button onclick="managerConfirm(${q.id})" class="btn-save" style="border-color:#4caf50; color:#4caf50;">✅ ISSUE FIXED</button>` : ''}
                         ${q.status === 'RESOLVED' || q.status === 'REOPENED' ? `<button onclick="reopenNotam(${q.id})" class="btn-save" style="border-color:#ff9800; color:#ff9800;">🔄 REOPEN</button>` : ''}
                         ${q.status !== 'ESCALATED' ? `<button onclick="escalateNotam(${q.id})" class="btn-save" style="border-color:#f44336; color:#f44336;">🔴 ESCALATE</button>` : ''}
                         <button onclick="deleteNotam(${q.id})" class="btn-save" style="border-color:#ff6b6b; color:#ff6b6b;">🗑️ DELETE</button>
@@ -814,30 +814,50 @@
             document.getElementById('latestNotam').textContent = latest ? latest.title.substring(0,25)+'...' : 'None';
         }
 
-        // ===== WEEKLY REPORT =====
-        function generateWeeklyReport() {
-            let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            const oneWeekAgo = new Date(); oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-            const weekly = queries.filter(q => new Date(q.createdAt) >= oneWeekAgo);
-            document.getElementById('reportPeriod').textContent = `${oneWeekAgo.toLocaleDateString()} - ${new Date().toLocaleDateString()}`;
-            let html = '';
-            if (!weekly.length) html = '<div style="text-align:center;">NO NOTAMS THIS WEEK</div>';
-            else {
-                const byBranch = {};
-                weekly.forEach(q => { if (!byBranch[q.branch]) byBranch[q.branch] = []; byBranch[q.branch].push(q); });
-                for (const [branch, items] of Object.entries(byBranch)) {
-                    html += `<div style="margin-bottom:12px;"><span style="color:#ffd700;">✈︎ ${branch}</span> (${items.length})<br>`;
-                    items.forEach(q => { html += `<div style="margin-left:8px; font-size:10px;">• ${q.title.substring(0,25)}... (${statusIcon(q.status)} ${statusLabel(q.status)})</div>`; });
-                    html += '</div>';
-                }
-            }
-            document.getElementById('weeklyReportContent').innerHTML = html;
-            document.getElementById('reportStats').innerHTML = `
-                <div class="stat-box"><div class="stat-number">${weekly.length}</div><div>TOTAL</div></div>
-                <div class="stat-box"><div class="stat-number">${weekly.filter(q => q.urgency === 'CRITICAL').length}</div><div>CRITICAL</div></div>
-                <div class="stat-box"><div class="stat-number">${new Set(weekly.map(q => q.branch)).size}</div><div>BRANCHES</div></div>
-            `;
+      function generateWeeklyReport() {
+    let queries = JSON.parse(localStorage.getItem('queries')) || [];
+    const oneWeekAgo = new Date(); 
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    const weekly = queries.filter(q => new Date(q.createdAt) >= oneWeekAgo);
+    
+    document.getElementById('reportPeriod').textContent = `${oneWeekAgo.toLocaleDateString()} - ${new Date().toLocaleDateString()}`;
+    
+    let html = '';
+    if (!weekly.length) {
+        html = '<div style="text-align:center; padding:20px; color:#8b9bb5;">📭 NO NOTAMS THIS WEEK</div>';
+    } else {
+        const byBranch = {};
+        weekly.forEach(q => {
+            if (!byBranch[q.branch]) byBranch[q.branch] = [];
+            byBranch[q.branch].push(q);
+        });
+        
+        for (const [branch, items] of Object.entries(byBranch)) {
+            html += `<div style="margin-bottom:12px; border-bottom:1px solid rgba(255,215,0,0.1); padding-bottom:8px;">
+                <span style="color:#ffd700; font-weight:bold; font-size:12px;">✈︎ ${branch}</span> 
+                <span style="color:#8b9bb5; font-size:10px;">(${items.length})</span><br>`;
+            
+            items.forEach(q => {
+                // FIXED: Show full title, no cutting
+                html += `<div style="margin-left:12px; font-size:11px; color:white; padding:2px 0;">
+                    • ${q.title} 
+                    <span style="color:${statusColor(q.status)}; font-size:10px;">${statusIcon(q.status)} ${statusLabel(q.status)}</span>
+                    <span style="color:#8b9bb5; font-size:9px; margin-left:5px;">(${q.notamNumber})</span>
+                </div>`;
+            });
+            html += '</div>';
         }
+    }
+    
+    document.getElementById('weeklyReportContent').innerHTML = html;
+    
+    // Stats at the top
+    document.getElementById('reportStats').innerHTML = `
+        <div class="stat-box"><div class="stat-number">${weekly.length}</div><div>TOTAL</div></div>
+        <div class="stat-box"><div class="stat-number">${weekly.filter(q => q.urgency === 'CRITICAL').length}</div><div>CRITICAL</div></div>
+        <div class="stat-box"><div class="stat-number">${new Set(weekly.map(q => q.branch)).size}</div><div>BRANCHES</div></div>
+    `;
+}
 
         function shareViaWhatsApp() {
             const text = document.getElementById('weeklyReportContent').innerText;
