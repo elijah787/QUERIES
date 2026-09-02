@@ -5,31 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>JEANS CLUB UGANDA • NOTAM System • Est. 2000</title>
     <style>
-        /* AVIATION INSPIRED TYPOGRAPHY - Mobile First */
+        /* === AVIATION INSPIRED TYPOGRAPHY - Mobile First === */
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        body {
-            background: #0b1a2f;
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            padding: 15px 10px;
-            position: relative;
-        }
-        
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #0b1a2f; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 15px 10px; position: relative; }
+        .container { max-width: 100%; margin: 0 auto; position: relative; z-index: 1; }
+
+        /* === HEADER === */
         .header {
             background: linear-gradient(135deg, #001529 0%, #002b4a 100%);
             border: 2px solid #ffd700;
@@ -38,7 +21,6 @@
             position: relative;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        
         .header::before {
             content: '✈︎ NOTAM • JEANS CLUB';
             position: absolute;
@@ -54,857 +36,251 @@
             letter-spacing: 1px;
             white-space: nowrap;
         }
-        
-        .header-content {
-            display: flex;
-            flex-direction: row;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        @media (min-width: 768px) {
-            .header-content {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-        }
-        
-        .club-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: #ffd700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-family: 'Space Mono', monospace;
-            line-height: 1.2;
-        }
-        
-        .club-tagline {
-            font-size: 9px;
-            color: #8b9bb5;
-            font-family: 'Space Mono', monospace;
-            margin-top: 2px;
-        }
-        
-        .notam-code {
-            background: rgba(255,215,0,0.1);
-            border: 1px solid #ffd700;
-            padding: 6px 12px;
-            border-radius: 40px;
-            font-family: 'Space Mono', monospace;
-            color: #ffd700;
-            font-size: 12px;
-            font-weight: 700;
-            align-self: flex-start;
-        }
-        
-        .notam-code span {
-            color: #8b9bb5;
-            font-size: 10px;
-            margin-right: 5px;
-        }
-        
-        .branch-card {
+        .header-content { display: flex; flex-direction: row; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .club-name { font-size: 20px; font-weight: 700; color: #ffd700; letter-spacing: 1px; text-transform: uppercase; font-family: 'Space Mono', monospace; line-height: 1.2; }
+        .club-tagline { font-size: 9px; color: #8b9bb5; font-family: 'Space Mono', monospace; margin-top: 2px; }
+        .notam-code { background: rgba(255,215,0,0.1); border: 1px solid #ffd700; padding: 6px 12px; border-radius: 40px; font-family: 'Space Mono', monospace; color: #ffd700; font-size: 12px; font-weight: 700; align-self: flex-start; }
+        .notam-code span { color: #8b9bb5; font-size: 10px; margin-right: 5px; }
+
+        /* === COLOR LEGEND === */
+        .legend {
             background: rgba(0,30,50,0.95);
             border: 1px solid #ffd700;
             border-radius: 12px;
             padding: 15px 12px;
-            backdrop-filter: blur(10px);
             margin: 12px 0;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            position: relative;
         }
-        
-        .branch-card::before {
-            content: '⚡ MANAGER ACCESS';
-            position: absolute;
-            top: -10px;
-            right: 15px;
-            background: #ffd700;
-            color: #001529;
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-        }
-        
-        .section-title {
-            font-family: 'Space Mono', monospace;
-            color: #ffd700;
-            font-size: 16px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255,215,0,0.3);
-            padding-bottom: 6px;
-        }
-        
-        .password-form {
-            display: flex;
-            flex-direction: column;
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 8px;
-            margin-bottom: 12px;
-        }
-        
-        @media (min-width: 480px) {
-            .password-form {
-                flex-direction: row;
-            }
-        }
-        
-        .password-input {
-            flex: 1;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,215,0,0.3);
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-family: 'Inter', sans-serif;
-            color: white;
-            font-size: 14px;
-            width: 100%;
-        }
-        
-        .branch-management {
-            display: none;
-        }
-        
-        .branch-management.visible {
-            display: block;
-        }
-        
-        .branch-form {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        
-        @media (min-width: 480px) {
-            .branch-form {
-                flex-direction: row;
-            }
-        }
-        
-        .branch-input {
-            flex: 1;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,215,0,0.3);
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-family: 'Inter', sans-serif;
-            color: white;
-            font-size: 14px;
-            width: 100%;
-        }
-        
-        .btn-gold {
-            background: #ffd700;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 16px;
-            font-family: 'Space Mono', monospace;
-            font-weight: 600;
-            color: #001529;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid #ffd700;
-            width: auto;
-            min-width: 80px;
-            touch-action: manipulation;
-        }
-        
-        .btn-gold:hover {
-            background: transparent;
-            color: #ffd700;
-        }
-        
-        .btn-gold:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: #8b9bb5;
-            border-color: #8b9bb5;
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #ffd700;
-            border-radius: 6px;
-            padding: 8px 12px;
-            font-family: 'Space Mono', monospace;
-            color: #ffd700;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: auto;
-            touch-action: manipulation;
-        }
-        
-        .btn-outline:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            border-color: #8b9bb5;
-            color: #8b9bb5;
-        }
-        
-        .branches-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
             margin-top: 8px;
         }
-        
-        .branch-tag {
-            background: rgba(255,215,0,0.1);
-            border: 1px solid #ffd700;
-            border-radius: 30px;
-            padding: 6px 10px;
+        .legend-item {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 12px;
-        }
-        
-        .branch-tag span {
-            color: white;
-            font-family: 'Space Mono', monospace;
-        }
-        
-        .delete-branch {
-            background: none;
-            border: none;
-            color: #ff6b6b;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 700;
-            padding: 0 3px;
-            touch-action: manipulation;
-        }
-        
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin: 12px 0;
-        }
-        
-        @media (min-width: 1024px) {
-            .main-grid {
-                grid-template-columns: 1.2fr 0.8fr;
-            }
-        }
-        
-        .notam-card {
-            background: rgba(0,30,50,0.95);
-            border: 1px solid #ffd700;
-            border-radius: 12px;
-            padding: 18px 15px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        
-        .notam-card::before {
-            content: '✈︎ NOTAM FORM';
-            position: absolute;
-            top: -10px;
-            left: 15px;
-            background: #ffd700;
-            color: #001529;
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 3px 12px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-        }
-        
-        .form-group {
-            margin-bottom: 12px;
-        }
-        
-        .form-label {
-            display: block;
-            font-family: 'Space Mono', monospace;
-            color: #ffd700;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-        
-        .form-control {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,215,0,0.3);
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-family: 'Inter', sans-serif;
-            color: white;
-            font-size: 14px;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-        
-        .form-control:disabled {
-            opacity: 0.5;
-            background: rgba(0,0,0,0.3);
-        }
-        
-        select.form-control {
-            background: #0b1a2f;
-            color: #ffd700;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ffd700' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 35px;
-        }
-        
-        textarea.form-control {
-            min-height: 80px;
-            resize: vertical;
-        }
-        
-        .qr-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin: 12px 0;
-        }
-        
-        @media (min-width: 640px) {
-            .qr-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .qr-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        .qr-card {
-            background: rgba(0,30,50,0.95);
-            border: 1px solid #ffd700;
-            border-radius: 10px;
-            padding: 15px 12px;
-            text-align: center;
-        }
-        
-        .qr-card h3 {
-            color: #ffd700;
-            font-family: 'Space Mono', monospace;
-            font-size: 14px;
-            margin-bottom: 12px;
-            word-break: break-word;
-        }
-        
-        .qr-code-container {
-            background: white;
-            padding: 8px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-        
-        .qr-code-container canvas {
-            width: 140px;
-            height: 140px;
-        }
-        
-        .qr-link {
-            color: #8b9bb5;
-            font-size: 9px;
-            word-break: break-all;
-            font-family: 'Space Mono', monospace;
-            margin: 8px 0;
-            padding: 5px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 4px;
-        }
-        
-        .queries-card {
-            background: rgba(0,30,50,0.95);
-            border: 1px solid #ffd700;
-            border-radius: 12px;
-            padding: 18px 15px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            position: relative;
-            margin-top: 12px;
-        }
-        
-        .queries-card::before {
-            content: '📋 ACTIVE NOTAMS';
-            position: absolute;
-            top: -10px;
-            left: 15px;
-            background: #ffd700;
-            color: #001529;
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 3px 12px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-        }
-        
-        .query-item {
             background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,215,0,0.2);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 10px;
-        }
-        
-        .query-header {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
-            border-bottom: 1px dashed rgba(255,215,0,0.3);
-        }
-        
-        .query-badge {
-            background: #ffd700;
-            color: #001529;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-size: 9px;
-            font-weight: 700;
-            display: inline-block;
-        }
-        
-        .query-title {
-            color: #ffd700;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            word-break: break-word;
-        }
-        
-        .query-content {
-            color: white;
-            font-size: 12px;
-            line-height: 1.4;
-            margin-bottom: 8px;
-            word-break: break-word;
-        }
-        
-        .query-footer {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: space-between;
-            align-items: center;
-            color: #8b9bb5;
-            font-size: 9px;
-        }
-        
-        .btn-save {
-            background: transparent;
-            border: 1px solid #4caf50;
-            border-radius: 4px;
-            padding: 4px 8px;
-            color: #4caf50;
-            font-size: 9px;
-            cursor: pointer;
-            font-family: 'Space Mono', monospace;
-            touch-action: manipulation;
-        }
-        
-        .btn-save:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            border-color: #8b9bb5;
-            color: #8b9bb5;
-        }
-        
-        .report-card {
-            background: linear-gradient(135deg, #001f3f 0%, #00355e 100%);
-            border: 2px solid #ffd700;
-            border-radius: 12px;
-            padding: 18px 15px;
-            margin-top: 15px;
-            position: relative;
-        }
-        
-        .report-card::before {
-            content: '📊 WEEKLY SUMMARY';
-            position: absolute;
-            top: -10px;
-            left: 15px;
-            background: #ffd700;
-            color: #001529;
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 3px 12px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-        }
-        
-        .report-header {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        @media (min-width: 480px) {
-            .report-header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-        }
-        
-        .report-title {
-            font-size: 16px;
-            font-family: 'Space Mono', monospace;
-            color: #ffd700;
-        }
-        
-        .report-period {
-            background: rgba(255,215,0,0.1);
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-family: 'Space Mono', monospace;
-            color: #ffd700;
-            font-size: 10px;
-            align-self: flex-start;
-        }
-        
-        .report-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        @media (min-width: 480px) {
-            .report-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        .stat-box {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,215,0,0.3);
+            padding: 6px 8px;
             border-radius: 6px;
-            padding: 12px;
-            text-align: center;
+            border-left: 3px solid #ffd700;
         }
-        
-        .stat-number {
-            font-size: 24px;
-            font-weight: 700;
-            color: #ffd700;
-            font-family: 'Space Mono', monospace;
-        }
-        
-        .share-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 15px;
-        }
-        
-        @media (min-width: 480px) {
-            .share-buttons {
-                flex-direction: row;
-                justify-content: flex-end;
-            }
-        }
-        
-        .btn-whatsapp, .btn-email {
-            border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            font-size: 13px;
-            width: 100%;
-            touch-action: manipulation;
-        }
-        
-        .btn-whatsapp:disabled, .btn-email:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        @media (min-width: 480px) {
-            .btn-whatsapp, .btn-email {
-                width: auto;
-                padding: 10px 20px;
-            }
-        }
-        
-        .btn-whatsapp {
-            background: #25D366;
-        }
-        
-        .btn-email {
-            background: #1a73e8;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            overflow-y: auto;
-            padding: 10px;
-        }
-        
-        .modal-content {
-            max-width: 100%;
-            margin: 15px auto;
-            background: #0b1a2f;
-            border: 2px solid #ffd700;
-            border-radius: 12px;
-            padding: 18px;
-        }
-        
-        @media (min-width: 768px) {
-            .modal-content {
-                max-width: 700px;
-            }
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #ffd700;
-            padding-bottom: 10px;
-        }
-        
-        .modal-header h2 {
-            color: #ffd700;
-            font-family: 'Space Mono', monospace;
-            font-size: 16px;
-            word-break: break-word;
-        }
-        
-        .close-modal {
-            color: #ffd700;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 0 8px;
-        }
-        
-        .sync-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            background: rgba(255,215,0,0.1);
-            border-radius: 30px;
-            font-size: 10px;
-            color: #8b9bb5;
-            margin-bottom: 8px;
-        }
-        
-        .sync-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4caf50;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        
-        .offline-banner {
-            background: #ff6b6b;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            margin: 20px 0;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-        
-        .toast {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            left: 15px;
-            background: #ffd700;
-            color: #001529;
-            padding: 12px;
-            border-radius: 8px;
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-            text-align: center;
-            font-size: 13px;
-        }
-        
-        @media (min-width: 480px) {
-            .toast {
-                left: auto;
-                width: auto;
-                min-width: 250px;
-            }
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .filter-bar {
-            background: rgba(255,215,0,0.1);
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 9px;
-            font-weight: 700;
-        }
-        
-        /* Branch-specific view styles */
-        .branch-view {
+        .legend-dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; }
+        .legend-label { font-size: 11px; color: white; font-family: 'Space Mono', monospace; }
+        .legend-desc { font-size: 9px; color: #8b9bb5; display: block; }
+
+        .legend-title { font-family: 'Space Mono', monospace; color: #ffd700; font-size: 14px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 6px; margin-bottom: 8px; }
+
+        /* === CARDS === */
+        .branch-card, .notam-card, .queries-card, .report-card, .branch-view {
             background: rgba(0,30,50,0.95);
             border: 1px solid #ffd700;
             border-radius: 12px;
             padding: 18px 15px;
-            margin-top: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            margin: 12px 0;
         }
-        
-        .branch-view h2 {
-            color: #ffd700;
-            font-family: 'Space Mono', monospace;
-            font-size: 18px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .worker-name-input {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #ffd700;
-            border-radius: 8px;
-            padding: 12px;
-            color: white;
-            font-size: 16px;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-        
-        .worker-name-input::placeholder {
-            color: #8b9bb5;
-        }
+        .branch-card::before { content: '⚡ MANAGER ACCESS'; position: absolute; top: -10px; right: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; }
+        .notam-card::before { content: '✈︎ NOTAM FORM'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
+        .queries-card::before { content: '📋 ACTIVE NOTAMS'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
+        .report-card::before { content: '📊 WEEKLY SUMMARY'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
+
+        .section-title { font-family: 'Space Mono', monospace; color: #ffd700; font-size: 16px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 6px; }
+
+        /* === FORMS === */
+        .form-group { margin-bottom: 12px; }
+        .form-label { display: block; font-family: 'Space Mono', monospace; color: #ffd700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .form-control { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,215,0,0.3); border-radius: 6px; padding: 10px 12px; font-family: 'Inter', sans-serif; color: white; font-size: 14px; -webkit-appearance: none; appearance: none; }
+        .form-control:disabled { opacity: 0.5; background: rgba(0,0,0,0.3); }
+        select.form-control { background: #0b1a2f; color: #ffd700; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ffd700' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 35px; }
+        textarea.form-control { min-height: 80px; resize: vertical; }
+
+        .radio-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+        .radio-label { display: flex; align-items: center; gap: 6px; color: white; font-size: 13px; cursor: pointer; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px solid transparent; }
+        .radio-label input[type="radio"] { accent-color: #ffd700; width: 16px; height: 16px; }
+        .radio-label.selected { border-color: #ffd700; background: rgba(255,215,0,0.1); }
+
+        .btn-gold { background: #ffd700; border: none; border-radius: 6px; padding: 10px 16px; font-family: 'Space Mono', monospace; font-weight: 600; color: #001529; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s; border: 1px solid #ffd700; width: auto; min-width: 80px; touch-action: manipulation; }
+        .btn-gold:hover { background: transparent; color: #ffd700; }
+        .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; background: #8b9bb5; border-color: #8b9bb5; }
+        .btn-outline { background: transparent; border: 1px solid #ffd700; border-radius: 6px; padding: 8px 12px; font-family: 'Space Mono', monospace; color: #ffd700; font-size: 11px; cursor: pointer; transition: all 0.3s; width: auto; touch-action: manipulation; }
+        .btn-outline:disabled { opacity: 0.5; cursor: not-allowed; border-color: #8b9bb5; color: #8b9bb5; }
+        .btn-save { background: transparent; border: 1px solid #4caf50; border-radius: 4px; padding: 4px 8px; color: #4caf50; font-size: 9px; cursor: pointer; font-family: 'Space Mono', monospace; touch-action: manipulation; }
+
+        /* === BRANCH TAGS === */
+        .branches-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .branch-tag { background: rgba(255,215,0,0.1); border: 1px solid #ffd700; border-radius: 30px; padding: 6px 10px; display: flex; align-items: center; gap: 6px; font-size: 12px; }
+        .branch-tag span { color: white; font-family: 'Space Mono', monospace; }
+        .delete-branch { background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 14px; font-weight: 700; padding: 0 3px; touch-action: manipulation; }
+
+        /* === QUERY ITEMS === */
+        .query-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,215,0,0.2); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+        .query-header { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px dashed rgba(255,215,0,0.3); }
+        .query-badge { background: #ffd700; color: #001529; padding: 3px 8px; border-radius: 20px; font-size: 9px; font-weight: 700; display: inline-block; }
+        .query-title { color: #ffd700; font-size: 14px; font-weight: 700; margin-bottom: 6px; word-break: break-word; }
+        .query-content { color: white; font-size: 12px; line-height: 1.4; margin-bottom: 8px; word-break: break-word; }
+        .query-footer { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; color: #8b9bb5; font-size: 9px; }
+
+        .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 9px; font-weight: 700; }
+
+        /* === QR === */
+        .qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin: 12px 0; }
+        .qr-card { background: rgba(0,30,50,0.95); border: 1px solid #ffd700; border-radius: 10px; padding: 15px 12px; text-align: center; }
+        .qr-card h3 { color: #ffd700; font-family: 'Space Mono', monospace; font-size: 14px; margin-bottom: 12px; word-break: break-word; }
+        .qr-code-container { background: white; padding: 8px; border-radius: 8px; display: inline-block; margin-bottom: 8px; }
+        .qr-code-container canvas { width: 140px; height: 140px; }
+        .qr-link { color: #8b9bb5; font-size: 9px; word-break: break-all; font-family: 'Space Mono', monospace; margin: 8px 0; padding: 5px; background: rgba(0,0,0,0.3); border-radius: 4px; }
+
+        /* === MANAGER VIEW === */
+        .filter-bar { background: rgba(255,215,0,0.1); border-radius: 8px; padding: 10px; margin-bottom: 15px; }
+        .report-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin-bottom: 15px; }
+        .stat-box { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,215,0,0.3); border-radius: 6px; padding: 12px; text-align: center; }
+        .stat-number { font-size: 24px; font-weight: 700; color: #ffd700; font-family: 'Space Mono', monospace; }
+
+        /* === SYNC STATUS === */
+        .sync-status { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(255,215,0,0.1); border-radius: 30px; font-size: 10px; color: #8b9bb5; margin-bottom: 8px; }
+        .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #4caf50; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        .offline-banner { background: #ff6b6b; color: white; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px; font-weight: bold; display: none; }
+
+        .toast { position: fixed; top: 15px; right: 15px; left: 15px; background: #ffd700; color: #001529; padding: 12px; border-radius: 8px; font-family: 'Space Mono', monospace; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 1000; animation: slideIn 0.3s ease; text-align: center; font-size: 13px; }
+        @media (min-width: 480px) { .toast { left: auto; width: auto; min-width: 250px; } }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; padding: 10px; }
+        .modal-content { max-width: 100%; margin: 15px auto; background: #0b1a2f; border: 2px solid #ffd700; border-radius: 12px; padding: 18px; }
+        @media (min-width: 768px) { .modal-content { max-width: 700px; } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #ffd700; padding-bottom: 10px; }
+        .modal-header h2 { color: #ffd700; font-family: 'Space Mono', monospace; font-size: 16px; word-break: break-word; }
+        .close-modal { color: #ffd700; font-size: 24px; cursor: pointer; padding: 0 8px; }
+
+        /* === SHARE === */
+        .share-buttons { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
+        @media (min-width: 480px) { .share-buttons { flex-direction: row; justify-content: flex-end; } }
+        .btn-whatsapp, .btn-email { border: none; border-radius: 6px; padding: 10px 20px; color: white; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; width: 100%; touch-action: manipulation; }
+        .btn-whatsapp:disabled, .btn-email:disabled { opacity: 0.5; cursor: not-allowed; }
+        @media (min-width: 480px) { .btn-whatsapp, .btn-email { width: auto; padding: 10px 20px; } }
+        .btn-whatsapp { background: #25D366; }
+        .btn-email { background: #1a73e8; }
+
+        .password-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+        @media (min-width: 480px) { .password-form { flex-direction: row; } }
+        .password-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,215,0,0.3); border-radius: 8px; padding: 10px 12px; font-family: 'Inter', sans-serif; color: white; font-size: 14px; width: 100%; }
+
+        .main-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 12px 0; }
+        @media (min-width: 1024px) { .main-grid { grid-template-columns: 1.2fr 0.8fr; } }
+
+        .branch-management { display: none; }
+        .branch-management.visible { display: block; }
+        .branch-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+        @media (min-width: 480px) { .branch-form { flex-direction: row; } }
+        .branch-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,215,0,0.3); border-radius: 8px; padding: 10px 12px; font-family: 'Inter', sans-serif; color: white; font-size: 14px; width: 100%; }
+
+        #branchViewContainer { display: none; }
+        .branch-view h2 { color: #ffd700; font-family: 'Space Mono', monospace; font-size: 18px; margin-bottom: 15px; text-align: center; }
+
+        .filter-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .filter-row .form-control { flex: 1; min-width: 120px; }
+        .filter-check { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px; }
+        .filter-check label { color: white; display: flex; align-items: center; gap: 5px; font-size: 12px; }
+
+        .hold-info { background: rgba(255,215,0,0.05); border-radius: 4px; padding: 6px 10px; font-size: 11px; color: #ffd700; margin-top: 4px; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
 <body>
     <div class="container">
+        <!-- SYNC STATUS -->
         <div class="sync-status" id="syncStatus">
             <span class="sync-dot"></span>
             <span id="syncText">Checking connection...</span>
         </div>
-        
-        <div id="offlineBanner" style="display: none;" class="offline-banner">
-            <strong>⚠️ NO INTERNET CONNECTION</strong><br>
-            This system requires internet to work.<br>
-            Please check your connection and refresh the page.
-        </div>
-        
+        <div id="offlineBanner" class="offline-banner"><strong>⚠️ NO INTERNET CONNECTION</strong><br>Please check your connection and refresh.</div>
+
+        <!-- HEADER -->
         <div class="header">
             <div class="header-content">
                 <div class="club-title">
                     <div class="club-name">JEANS CLUB UGANDA</div>
                     <div class="club-tagline">EST. 2000 • SINCE 2000</div>
                 </div>
-                <div class="notam-code" id="headerNotamCode">
-                    <span>NOTAM</span> JCU-A0001
-                </div>
+                <div class="notam-code" id="headerNotamCode"><span>NOTAM</span> JCU-A0001</div>
             </div>
         </div>
-        
+
+        <!-- ===== COLOR LEGEND ===== -->
+        <div class="legend">
+            <div class="legend-title">🎨 STATUS COLORS — What They Mean</div>
+            <div class="legend-grid">
+                <div class="legend-item"><span class="legend-dot" style="background:#4caf50;"></span><span class="legend-label">🟢 ACTIVE</span><span class="legend-desc">Fix it now! Problem is happening.</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#ffd700;"></span><span class="legend-label">⏳ PENDING</span><span class="legend-desc">Staff says fixed — manager check.</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#ff9800;"></span><span class="legend-label">🟠 REOPENED</span><span class="legend-desc">We thought it was fixed, but not.</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#8b9bb5;"></span><span class="legend-label">✅ RESOLVED</span><span class="legend-desc">Done! Auto‑deletes after time.</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#9c27b0;"></span><span class="legend-label">🟣 REPORTED</span><span class="legend-desc">New issue — manager review soon.</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#2196f3;"></span><span class="legend-label">🔵 INVESTIGATING</span><span class="legend-desc">Manager looking into it.</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#ffc107;"></span><span class="legend-label">🟡 AWAITING RESPONSE</span><span class="legend-desc">Waiting for staff/customer reply.</span></div>
+                <div class="legend-item"><span class="legend-dot" style="background:#f44336;"></span><span class="legend-label">🔴 ESCALATED</span><span class="legend-desc">Needs owner/HR — manager can't solve.</span></div>
+            </div>
+            <div style="margin-top:10px; font-size:10px; color:#8b9bb5; border-top:1px solid rgba(255,215,0,0.2); padding-top:8px;">⚠️ ALL ISSUES SHOW REPORTER'S NAME. No anonymous reporting — transparency builds trust.</div>
+        </div>
+
+        <!-- BRANCH CONTROL -->
         <div class="branch-card">
             <div class="section-title">✈︎ BRANCH CONTROL</div>
             <div class="password-form">
                 <input type="password" id="managerPassword" class="password-input" placeholder="Manager password">
                 <button onclick="verifyManager()" class="btn-gold" id="unlockBtn">UNLOCK</button>
             </div>
-            
             <div id="branchManagement" class="branch-management">
                 <div class="branch-form">
                     <input type="text" id="newBranchName" class="branch-input" placeholder="New branch name (e.g., KAMPALA ROAD)">
                     <button onclick="addBranch()" class="btn-gold" id="addBranchBtn">ADD BRANCH</button>
                 </div>
                 <div id="branchesList" class="branches-list"></div>
-                <p style="color: #8b9bb5; font-size: 10px; margin-top: 10px;">⚠️ Only managers can add/delete branches</p>
+                <p style="color:#8b9bb5; font-size:10px; margin-top:10px;">⚠️ Only managers can add/delete branches</p>
             </div>
         </div>
-        
+
+        <!-- MAIN GRID: FORM + SUMMARY -->
         <div class="main-grid">
             <div class="notam-card">
-                <div class="section-title">FILE NOTAM</div>
-                
+                <div class="section-title">📝 FILE NOTAM</div>
+
                 <div class="form-group">
-                    <label class="form-label">YOUR NAME</label>
+                    <label class="form-label">👤 YOUR NAME</label>
                     <input type="text" id="staffName" class="form-control" placeholder="e.g., OKELLO JOHN">
                 </div>
-                
+
                 <div class="form-group">
-                    <label class="form-label">BRANCH</label>
-                    <select id="branchSelect" class="form-control">
-                        <option value="">-- SELECT BRANCH --</option>
-                    </select>
+                    <label class="form-label">🏢 BRANCH</label>
+                    <select id="branchSelect" class="form-control"><option value="">-- SELECT BRANCH --</option></select>
                 </div>
-                
+
                 <div class="form-group">
-                    <label class="form-label">TITLE</label>
+                    <label class="form-label">📋 ISSUE TYPE</label>
+                    <div class="radio-group" id="issueTypeGroup">
+                        <label class="radio-label selected" id="typeStore"><input type="radio" name="issueType" value="STORE" checked> 🔧 STORE OPS</label>
+                        <label class="radio-label" id="typeInternal"><input type="radio" name="issueType" value="INTERNAL"> 👥 INTERNAL</label>
+                        <label class="radio-label" id="typeExternal"><input type="radio" name="issueType" value="EXTERNAL"> 🧑‍🤝‍🧑 EXTERNAL</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">📌 TITLE</label>
                     <input type="text" id="queryTitle" class="form-control" placeholder="e.g., DEBTOR ALERT">
                 </div>
-                
+
                 <div class="form-group">
-                    <label class="form-label">DETAILS</label>
+                    <label class="form-label">📝 DETAILS</label>
                     <textarea id="queryDetails" class="form-control" placeholder="Describe the issue..."></textarea>
                 </div>
-                
+
                 <div class="form-group">
-                    <label class="form-label">URGENCY</label>
+                    <label class="form-label">🚨 URGENCY</label>
                     <select id="queryUrgency" class="form-control">
                         <option value="LOW">LOW</option>
                         <option value="MEDIUM" selected>MEDIUM</option>
@@ -912,1150 +288,640 @@
                         <option value="CRITICAL">CRITICAL</option>
                     </select>
                 </div>
-                
-                <button onclick="submitQuery()" class="btn-gold" style="width: 100%;" id="fileNotamBtn">FILE NOTAM</button>
+
+                <div class="form-group" id="holdDateGroup">
+                    <label class="form-label">📅 HOLD UNTIL DATE (Optional — for store ops)</label>
+                    <input type="date" id="holdUntil" class="form-control">
+                    <div class="hold-info">⏳ If customer doesn't pick up by this date, item releases.</div>
+                </div>
+
+                <button onclick="submitQuery()" class="btn-gold" style="width:100%;" id="fileNotamBtn">📤 FILE NOTAM</button>
+                <div style="margin-top:6px; font-size:9px; color:#8b9bb5;">⚠️ Your name will be visible to everyone. No anonymous reports.</div>
             </div>
-            
+
             <div class="notam-card">
-                <div class="section-title">SUMMARY</div>
-                
-                <div style="margin-bottom: 15px; text-align: center;">
-                    <div style="color: #8b9bb5; font-size: 11px;">ACTIVE NOTAMS</div>
-                    <div id="activeNotamsCount" style="font-size: 36px; color: #ffd700; font-family: 'Space Mono';">0</div>
+                <div class="section-title">📊 SUMMARY</div>
+                <div style="margin-bottom:15px; text-align:center;">
+                    <div style="color:#8b9bb5; font-size:11px;">ACTIVE NOTAMS</div>
+                    <div id="activeNotamsCount" style="font-size:36px; color:#ffd700; font-family:'Space Mono';">0</div>
                 </div>
-                
-                <div style="margin-bottom: 15px; text-align: center;">
-                    <div style="color: #8b9bb5; font-size: 11px;">BRANCHES</div>
-                    <div id="branchesCount" style="font-size: 20px; color: white; font-family: 'Space Mono';">0</div>
+                <div style="margin-bottom:15px; text-align:center;">
+                    <div style="color:#8b9bb5; font-size:11px;">BRANCHES</div>
+                    <div id="branchesCount" style="font-size:20px; color:white; font-family:'Space Mono';">0</div>
                 </div>
-                
-                <div id="statusBreakdown" style="margin: 15px 0; padding: 10px; background: rgba(255,215,0,0.1); border-radius: 5px;">
-                    <div style="display: flex; justify-content: space-around; color: white; font-size: 11px;">
-                        <div><span style="color: #4caf50;">🟢</span> Active: <span id="activeCount">0</span></div>
-                        <div><span style="color: #ffd700;">⏳</span> Pending: <span id="pendingCount">0</span></div>
-                        <div><span style="color: #8b9bb5;">✅</span> Resolved: <span id="resolvedCount">0</span></div>
+                <div id="statusBreakdown" style="margin:15px 0; padding:10px; background:rgba(255,215,0,0.1); border-radius:5px;">
+                    <div style="display:flex; justify-content:space-around; color:white; font-size:11px; flex-wrap:wrap;">
+                        <div><span style="color:#4caf50;">🟢</span> Active: <span id="activeCount">0</span></div>
+                        <div><span style="color:#ffd700;">⏳</span> Pending: <span id="pendingCount">0</span></div>
+                        <div><span style="color:#8b9bb5;">✅</span> Resolved: <span id="resolvedCount">0</span></div>
+                        <div><span style="color:#9c27b0;">🟣</span> Reported: <span id="reportedCount">0</span></div>
                     </div>
                 </div>
-                
-                <div style="text-align: center;">
-                    <div style="color: #8b9bb5; font-size: 11px;">LATEST NOTAM</div>
-                    <div id="latestNotam" style="color: white; font-size: 12px; background: rgba(255,215,0,0.1); padding: 8px; border-radius: 5px;">
-                        None
-                    </div>
+                <div style="text-align:center;">
+                    <div style="color:#8b9bb5; font-size:11px;">LATEST NOTAM</div>
+                    <div id="latestNotam" style="color:white; font-size:12px; background:rgba(255,215,0,0.1); padding:8px; border-radius:5px;">None</div>
                 </div>
             </div>
         </div>
-        
+
+        <!-- QR CODES -->
         <div class="queries-card">
             <div class="section-title">📱 BRANCH QR CODES</div>
-            <div id="qrGrid" class="qr-grid">
-                <div style="color: #8b9bb5; text-align: center; padding: 20px;">No branches yet. Manager must add branches first.</div>
-            </div>
+            <div id="qrGrid" class="qr-grid"><div style="color:#8b9bb5; text-align:center; padding:20px;">No branches yet. Manager must add branches first.</div></div>
         </div>
-        
-        <!-- MANAGER VIEW - Only appears when logged in -->
-        <div id="managerView" style="display: none;">
+
+        <!-- MANAGER VIEW -->
+        <div id="managerView" style="display:none;">
             <div class="queries-card">
                 <div class="section-title">✈︎ MANAGER NOTAMS</div>
-                
                 <div class="filter-bar">
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                        <input type="text" id="searchNotams" placeholder="🔍 Search..." class="form-control" style="flex: 2;">
-                        
-                        <select id="filterBranch" class="form-control" style="flex: 1;">
-                            <option value="">ALL BRANCHES</option>
-                        </select>
-                        
-                        <select id="filterUrgency" class="form-control" style="flex: 1;">
-                            <option value="">ALL URGENCY</option>
-                            <option value="LOW">LOW</option>
-                            <option value="MEDIUM">MEDIUM</option>
-                            <option value="HIGH">HIGH</option>
-                            <option value="CRITICAL">CRITICAL</option>
-                        </select>
+                    <div class="filter-row">
+                        <input type="text" id="searchNotams" placeholder="🔍 Search..." class="form-control">
+                        <select id="filterBranch" class="form-control"><option value="">ALL BRANCHES</option></select>
+                        <select id="filterUrgency" class="form-control"><option value="">ALL URGENCY</option><option value="LOW">LOW</option><option value="MEDIUM">MEDIUM</option><option value="HIGH">HIGH</option><option value="CRITICAL">CRITICAL</option></select>
+                        <select id="filterType" class="form-control"><option value="">ALL TYPES</option><option value="STORE">STORE OPS</option><option value="INTERNAL">INTERNAL</option><option value="EXTERNAL">EXTERNAL</option></select>
                     </div>
-                    
-                    <div style="display: flex; gap: 15px; margin-top: 10px; flex-wrap: wrap;">
-                        <label style="color: white; display: flex; align-items: center; gap: 5px;">
-                            <input type="checkbox" id="showResolved" onchange="loadQueries()">
-                            <span style="font-size: 12px;">Show Resolved</span>
-                        </label>
-                        
-                        <label style="color: white; display: flex; align-items: center; gap: 5px;">
-                            <input type="checkbox" id="showAll" onchange="loadQueries()">
-                            <span style="font-size: 12px;">Show All (including old)</span>
-                        </label>
-                        
-                        <div style="margin-left: auto; display: flex; gap: 10px;">
-                            <span style="color: #4caf50; font-size: 10px;">🟢 Active</span>
-                            <span style="color: #ffd700; font-size: 10px;">⏳ Pending</span>
-                            <span style="color: #8b9bb5; font-size: 10px;">✅ Resolved</span>
-                        </div>
+                    <div class="filter-check">
+                        <label><input type="checkbox" id="showResolved" onchange="loadQueries()"> <span>Show Resolved</span></label>
+                        <label><input type="checkbox" id="showAll" onchange="loadQueries()"> <span>Show All (including old)</span></label>
+                        <span style="color:#4caf50; font-size:10px;">🟢 Active</span>
+                        <span style="color:#ffd700; font-size:10px;">⏳ Pending</span>
+                        <span style="color:#8b9bb5; font-size:10px;">✅ Resolved</span>
                     </div>
                 </div>
-                
                 <div id="queriesList"></div>
             </div>
-            
+
             <div class="report-card">
-                <div class="report-header">
-                    <div class="report-title">WEEKLY SUMMARY</div>
-                    <div class="report-period" id="reportPeriod"></div>
+                <div class="report-header" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <div class="report-title">📊 WEEKLY SUMMARY</div>
+                    <div class="report-period" id="reportPeriod" style="background:rgba(255,215,0,0.1); padding:4px 10px; border-radius:30px; font-family:'Space Mono', monospace; color:#ffd700; font-size:10px;"></div>
                 </div>
-                
                 <div class="report-grid" id="reportStats"></div>
-                
-                <div id="weeklyReportContent" style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; color: white; font-family: 'Space Mono'; font-size: 11px; margin-bottom: 15px; max-height: 250px; overflow-y: auto;"></div>
-                
+                <div id="weeklyReportContent" style="background:rgba(0,0,0,0.3); border-radius:8px; padding:12px; color:white; font-family:'Space Mono'; font-size:11px; margin-bottom:15px; max-height:250px; overflow-y:auto;"></div>
                 <div class="share-buttons">
-                    <button onclick="shareViaWhatsApp()" class="btn-whatsapp" id="whatsappBtn">📱 WHATSAPP</button>
-                    <button onclick="shareViaEmail()" class="btn-email" id="emailBtn">✉️ EMAIL</button>
+                    <button onclick="shareViaWhatsApp()" class="btn-whatsapp">📱 WHATSAPP</button>
+                    <button onclick="shareViaEmail()" class="btn-email">✉️ EMAIL</button>
                 </div>
             </div>
         </div>
-        
-        <!-- WORKER BRANCH VIEW (hidden by default, shown when QR scanned) -->
-        <div id="branchViewContainer" style="display: none;"></div>
+
+        <!-- WORKER BRANCH VIEW -->
+        <div id="branchViewContainer" style="display:none;"></div>
     </div>
-    
-    <!-- Worker Name Modal for Marking Solved -->
-    <div id="workerNameModal" class="modal" style="display: none;">
+
+    <!-- WORKER NAME MODAL -->
+    <div id="workerNameModal" class="modal" style="display:none;">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Enter Your Name</h2>
-                <span class="close-modal" onclick="closeWorkerNameModal()">&times;</span>
-            </div>
-            <div style="padding: 20px;">
-                <input type="text" id="workerNameInput" class="form-control" placeholder="e.g., JOHN OKELLO" style="margin-bottom: 15px;">
-                <button onclick="confirmWorkerResolve()" class="btn-gold" style="width: 100%;">CONFIRM RESOLVE</button>
+            <div class="modal-header"><h2>Enter Your Name</h2><span class="close-modal" onclick="closeWorkerNameModal()">&times;</span></div>
+            <div style="padding:20px;">
+                <input type="text" id="workerNameInput" class="form-control" placeholder="e.g., JOHN OKELLO" style="margin-bottom:15px;">
+                <button onclick="confirmWorkerResolve()" class="btn-gold" style="width:100%;">CONFIRM RESOLVE</button>
             </div>
         </div>
     </div>
-    
-    <div id="branchModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalBranchName">Branch NOTAMs</h2>
-                <span class="close-modal" onclick="closeModal()">&times;</span>
-            </div>
-            <div id="modalQueriesList" style="color: white; font-family: 'Space Mono'; font-size: 12px;"></div>
-        </div>
-    </div>
-    
+
     <script>
-        // ========== CLOUDFLARE WORKER CONFIGURATION ==========
+        // ===== CONFIG =====
         const WORKER_URL = 'https://jeans-club-proxy.amanyakeith418.workers.dev';
-        
-        // ========== GLOBAL VARIABLES ==========
         const SYNC_KEY = 'jeans_club_global_data';
-        const SYNC_VERSION = '3.0';
-        
-        // NO DEFAULT BRANCHES - Only manager creates them
-        const DEFAULT_BRANCHES = []; // Empty!
-        
-        // Default query (will only be used if no data exists)
-        const DEFAULT_QUERIES = [];
-        
-        // Track online status
+        const SYNC_VERSION = '4.0';
+        const RESOLVED_EXPIRY_STORE = 14;   // days
+        const RESOLVED_EXPIRY_INTERNAL = 30;
+        const RESOLVED_EXPIRY_EXTERNAL = 30;
+        const PENDING_EXPIRY_HOURS = 48;
+        const REPORTED_REVIEW_HOURS = 24;
+        const AWAITING_RESPONSE_INTERNAL = 48; // hours
+        const AWAITING_RESPONSE_EXTERNAL = 72;
+
         let isOnline = navigator.onLine;
-        
-        // Current branch for worker view
         let currentBranch = null;
         let pendingResolveId = null;
-        
-        // ========== NOTAM STATUS SYSTEM ==========
-        const NOTAM_STATUS = {
-            'ACTIVE': {
-                icon: '🟢',
-                label: 'ACTIVE',
-                color: '#4caf50',
-                showInMain: true,
-                description: 'Current issue - needs attention'
-            },
-            'AWAITING_CONFIRMATION': {
-                icon: '⏳',
-                label: 'PENDING',
-                color: '#ffd700',
-                showInMain: true,
-                description: 'Staff marked solved - awaiting manager (48h)'
-            },
-            'RESOLVED': {
-                icon: '✅',
-                label: 'RESOLVED',
-                color: '#8b9bb5',
-                showInMain: false,
-                description: 'Issue resolved - auto-deletes after 14 days'
-            },
-            'REOPENED': {
-                icon: '🔄',
-                label: 'REOPENED',
-                color: '#ff9800',
-                showInMain: true,
-                description: 'Reopened by manager'
-            }
-        };
-        
-        // ========== EXPIRY CONFIGURATION ==========
-        const RESOLVED_EXPIRY_DAYS = 14; // 14 days after resolution
-        
-        // ========== ONLINE CHECK FUNCTION ==========
-        function requireOnline() {
-            if (!navigator.onLine) {
-                showToast('❌ Internet required for this action');
-                return false;
-            }
-            return true;
+
+        // ===== UTILITY =====
+        function showToast(msg) {
+            const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
         }
-        
-        // ========== DISABLE ALL INPUTS ==========
-        function disableAllInputs(disabled = true) {
-            const inputs = document.querySelectorAll('input, select, textarea, button');
-            inputs.forEach(el => {
-                el.disabled = disabled;
-            });
+        function requireOnline() { if (!navigator.onLine) { showToast('❌ Internet required'); return false; } return true; }
+        function isManager() { return sessionStorage.getItem('isManager') === 'true'; }
+        function urgencyColor(u) { return { LOW:'#4caf50', MEDIUM:'#ffc107', HIGH:'#ff9800', CRITICAL:'#f44336' }[u] || '#ffd700'; }
+        function statusColor(s) {
+            const map = { ACTIVE:'#4caf50', AWAITING_CONFIRMATION:'#ffd700', REOPENED:'#ff9800', RESOLVED:'#8b9bb5', REPORTED:'#9c27b0', INVESTIGATING:'#2196f3', AWAITING_RESPONSE:'#ffc107', ESCALATED:'#f44336' };
+            return map[s] || '#8b9bb5';
         }
-        
-        // ========== SHOW OFFLINE BANNER ==========
-        function showOfflineBanner(show) {
-            const banner = document.getElementById('offlineBanner');
-            if (banner) {
-                banner.style.display = show ? 'block' : 'none';
-            }
-            
-            const syncStatus = document.getElementById('syncStatus');
-            const syncText = document.getElementById('syncText');
-            
-            if (show) {
-                syncStatus.style.background = 'rgba(255,107,107,0.2)';
-                syncText.textContent = '❌ OFFLINE - No Connection';
-                syncText.style.color = '#ff6b6b';
-                disableAllInputs(true);
-            } else {
-                syncStatus.style.background = 'rgba(255,215,0,0.1)';
-                syncText.style.color = '#8b9bb5';
-                disableAllInputs(false);
-            }
+        function statusLabel(s) {
+            const map = { ACTIVE:'ACTIVE', AWAITING_CONFIRMATION:'PENDING', REOPENED:'REOPENED', RESOLVED:'RESOLVED', REPORTED:'REPORTED', INVESTIGATING:'INVESTIGATING', AWAITING_RESPONSE:'AWAITING RESPONSE', ESCALATED:'ESCALATED' };
+            return map[s] || s;
         }
-        
-        // ========== CONNECTION MONITOR ==========
-        window.addEventListener('online', function() {
-            isOnline = true;
-            showOfflineBanner(false);
-            showToast('📶 Connection restored - Refreshing...');
-            setTimeout(() => {
-                location.reload();
-            }, 2000);
-        });
-        
-        window.addEventListener('offline', function() {
-            isOnline = false;
-            showOfflineBanner(true);
-            showToast('❌ Internet lost - System disabled');
-        });
-        
-        // ========== CLOUDFLARE WORKER FUNCTIONS ==========
+        function statusIcon(s) {
+            const map = { ACTIVE:'🟢', AWAITING_CONFIRMATION:'⏳', REOPENED:'🟠', RESOLVED:'✅', REPORTED:'🟣', INVESTIGATING:'🔵', AWAITING_RESPONSE:'🟡', ESCALATED:'🔴' };
+            return map[s] || '⚪';
+        }
+
+        function getIssueTypeLabel(t) {
+            return { STORE:'🔧 STORE OPS', INTERNAL:'👥 INTERNAL', EXTERNAL:'🧑‍🤝‍🧑 EXTERNAL' }[t] || t;
+        }
+
+        // ===== CONNECTION =====
+        window.addEventListener('online', function() { isOnline = true; document.getElementById('offlineBanner').style.display = 'none'; showToast('📶 Online — refreshing'); setTimeout(() => location.reload(), 1500); });
+        window.addEventListener('offline', function() { isOnline = false; document.getElementById('offlineBanner').style.display = 'block'; showToast('❌ Offline'); });
+
+        // ===== CLOUD SYNC =====
         async function loadFromGist() {
-            if (!requireOnline()) {
-                showOfflineBanner(true);
-                return;
-            }
-            
+            if (!requireOnline()) return;
             try {
-                showToast('📡 Loading from cloud...');
                 document.getElementById('syncText').textContent = 'Loading...';
-                
-                const response = await fetch(WORKER_URL);
-                
-                if (!response.ok) {
-                    throw new Error('Cannot reach server');
-                }
-                
-                const gistData = await response.json();
-                
-                // Extract the content from the Gist response
-                const content = JSON.parse(gistData.files['jeans-club-data.json'].content);
-                
+                const resp = await fetch(WORKER_URL);
+                if (!resp.ok) throw new Error('Server error');
+                const data = await resp.json();
+                const content = JSON.parse(data.files['jeans-club-data.json'].content);
                 localStorage.setItem('branches', JSON.stringify(content.branches || []));
                 localStorage.setItem('queries', JSON.stringify(content.queries || []));
-                
-                const globalData = {
-                    version: SYNC_VERSION,
-                    lastUpdated: new Date().toISOString(),
-                    branches: content.branches || [],
-                    queries: content.queries || []
-                };
-                localStorage.setItem(SYNC_KEY, JSON.stringify(globalData));
-                
+                localStorage.setItem(SYNC_KEY, JSON.stringify({ version: SYNC_VERSION, lastUpdated: new Date().toISOString(), branches: content.branches || [], queries: content.queries || [] }));
                 loadBranches();
-                
-                // Only load queries if we're in manager view or branch view
-                if (isManager()) {
-                    loadQueries();
-                    updateStats();
-                    generateWeeklyReport();
-                } else if (currentBranch) {
-                    loadBranchQueries(currentBranch);
-                }
-                
+                if (isManager()) { loadQueries(); updateStats(); generateWeeklyReport(); }
+                else if (currentBranch) loadBranchQueries(currentBranch);
                 generateBranchQRCodes();
-                
-                showToast('✅ Connected - System ready');
                 document.getElementById('syncText').textContent = 'ONLINE • Connected';
                 document.getElementById('syncText').style.color = '#4caf50';
-                
-            } catch (error) {
-                console.error('Connection error:', error);
-                document.getElementById('syncText').textContent = '❌ CONNECTION FAILED';
+            } catch (e) {
+                console.error(e);
+                document.getElementById('syncText').textContent = '❌ Connection failed';
                 document.getElementById('syncText').style.color = '#ff6b6b';
-                showOfflineBanner(true);
-                showToast('❌ Cannot connect to server');
+                document.getElementById('offlineBanner').style.display = 'block';
             }
         }
-        
+
         async function saveToGist() {
-            if (!requireOnline()) {
-                return;
-            }
-            
+            if (!requireOnline()) return;
             const branches = JSON.parse(localStorage.getItem('branches')) || [];
             const queries = JSON.parse(localStorage.getItem('queries')) || [];
-            
-            const data = {
-                version: SYNC_VERSION,
-                lastSync: new Date().toISOString(),
-                branches: branches,
-                queries: queries
-            };
-            
+            const data = { version: SYNC_VERSION, lastSync: new Date().toISOString(), branches, queries };
             try {
                 document.getElementById('syncText').textContent = 'Saving...';
-                
-                const response = await fetch(WORKER_URL, {
+                const resp = await fetch(WORKER_URL, {
                     method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        files: {
-                            'jeans-club-data.json': {
-                                content: JSON.stringify(data, null, 2)
-                            }
-                        }
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ files: { 'jeans-club-data.json': { content: JSON.stringify(data, null, 2) } } })
                 });
-                
-                const result = await response.json();
-                
-                if (response.ok) {
-                    document.getElementById('syncText').textContent = 'ONLINE • Connected';
-                    showToast('✅ Synced to cloud');
-                } else {
-                    document.getElementById('syncText').textContent = '❌ Save Failed';
-                    console.error('Save failed:', result);
-                }
-                
-            } catch (error) {
-                console.error('Save error:', error);
-                document.getElementById('syncText').textContent = '❌ Error';
+                if (resp.ok) { document.getElementById('syncText').textContent = 'ONLINE • Connected'; showToast('✅ Synced'); }
+                else throw new Error('Save failed');
+            } catch (e) { console.error(e); document.getElementById('syncText').textContent = '❌ Save error'; }
+        }
+
+        // ===== BRANCHES =====
+        function loadBranches() {
+            let branches = JSON.parse(localStorage.getItem('branches')) || [];
+            const list = document.getElementById('branchesList');
+            const sel = document.getElementById('branchSelect');
+            const fsel = document.getElementById('filterBranch');
+            list.innerHTML = '';
+            sel.innerHTML = '<option value="">-- SELECT BRANCH --</option>';
+            fsel.innerHTML = '<option value="">ALL BRANCHES</option>';
+            if (branches.length === 0) { list.innerHTML = '<div style="color:#8b9bb5; padding:10px;">No branches yet.</div>'; }
+            else {
+                branches.forEach(b => {
+                    const tag = document.createElement('div'); tag.className = 'branch-tag';
+                    tag.innerHTML = `<span>✈︎ ${b}</span>${isManager() ? `<button class="delete-branch" onclick="deleteBranch('${b}')">✕</button>` : ''}`;
+                    list.appendChild(tag);
+                    const opt = document.createElement('option'); opt.value = b; opt.textContent = b;
+                    sel.appendChild(opt.cloneNode(true));
+                    fsel.appendChild(opt);
+                });
             }
+            document.getElementById('branchesCount').textContent = branches.length;
         }
-        
-        // ========== MANAGER FUNCTIONS ==========
-        function isManager() {
-            return sessionStorage.getItem('isManager') === 'true';
+
+        async function addBranch() {
+            if (!requireOnline() || !isManager()) return;
+            const name = document.getElementById('newBranchName').value.trim().toUpperCase();
+            if (!name) return showToast('⚠️ Enter branch name');
+            let branches = JSON.parse(localStorage.getItem('branches')) || [];
+            if (branches.includes(name)) return showToast('⚠️ Already exists');
+            branches.push(name);
+            localStorage.setItem('branches', JSON.stringify(branches));
+            document.getElementById('newBranchName').value = '';
+            loadBranches(); generateBranchQRCodes(); await saveToGist();
+            showToast(`✅ Branch ${name} added`);
         }
-        
+
+        async function deleteBranch(b) {
+            if (!requireOnline() || !isManager()) return;
+            if (!confirm(`Delete ${b}?`)) return;
+            let branches = JSON.parse(localStorage.getItem('branches')) || [];
+            branches = branches.filter(x => x !== b);
+            localStorage.setItem('branches', JSON.stringify(branches));
+            loadBranches(); generateBranchQRCodes(); await saveToGist();
+            showToast(`🗑️ ${b} removed`);
+        }
+
+        // ===== QR =====
+        function generateBranchQRCodes() {
+            const branches = JSON.parse(localStorage.getItem('branches')) || [];
+            const grid = document.getElementById('qrGrid');
+            if (!branches.length) { grid.innerHTML = '<div style="color:#8b9bb5; text-align:center; padding:20px;">No branches yet.</div>'; return; }
+            grid.innerHTML = '';
+            branches.forEach(b => {
+                const url = window.location.href.split('#')[0] + `?t=${Date.now()}#branch=${encodeURIComponent(b)}`;
+                const card = document.createElement('div'); card.className = 'qr-card';
+                const cid = `qr-${b.replace(/\s+/g,'-')}-${Date.now()}`;
+                card.innerHTML = `<h3>✈︎ ${b}</h3><div class="qr-code-container"><canvas id="${cid}" width="140" height="140"></canvas></div><div class="qr-link">Scan for ${b} NOTAMs</div><button onclick="viewBranchQueries('${b}')" class="btn-outline">VIEW BRANCH</button>`;
+                grid.appendChild(card);
+                setTimeout(() => { const c = document.getElementById(cid); if (c) QRCode.toCanvas(c, url, { width: 140 }); }, 100);
+            });
+        }
+
+        // ===== BRANCH VIEW =====
+        function viewBranchQueries(branch) {
+            if (!requireOnline()) return;
+            currentBranch = branch;
+            document.getElementById('managerView').style.display = 'none';
+            const container = document.getElementById('branchViewContainer');
+            container.style.display = 'block';
+            container.innerHTML = `<div class="branch-view"><h2>✈︎ ${branch} NOTAMS</h2><div id="branchQueriesList"></div></div>`;
+            loadBranchQueries(branch);
+        }
+
+        function loadBranchQueries(branch) {
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const list = document.getElementById('branchQueriesList');
+            if (!list) return;
+            const filtered = queries.filter(q => q.branch === branch && q.status !== 'RESOLVED' && q.status !== 'REPORTED' && q.status !== 'ESCALATED');
+            if (!filtered.length) { list.innerHTML = '<p style="text-align:center; padding:20px; color:#8b9bb5;">No active NOTAMS</p>'; return; }
+            list.innerHTML = '';
+            filtered.slice(0, 20).forEach(q => {
+                const st = statusColor(q.status);
+                const icon = statusIcon(q.status);
+                const label = statusLabel(q.status);
+                const urgCol = urgencyColor(q.urgency);
+                list.innerHTML += `<div class="query-item" style="border-left:4px solid ${st}; margin-bottom:15px;">
+                    <div class="query-header"><div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;"><span class="query-badge">${q.notamNumber}</span><span style="color:${st}; font-size:10px;">${icon} ${label}</span></div><span style="color:${urgCol}; font-size:10px;">● ${q.urgency}</span></div>
+                    <div class="query-title">${q.title}</div>
+                    <div class="query-content">${q.details}</div>
+                    <div class="query-footer"><span>📅 ${new Date(q.createdAt).toLocaleDateString()}</span>${q.status === 'ACTIVE' ? `<button onclick="showWorkerNameModal(${q.id})" class="btn-save" style="border-color:#ffd700; color:#ffd700;">✅ MARK SOLVED</button>` : ''}</div>
+                </div>`;
+            });
+        }
+
+        // ===== WORKER RESOLVE =====
+        function showWorkerNameModal(id) { pendingResolveId = id; document.getElementById('workerNameModal').style.display = 'block'; document.getElementById('workerNameInput').value = ''; }
+        function closeWorkerNameModal() { document.getElementById('workerNameModal').style.display = 'none'; pendingResolveId = null; }
+
+        async function confirmWorkerResolve() {
+            const name = document.getElementById('workerNameInput').value.trim();
+            if (!name) return showToast('⚠️ Enter your name');
+            await staffResolveNotam(pendingResolveId, name);
+            closeWorkerNameModal();
+        }
+
+        async function staffResolveNotam(id, name) {
+            if (!requireOnline()) return;
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const idx = queries.findIndex(q => q.id === id);
+            if (idx === -1) return;
+            const now = new Date();
+            const deadline = new Date(now.getTime() + PENDING_EXPIRY_HOURS * 60 * 60 * 1000);
+            queries[idx].status = 'AWAITING_CONFIRMATION';
+            queries[idx].resolvedByStaff = name.toUpperCase();
+            queries[idx].resolvedAtBranch = now.toISOString();
+            queries[idx].managerReviewDeadline = deadline.toISOString();
+            if (!queries[idx].statusHistory) queries[idx].statusHistory = [];
+            queries[idx].statusHistory.push({ status: 'AWAITING_CONFIRMATION', timestamp: now.toISOString(), changedBy: name.toUpperCase(), note: 'Marked solved — awaiting manager' });
+            localStorage.setItem('queries', JSON.stringify(queries));
+            await saveToGist();
+            if (currentBranch) loadBranchQueries(currentBranch);
+            showToast('✅ Marked solved — manager has 48h');
+        }
+
+        // ===== MANAGER ACTIONS =====
         function verifyManager() {
             if (!requireOnline()) return;
-            
-            const password = document.getElementById('managerPassword').value;
-            if (password === 'jeansclub2024') {
-                document.getElementById('branchManagement').classList.add('visible');
-                document.getElementById('managerPassword').value = '';
+            if (document.getElementById('managerPassword').value === 'jeansclub2024') {
                 sessionStorage.setItem('isManager', 'true');
-                
-                // Show manager view
+                document.getElementById('branchManagement').classList.add('visible');
                 document.getElementById('managerView').style.display = 'block';
-                
-                showToast('✓ Manager access granted');
-                loadBranches();
-                loadQueries();
-                updateStats();
-                generateWeeklyReport();
-            } else {
-                showToast('⚠️ Incorrect password');
-            }
+                document.getElementById('managerPassword').value = '';
+                showToast('✅ Manager access granted');
+                loadBranches(); loadQueries(); updateStats(); generateWeeklyReport();
+            } else showToast('⚠️ Wrong password');
         }
-        
-        // ========== SUBMIT QUERY FUNCTION (FIXES THE ERROR) ==========
+
+        async function managerConfirm(id) {
+            if (!requireOnline() || !isManager()) return;
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const idx = queries.findIndex(q => q.id === id);
+            if (idx === -1) return;
+            const q = queries[idx];
+            const expiryDays = q.issueType === 'STORE' ? RESOLVED_EXPIRY_STORE : (q.issueType === 'INTERNAL' ? RESOLVED_EXPIRY_INTERNAL : RESOLVED_EXPIRY_EXTERNAL);
+            q.status = 'RESOLVED';
+            q.resolvedByManager = 'MANAGER';
+            q.resolvedAt = new Date().toISOString();
+            q.resolvedExpiryDate = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000).toISOString();
+            if (!q.statusHistory) q.statusHistory = [];
+            q.statusHistory.push({ status: 'RESOLVED', timestamp: new Date().toISOString(), changedBy: 'MANAGER', note: `Confirmed — auto-deletes in ${expiryDays} days` });
+            localStorage.setItem('queries', JSON.stringify(queries));
+            await saveToGist();
+            loadQueries(); updateStats();
+            showToast(`✅ Resolved — auto-deletes in ${expiryDays} days`);
+        }
+
+        async function reopenNotam(id) {
+            if (!requireOnline() || !isManager()) return;
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const idx = queries.findIndex(q => q.id === id);
+            if (idx === -1) return;
+            queries[idx].status = 'REOPENED';
+            queries[idx].resolvedExpiryDate = null;
+            if (!queries[idx].statusHistory) queries[idx].statusHistory = [];
+            queries[idx].statusHistory.push({ status: 'REOPENED', timestamp: new Date().toISOString(), changedBy: 'MANAGER', note: 'Reopened — previous resolution invalid' });
+            localStorage.setItem('queries', JSON.stringify(queries));
+            await saveToGist();
+            loadQueries(); updateStats();
+            showToast('🔄 Reopened');
+        }
+
+        async function escalateNotam(id) {
+            if (!requireOnline() || !isManager()) return;
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const idx = queries.findIndex(q => q.id === id);
+            if (idx === -1) return;
+            queries[idx].status = 'ESCALATED';
+            if (!queries[idx].statusHistory) queries[idx].statusHistory = [];
+            queries[idx].statusHistory.push({ status: 'ESCALATED', timestamp: new Date().toISOString(), changedBy: 'MANAGER', note: 'Escalated to owner/HR' });
+            localStorage.setItem('queries', JSON.stringify(queries));
+            await saveToGist();
+            loadQueries(); updateStats();
+            showToast('🔴 Escalated');
+        }
+
+        async function deleteNotam(id) {
+            if (!requireOnline() || !isManager()) return;
+            if (!confirm('Delete permanently?')) return;
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            queries = queries.filter(q => q.id !== id);
+            localStorage.setItem('queries', JSON.stringify(queries));
+            await saveToGist();
+            loadQueries(); updateStats();
+            showToast('🗑️ Deleted');
+        }
+
+        // ===== SUBMIT NOTAM =====
         async function submitQuery() {
             if (!requireOnline()) return;
-            
             const staffName = document.getElementById('staffName').value.trim();
             const branch = document.getElementById('branchSelect').value;
             const title = document.getElementById('queryTitle').value.trim();
             const details = document.getElementById('queryDetails').value.trim();
             const urgency = document.getElementById('queryUrgency').value;
-            
-            if (!staffName || !branch || !title || !details) {
-                showToast('⚠️ Please fill all fields');
-                return;
-            }
-            
-            // Generate NOTAM number
+            const issueType = document.querySelector('input[name="issueType"]:checked')?.value || 'STORE';
+            const holdUntil = document.getElementById('holdUntil').value;
+
+            if (!staffName || !branch || !title || !details) return showToast('⚠️ Fill all fields');
+
             const date = new Date();
-            const year = date.getFullYear().toString().slice(-2);
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            const random = Math.floor(Math.random() * 900 + 100);
-            const notamNumber = `JCU-${year}${month}${day}-${random}`;
-            
-            // Create query object
+            const y = date.getFullYear().toString().slice(-2);
+            const m = (date.getMonth()+1).toString().padStart(2,'0');
+            const d = date.getDate().toString().padStart(2,'0');
+            const r = Math.floor(Math.random()*900+100);
+            const notamNumber = `JCU-${y}${m}${d}-${r}`;
+
             const newQuery = {
                 id: Date.now(),
-                notamNumber: notamNumber,
-                staffName: staffName,
-                branch: branch,
-                title: title,
-                details: details,
-                urgency: urgency,
+                notamNumber,
+                staffName,
+                branch,
+                title,
+                details,
+                urgency,
+                issueType,
                 status: 'ACTIVE',
-                createdAt: new Date().toISOString(),
-                statusHistory: [{
-                    status: 'ACTIVE',
-                    timestamp: new Date().toISOString(),
-                    changedBy: staffName,
-                    note: 'NOTAM filed'
-                }]
+                holdUntil: holdUntil || null,
+                createdAt: date.toISOString(),
+                statusHistory: [{ status: 'ACTIVE', timestamp: date.toISOString(), changedBy: staffName, note: 'NOTAM filed' }]
             };
-            
-            // Save to localStorage
+
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            queries.unshift(newQuery); // Add to beginning
+            queries.unshift(newQuery);
             localStorage.setItem('queries', JSON.stringify(queries));
-            
-            // Sync to cloud
             await saveToGist();
-            
-            // Clear form
+
             document.getElementById('staffName').value = '';
             document.getElementById('queryTitle').value = '';
             document.getElementById('queryDetails').value = '';
             document.getElementById('queryUrgency').value = 'MEDIUM';
-            
-            // Update UI
-            if (isManager()) {
-                loadQueries();
-                updateStats();
-                generateWeeklyReport();
-            }
-            
-            showToast(`✓ NOTAM filed: ${notamNumber}`);
+            document.getElementById('holdUntil').value = '';
+            if (isManager()) { loadQueries(); updateStats(); generateWeeklyReport(); }
+            showToast(`✅ NOTAM filed: ${notamNumber}`);
         }
-        
-        // ========== BRANCH MANAGEMENT ==========
-        function loadBranches() {
-            let branches = JSON.parse(localStorage.getItem('branches'));
-            
-            if (!branches || branches.length === 0) {
-                branches = [];
-                localStorage.setItem('branches', JSON.stringify(branches));
-            }
-            
-            const branchesList = document.getElementById('branchesList');
-            const branchSelect = document.getElementById('branchSelect');
-            const filterBranch = document.getElementById('filterBranch');
-            
-            branchesList.innerHTML = '';
-            if (branches.length === 0) {
-                branchesList.innerHTML = '<div style="color: #8b9bb5; padding: 10px;">No branches yet. Manager must add branches.</div>';
-            } else {
-                branches.forEach(branch => {
-                    const tag = document.createElement('div');
-                    tag.className = 'branch-tag';
-                    tag.innerHTML = `
-                        <span>✈︎ ${branch}</span>
-                        ${isManager() ? `<button class="delete-branch" onclick="deleteBranch('${branch}')">✕</button>` : ''}
-                    `;
-                    branchesList.appendChild(tag);
-                });
-            }
-            
-            branchSelect.innerHTML = '<option value="">-- SELECT BRANCH --</option>';
-            if (filterBranch) filterBranch.innerHTML = '<option value="">ALL BRANCHES</option>';
-            
-            branches.forEach(branch => {
-                const option = document.createElement('option');
-                option.value = branch;
-                option.textContent = branch;
-                branchSelect.appendChild(option.cloneNode(true));
-                if (filterBranch) filterBranch.appendChild(option);
-            });
-            
-            document.getElementById('branchesCount').textContent = branches.length;
-        }
-        
-        async function addBranch() {
-            if (!requireOnline()) return;
-            if (!isManager()) {
-                showToast('⚠️ Only managers can add branches');
-                return;
-            }
-            
-            const newBranch = document.getElementById('newBranchName').value.trim().toUpperCase();
-            if (!newBranch) {
-                showToast('⚠️ Enter branch name');
-                return;
-            }
-            
-            let branches = JSON.parse(localStorage.getItem('branches')) || [];
-            
-            if (branches.includes(newBranch)) {
-                showToast('⚠️ Branch already exists');
-                return;
-            }
-            
-            branches.push(newBranch);
-            localStorage.setItem('branches', JSON.stringify(branches));
-            
-            document.getElementById('newBranchName').value = '';
-            loadBranches();
-            generateBranchQRCodes();
-            await saveToGist();
-            
-            showToast(`✓ Branch ${newBranch} added`);
-        }
-        
-        async function deleteBranch(branch) {
-            if (!requireOnline()) return;
-            if (!isManager()) {
-                showToast('⚠️ Only managers can delete branches');
-                return;
-            }
-            
-            if (!confirm(`Delete branch ${branch}? This will NOT delete NOTAMs from this branch.`)) return;
-            
-            let branches = JSON.parse(localStorage.getItem('branches')) || [];
-            branches = branches.filter(b => b !== branch);
-            localStorage.setItem('branches', JSON.stringify(branches));
-            
-            loadBranches();
-            generateBranchQRCodes();
-            await saveToGist();
-            
-            showToast(`✕ Branch ${branch} removed`);
-        }
-        
-        // ========== QR CODE GENERATION ==========
-        function generateBranchQRCodes() {
-            const branches = JSON.parse(localStorage.getItem('branches')) || [];
-            const qrGrid = document.getElementById('qrGrid');
-            
-            if (branches.length === 0) {
-                qrGrid.innerHTML = '<div style="color: #8b9bb5; text-align: center; padding: 20px;">No branches yet. Manager must add branches first.</div>';
-                return;
-            }
-            
-            qrGrid.innerHTML = '';
-            
-            branches.forEach(branch => {
-                const baseUrl = window.location.href.split('#')[0];
-                const timestamp = Date.now();
-                const branchUrl = baseUrl + `?t=${timestamp}#branch=${encodeURIComponent(branch)}`;
-                
-                const card = document.createElement('div');
-                card.className = 'qr-card';
-                
-                const canvasId = `qr-${branch.replace(/\s+/g, '-')}-${timestamp}`;
-                
-                card.innerHTML = `
-                    <h3>✈︎ ${branch}</h3>
-                    <div class="qr-code-container">
-                        <canvas id="${canvasId}" width="140" height="140"></canvas>
-                    </div>
-                    <div class="qr-link">Scan for ${branch} NOTAMs</div>
-                    <button onclick="viewBranchQueries('${branch}')" class="btn-outline">VIEW BRANCH</button>
-                `;
-                
-                qrGrid.appendChild(card);
-                
-                setTimeout(() => {
-                    const canvas = document.getElementById(canvasId);
-                    if (canvas) {
-                        QRCode.toCanvas(canvas, branchUrl, { width: 140 });
-                    }
-                }, 100);
-            });
-        }
-        
-        // ========== BRANCH QUERIES VIEW (for workers) ==========
-        function viewBranchQueries(branch) {
-            if (!requireOnline()) return;
-            
-            currentBranch = branch;
-            
-            const queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            const branchQueries = queries.filter(q => q.branch === branch && q.status !== 'RESOLVED');
-            
-            // Hide manager view if visible
-            document.getElementById('managerView').style.display = 'none';
-            
-            // Create or update branch view
-            const container = document.getElementById('branchViewContainer');
-            container.style.display = 'block';
-            
-            let html = `
-                <div class="branch-view">
-                    <h2>✈︎ ${branch} NOTAMS</h2>
-                    <div id="branchQueriesList"></div>
-                </div>
-            `;
-            
-            container.innerHTML = html;
-            
-            const listDiv = document.getElementById('branchQueriesList');
-            
-            if (branchQueries.length === 0) {
-                listDiv.innerHTML = '<p style="text-align: center; padding: 20px; color: #8b9bb5;">No active NOTAMS for this branch</p>';
-                return;
-            }
-            
-            listDiv.innerHTML = '';
-            branchQueries.slice(0, 20).forEach(query => {
-                const status = NOTAM_STATUS[query.status] || NOTAM_STATUS.ACTIVE;
-                const urgencyCol = urgencyColor(query.urgency);
-                
-                listDiv.innerHTML += `
-                    <div class="query-item" style="border-left: 4px solid ${status.color}; margin-bottom: 15px;">
-                        <div class="query-header">
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <span class="query-badge">${query.notamNumber}</span>
-                                <span style="color: ${status.color}; font-size: 10px;">${status.icon} ${status.label}</span>
-                            </div>
-                            <span style="color: ${urgencyCol}; font-size: 10px;">● ${query.urgency}</span>
-                        </div>
-                        
-                        <div class="query-title">${query.title}</div>
-                        <div class="query-content">${query.details}</div>
-                        
-                        <div class="query-footer">
-                            <span>📅 ${new Date(query.createdAt).toLocaleDateString()}</span>
-                            ${query.status === 'ACTIVE' ? 
-                                `<button onclick="showWorkerNameModal(${query.id})" class="btn-save" style="border-color: #ffd700; color: #ffd700;">✅ MARK SOLVED</button>` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-        
-        // ========== WORKER RESOLVE FUNCTIONS ==========
-        function showWorkerNameModal(notamId) {
-            pendingResolveId = notamId;
-            document.getElementById('workerNameModal').style.display = 'block';
-            document.getElementById('workerNameInput').value = '';
-        }
-        
-        function closeWorkerNameModal() {
-            document.getElementById('workerNameModal').style.display = 'none';
-            pendingResolveId = null;
-        }
-        
-        async function confirmWorkerResolve() {
-            const workerName = document.getElementById('workerNameInput').value.trim();
-            if (!workerName) {
-                showToast('⚠️ Please enter your name');
-                return;
-            }
-            
-            await staffResolveNotam(pendingResolveId, workerName);
-            closeWorkerNameModal();
-        }
-        
-        async function staffResolveNotam(notamId, workerName) {
-            if (!requireOnline()) return;
-            
-            let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            const index = queries.findIndex(q => q.id === notamId);
-            
-            if (index !== -1) {
-                const now = new Date();
-                const deadline = new Date();
-                deadline.setHours(deadline.getHours() + 48);
-                
-                queries[index].status = 'AWAITING_CONFIRMATION';
-                queries[index].resolvedByStaff = workerName.toUpperCase();
-                queries[index].resolvedAtBranch = now.toISOString();
-                queries[index].managerReviewDeadline = deadline.toISOString();
-                
-                if (!queries[index].statusHistory) queries[index].statusHistory = [];
-                queries[index].statusHistory.push({
-                    status: 'AWAITING_CONFIRMATION',
-                    timestamp: now.toISOString(),
-                    changedBy: workerName.toUpperCase(),
-                    note: 'Marked as solved - awaiting manager'
-                });
-                
-                localStorage.setItem('queries', JSON.stringify(queries));
-                await saveToGist();
-                
-                // Refresh current view
-                if (currentBranch) {
-                    viewBranchQueries(currentBranch);
-                }
-                
-                showToast(`✅ Marked solved - Manager has 48h to confirm`);
-            }
-        }
-        
-        // ========== MANAGER CONFIRM FUNCTIONS ==========
-        async function managerConfirm(notamId) {
-            if (!requireOnline()) return;
-            if (!isManager()) {
-                showToast('⚠️ Only managers can confirm resolution');
-                return;
-            }
-            
-            let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            const index = queries.findIndex(q => q.id === notamId);
-            
-            if (index !== -1) {
-                queries[index].status = 'RESOLVED';
-                queries[index].resolvedByManager = 'MANAGER';
-                queries[index].resolvedAt = new Date().toISOString();
-                queries[index].resolvedExpiryDate = new Date(Date.now() + RESOLVED_EXPIRY_DAYS * 24 * 60 * 60 * 1000).toISOString();
-                
-                if (!queries[index].statusHistory) queries[index].statusHistory = [];
-                queries[index].statusHistory.push({
-                    status: 'RESOLVED',
-                    timestamp: new Date().toISOString(),
-                    changedBy: 'MANAGER',
-                    note: `Manager confirmed resolution (will auto-delete after ${RESOLVED_EXPIRY_DAYS} days)`
-                });
-                
-                localStorage.setItem('queries', JSON.stringify(queries));
-                await saveToGist();
-                
-                loadQueries();
-                updateStats();
-                
-                showToast(`👔 Manager confirmed - Issue resolved (auto-deletes in ${RESOLVED_EXPIRY_DAYS} days)`);
-            }
-        }
-        
-        async function reopenNotam(notamId) {
-            if (!requireOnline()) return;
-            if (!isManager()) {
-                showToast('⚠️ Only managers can reopen');
-                return;
-            }
-            
-            let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            const index = queries.findIndex(q => q.id === notamId);
-            
-            if (index !== -1) {
-                queries[index].status = 'REOPENED';
-                queries[index].resolvedExpiryDate = null;
-                
-                if (!queries[index].statusHistory) queries[index].statusHistory = [];
-                queries[index].statusHistory.push({
-                    status: 'REOPENED',
-                    timestamp: new Date().toISOString(),
-                    changedBy: 'MANAGER',
-                    note: 'Reopened - previous resolution invalid'
-                });
-                
-                localStorage.setItem('queries', JSON.stringify(queries));
-                await saveToGist();
-                
-                loadQueries();
-                updateStats();
-                
-                showToast('🔄 NOTAM reopened');
-            }
-        }
-        
-        async function deleteNotam(notamId) {
-            if (!requireOnline()) return;
-            if (!isManager()) {
-                showToast('⚠️ Only managers can delete');
-                return;
-            }
-            
-            if (!confirm('Delete this NOTAM permanently?')) return;
-            
-            let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            queries = queries.filter(q => q.id !== notamId);
-            localStorage.setItem('queries', JSON.stringify(queries));
-            
-            await saveToGist();
-            loadQueries();
-            updateStats();
-            
-            showToast('🗑️ NOTAM deleted');
-        }
-        
-        // ========== MANAGER LOAD QUERIES ==========
+
+        // ===== LOAD QUERIES (MANAGER) =====
         function loadQueries() {
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
             const list = document.getElementById('queriesList');
             if (!list) return;
-            
-            const searchTerm = document.getElementById('searchNotams')?.value.toLowerCase() || '';
-            const branchFilter = document.getElementById('filterBranch')?.value || '';
-            const urgencyFilter = document.getElementById('filterUrgency')?.value || '';
+            const search = document.getElementById('searchNotams')?.value.toLowerCase() || '';
+            const branchF = document.getElementById('filterBranch')?.value || '';
+            const urgencyF = document.getElementById('filterUrgency')?.value || '';
+            const typeF = document.getElementById('filterType')?.value || '';
             const showResolved = document.getElementById('showResolved')?.checked || false;
             const showAll = document.getElementById('showAll')?.checked || false;
-            
-            let filteredQueries = queries.filter(q => {
+
+            let filtered = queries.filter(q => {
                 if (!showResolved && q.status === 'RESOLVED' && !showAll) return false;
                 if (!showAll && q.status === 'RESOLVED' && !showResolved) return false;
-                
-                if (searchTerm) {
-                    const matches = q.title?.toLowerCase().includes(searchTerm) ||
-                                   q.details?.toLowerCase().includes(searchTerm) ||
-                                   q.staffName?.toLowerCase().includes(searchTerm) ||
-                                   q.notamNumber?.toLowerCase().includes(searchTerm);
-                    if (!matches) return false;
+                if (search) {
+                    const m = (q.title||'').toLowerCase().includes(search) || (q.details||'').toLowerCase().includes(search) || (q.staffName||'').toLowerCase().includes(search) || (q.notamNumber||'').toLowerCase().includes(search);
+                    if (!m) return false;
                 }
-                
-                if (branchFilter && q.branch !== branchFilter) return false;
-                if (urgencyFilter && q.urgency !== urgencyFilter) return false;
-                
+                if (branchF && q.branch !== branchF) return false;
+                if (urgencyF && q.urgency !== urgencyF) return false;
+                if (typeF && q.issueType !== typeF) return false;
                 return true;
             });
-            
-            if (filteredQueries.length === 0) {
-                list.innerHTML = '<div style="text-align: center; padding: 20px; color: #8b9bb5;">NO NOTAMS FOUND</div>';
-                return;
-            }
-            
+
+            if (!filtered.length) { list.innerHTML = '<div style="text-align:center; padding:20px; color:#8b9bb5;">NO NOTAMS</div>'; return; }
             list.innerHTML = '';
-            filteredQueries.slice(0, 50).forEach(query => {
-                const status = NOTAM_STATUS[query.status] || NOTAM_STATUS.ACTIVE;
-                const urgencyCol = urgencyColor(query.urgency);
-                
+            filtered.slice(0, 50).forEach(q => {
+                const st = statusColor(q.status);
+                const icon = statusIcon(q.status);
+                const label = statusLabel(q.status);
+                const urgCol = urgencyColor(q.urgency);
+                const typeLabel = getIssueTypeLabel(q.issueType);
+                let holdHtml = '';
+                if (q.holdUntil) {
+                    const hd = new Date(q.holdUntil);
+                    const now = new Date();
+                    const days = Math.ceil((hd - now) / (1000*60*60*24));
+                    holdHtml = `<div style="font-size:10px; color:#ffd700; margin-top:4px;">📅 Hold until ${hd.toLocaleDateString()} ${days > 0 ? `(⏳ ${days} days left)` : '⚠️ EXPIRED'}</div>`;
+                }
                 let timeLeftHtml = '';
-                if (query.status === 'AWAITING_CONFIRMATION' && query.managerReviewDeadline) {
-                    const deadline = new Date(query.managerReviewDeadline);
-                    const now = new Date();
-                    const hoursLeft = Math.ceil((deadline - now) / (1000 * 60 * 60));
-                    if (hoursLeft > 0) {
-                        timeLeftHtml = `<span style="color: #ffd700; font-size: 9px;">⏱️ ${hoursLeft}h left</span>`;
-                    } else {
-                        timeLeftHtml = `<span style="color: #ff6b6b; font-size: 9px;">⏱️ OVERDUE</span>`;
-                    }
+                if (q.status === 'AWAITING_CONFIRMATION' && q.managerReviewDeadline) {
+                    const dl = new Date(q.managerReviewDeadline);
+                    const hrs = Math.ceil((dl - new Date()) / (1000*60*60));
+                    timeLeftHtml = hrs > 0 ? `<span style="color:#ffd700; font-size:9px;">⏱️ ${hrs}h left</span>` : `<span style="color:#ff6b6b; font-size:9px;">⏱️ OVERDUE</span>`;
                 }
-                
-                let expiryInfo = '';
-                if (query.status === 'RESOLVED' && query.resolvedExpiryDate) {
-                    const expiryDate = new Date(query.resolvedExpiryDate);
-                    const now = new Date();
-                    const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
-                    expiryInfo = `<span style="color: #8b9bb5; font-size: 9px; margin-left: 5px;">🗑️ Auto-deletes in ${daysLeft} days</span>`;
+                let expiryHtml = '';
+                if (q.status === 'RESOLVED' && q.resolvedExpiryDate) {
+                    const ed = new Date(q.resolvedExpiryDate);
+                    const days = Math.ceil((ed - new Date()) / (1000*60*60*24));
+                    expiryHtml = `<span style="color:#8b9bb5; font-size:9px;">🗑️ auto-delete in ${days}d</span>`;
                 }
-                
-                list.innerHTML += `
-                    <div class="query-item" style="border-left: 4px solid ${status.color};">
-                        <div class="query-header">
-                            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                                <span class="query-badge">${query.notamNumber}</span>
-                                <span style="color: ${status.color}; font-size: 10px;">${status.icon} ${status.label}</span>
-                                ${timeLeftHtml}
-                                ${expiryInfo}
-                            </div>
-                            <span style="color: ${urgencyCol}; font-size: 10px;">● ${query.urgency}</span>
-                        </div>
-                        
-                        <div class="query-title">${query.title}</div>
-                        <div class="query-content">${query.details}</div>
-                        
-                        <div class="query-footer">
-                            <span>✈︎ ${query.branch} • 👤 ${query.staffName}</span>
-                            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-                                <button onclick="saveQueryToDevice(${query.id})" class="btn-save">💾 SAVE</button>
-                                
-                                ${query.status === 'AWAITING_CONFIRMATION' ? 
-                                    `<button onclick="managerConfirm(${query.id})" class="btn-save" style="border-color: #4caf50; color: #4caf50;">👔 CONFIRM</button>` : ''}
-                                
-                                ${query.status === 'RESOLVED' || query.status === 'REOPENED' ? 
-                                    `<button onclick="reopenNotam(${query.id})" class="btn-save" style="border-color: #ff9800; color: #ff9800;">🔄 REOPEN</button>` : ''}
-                                
-                                <button onclick="deleteNotam(${query.id})" class="btn-save" style="border-color: #ff6b6b; color: #ff6b6b;">🗑️ DELETE</button>
-                            </div>
-                        </div>
-                        
-                        ${query.resolvedByStaff ? `
-                            <div style="margin-top: 8px; font-size: 9px; color: #8b9bb5; border-top: 1px dashed #333; padding-top: 5px;">
-                                ✅ Staff marked solved: ${new Date(query.resolvedAtBranch).toLocaleString()} by ${query.resolvedByStaff}
-                                ${query.resolvedByManager ? `<br>👔 Manager confirmed: ${new Date(query.resolvedAt).toLocaleString()}` : ''}
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
+
+                list.innerHTML += `<div class="query-item" style="border-left:4px solid ${st};">
+                    <div class="query-header"><div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;"><span class="query-badge">${q.notamNumber}</span><span style="color:${st}; font-size:10px;">${icon} ${label}</span>${timeLeftHtml}${expiryHtml}</div>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;"><span style="font-size:9px; color:#8b9bb5;">${typeLabel}</span><span style="color:${urgCol}; font-size:10px;">● ${q.urgency}</span></div></div>
+                    <div class="query-title">${q.title}</div>
+                    <div class="query-content">${q.details}</div>
+                    ${holdHtml}
+                    <div class="query-footer"><span>✈︎ ${q.branch} • 👤 ${q.staffName}</span>
+                    <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                        <button onclick="saveQueryToDevice(${q.id})" class="btn-save">💾 SAVE</button>
+                        ${q.status === 'AWAITING_CONFIRMATION' ? `<button onclick="managerConfirm(${q.id})" class="btn-save" style="border-color:#4caf50; color:#4caf50;">👔 CONFIRM</button>` : ''}
+                        ${q.status === 'RESOLVED' || q.status === 'REOPENED' ? `<button onclick="reopenNotam(${q.id})" class="btn-save" style="border-color:#ff9800; color:#ff9800;">🔄 REOPEN</button>` : ''}
+                        ${q.status !== 'ESCALATED' ? `<button onclick="escalateNotam(${q.id})" class="btn-save" style="border-color:#f44336; color:#f44336;">🔴 ESCALATE</button>` : ''}
+                        <button onclick="deleteNotam(${q.id})" class="btn-save" style="border-color:#ff6b6b; color:#ff6b6b;">🗑️ DELETE</button>
+                    </div></div>
+                    ${q.resolvedByStaff ? `<div style="margin-top:8px; font-size:9px; color:#8b9bb5; border-top:1px dashed #333; padding-top:5px;">✅ Staff marked: ${new Date(q.resolvedAtBranch).toLocaleString()} by ${q.resolvedByStaff}${q.resolvedByManager ? `<br>👔 Manager confirmed: ${new Date(q.resolvedAt).toLocaleString()}` : ''}</div>` : ''}
+                </div>`;
             });
         }
-        
-        function saveQueryToDevice(notamId) {
-            if (!requireOnline()) return;
-            
+
+        function saveQueryToDevice(id) {
             const queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            const query = queries.find(q => q.id === notamId);
-            
-            if (!query) return;
-            
-            const text = `JEANS CLUB UGANDA NOTAM
-═══════════════════════════
-NOTAM: ${query.notamNumber}
-Branch: ${query.branch}
-Staff: ${query.staffName}
-Date: ${query.date}
-Urgency: ${query.urgency}
-Status: ${query.status}
-Title: ${query.title}
-───────────────────────────
-${query.details}
-═══════════════════════════`;
-            
-            const blob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `NOTAM-${query.notamNumber}.txt`;
-            a.click();
-            
-            showToast('✓ Saved to device');
+            const q = queries.find(x => x.id === id);
+            if (!q) return;
+            const text = `JEANS CLUB UGANDA NOTAM\n═══════════════════════════\nNOTAM: ${q.notamNumber}\nBranch: ${q.branch}\nStaff: ${q.staffName}\nDate: ${new Date(q.createdAt).toLocaleString()}\nUrgency: ${q.urgency}\nType: ${q.issueType}\nStatus: ${q.status}\nTitle: ${q.title}\n───────────────────────────\n${q.details}\n${q.holdUntil ? `Hold until: ${new Date(q.holdUntil).toLocaleDateString()}` : ''}\n═══════════════════════════`;
+            const blob = new Blob([text], { type:'text/plain' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `NOTAM-${q.notamNumber}.txt`; a.click();
+            showToast('✅ Saved');
         }
-        
-        function urgencyColor(urgency) {
-            const colors = {
-                'LOW': '#4caf50',
-                'MEDIUM': '#ffc107',
-                'HIGH': '#ff9800',
-                'CRITICAL': '#f44336'
-            };
-            return colors[urgency] || '#ffd700';
-        }
-        
-        // ========== CLEAN UP EXPIRED RESOLVED NOTAMS ==========
-        async function cleanExpiredResolvedNotams() {
-            if (!requireOnline()) return;
-            
-            let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            let changed = false;
-            const now = new Date();
-            
-            queries = queries.filter(query => {
-                // Keep ACTIVE and PENDING and REOPENED
-                if (query.status !== 'RESOLVED') return true;
-                
-                // Check if RESOLVED has expired
-                if (query.resolvedExpiryDate) {
-                    const expiryDate = new Date(query.resolvedExpiryDate);
-                    if (now > expiryDate) {
-                        changed = true;
-                        return false; // Remove expired
-                    }
-                }
-                return true;
-            });
-            
-            if (changed) {
-                localStorage.setItem('queries', JSON.stringify(queries));
-                await saveToGist();
-                if (isManager()) {
-                    loadQueries();
-                    updateStats();
-                }
-                showToast('🧹 Cleaned up expired resolved NOTAMs');
-            }
-        }
-        
-        // ========== AUTO-CONFIRM STALE RESOLUTIONS ==========
-        async function autoConfirmStaleResolutions() {
-            if (!requireOnline()) return;
-            
-            let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            let changed = false;
-            const now = new Date();
-            
-            queries = queries.map(query => {
-                if (query.status === 'AWAITING_CONFIRMATION' && query.managerReviewDeadline) {
-                    const deadline = new Date(query.managerReviewDeadline);
-                    
-                    if (now > deadline) {
-                        query.status = 'RESOLVED';
-                        query.resolvedByManager = 'SYSTEM (auto)';
-                        query.resolvedAt = now.toISOString();
-                        query.resolvedExpiryDate = new Date(Date.now() + RESOLVED_EXPIRY_DAYS * 24 * 60 * 60 * 1000).toISOString();
-                        query.autoConfirmed = true;
-                        
-                        if (!query.statusHistory) query.statusHistory = [];
-                        query.statusHistory.push({
-                            status: 'AUTO_CONFIRMED',
-                            timestamp: now.toISOString(),
-                            changedBy: 'SYSTEM',
-                            note: `Auto-confirmed after 48h (no manager review) - will auto-delete after ${RESOLVED_EXPIRY_DAYS} days`
-                        });
-                        
-                        changed = true;
-                    }
-                }
-                return query;
-            });
-            
-            if (changed) {
-                localStorage.setItem('queries', JSON.stringify(queries));
-                await saveToGist();
-                if (isManager()) {
-                    loadQueries();
-                    updateStats();
-                }
-                showToast('🔄 Auto-confirmed stale resolutions');
-            }
-        }
-        
-        // ========== STATS FUNCTIONS ==========
+
+        // ===== STATS =====
         function updateStats() {
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            
             const active = queries.filter(q => q.status === 'ACTIVE').length;
             const pending = queries.filter(q => q.status === 'AWAITING_CONFIRMATION').length;
             const resolved = queries.filter(q => q.status === 'RESOLVED').length;
-            
+            const reported = queries.filter(q => q.status === 'REPORTED').length;
             document.getElementById('activeNotamsCount').textContent = active;
             document.getElementById('activeCount').textContent = active;
             document.getElementById('pendingCount').textContent = pending;
             document.getElementById('resolvedCount').textContent = resolved;
-            
-            if (queries.length > 0) {
-                const activeQueries = queries.filter(q => q.status === 'ACTIVE');
-                if (activeQueries.length > 0) {
-                    document.getElementById('latestNotam').textContent = activeQueries[0].title.substring(0, 25) + '...';
-                }
-            }
+            document.getElementById('reportedCount').textContent = reported;
+            const latest = queries.find(q => q.status === 'ACTIVE');
+            document.getElementById('latestNotam').textContent = latest ? latest.title.substring(0,25)+'...' : 'None';
         }
-        
-        // ========== WEEKLY REPORT ==========
+
+        // ===== WEEKLY REPORT =====
         function generateWeeklyReport() {
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
-            if (!Array.isArray(queries)) queries = [];
-            const oneWeekAgo = new Date();
-            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-            
+            const oneWeekAgo = new Date(); oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
             const weekly = queries.filter(q => new Date(q.createdAt) >= oneWeekAgo);
-            
-            const start = oneWeekAgo.toLocaleDateString();
-            const end = new Date().toLocaleDateString();
-            document.getElementById('reportPeriod').textContent = `${start} - ${end}`;
-            
+            document.getElementById('reportPeriod').textContent = `${oneWeekAgo.toLocaleDateString()} - ${new Date().toLocaleDateString()}`;
             let html = '';
-            if (weekly.length === 0) {
-                html = '<div style="text-align: center;">NO NOTAMS THIS WEEK</div>';
-            } else {
+            if (!weekly.length) html = '<div style="text-align:center;">NO NOTAMS THIS WEEK</div>';
+            else {
                 const byBranch = {};
-                weekly.forEach(q => {
-                    if (!byBranch[q.branch]) byBranch[q.branch] = [];
-                    byBranch[q.branch].push(q);
-                });
-                
-                for (const [branch, branchQueries] of Object.entries(byBranch)) {
-                    html += `<div style="margin-bottom: 12px;"><span style="color: #ffd700;">✈︎ ${branch}</span> (${branchQueries.length})<br>`;
-                    branchQueries.forEach(q => {
-                        html += `<div style="margin-left: 8px; font-size: 10px;">• ${q.title.substring(0, 25)}...</div>`;
-                    });
+                weekly.forEach(q => { if (!byBranch[q.branch]) byBranch[q.branch] = []; byBranch[q.branch].push(q); });
+                for (const [branch, items] of Object.entries(byBranch)) {
+                    html += `<div style="margin-bottom:12px;"><span style="color:#ffd700;">✈︎ ${branch}</span> (${items.length})<br>`;
+                    items.forEach(q => { html += `<div style="margin-left:8px; font-size:10px;">• ${q.title.substring(0,25)}... (${statusIcon(q.status)} ${statusLabel(q.status)})</div>`; });
                     html += '</div>';
                 }
             }
-            
             document.getElementById('weeklyReportContent').innerHTML = html;
-            
             document.getElementById('reportStats').innerHTML = `
                 <div class="stat-box"><div class="stat-number">${weekly.length}</div><div>TOTAL</div></div>
                 <div class="stat-box"><div class="stat-number">${weekly.filter(q => q.urgency === 'CRITICAL').length}</div><div>CRITICAL</div></div>
                 <div class="stat-box"><div class="stat-number">${new Set(weekly.map(q => q.branch)).size}</div><div>BRANCHES</div></div>
             `;
         }
-        
-        // ========== SHARE ==========
+
         function shareViaWhatsApp() {
-            if (!requireOnline()) return;
-            
             const text = document.getElementById('weeklyReportContent').innerText;
             const period = document.getElementById('reportPeriod').innerText;
-            window.open(`https://wa.me/?text=${encodeURIComponent('JEANS CLUB WEEKLY REPORT\n' + period + '\n' + text)}`);
+            window.open(`https://wa.me/?text=${encodeURIComponent('JEANS CLUB REPORT\n' + period + '\n' + text)}`);
         }
-        
         function shareViaEmail() {
-            if (!requireOnline()) return;
-            
             const text = document.getElementById('weeklyReportContent').innerText;
             const period = document.getElementById('reportPeriod').innerText;
-            window.location.href = `mailto:?subject=JEANS CLUB WEEKLY REPORT&body=${encodeURIComponent(period + '\n' + text)}`;
+            window.location.href = `mailto:?subject=JEANS CLUB REPORT&body=${encodeURIComponent(period + '\n' + text)}`;
         }
-        
-        // ========== UTILITIES ==========
-        function showToast(msg) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2000);
+
+        // ===== AUTO PROCESSES =====
+        async function autoConfirmStaleResolutions() {
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            let changed = false;
+            const now = new Date();
+            queries = queries.map(q => {
+                if (q.status === 'AWAITING_CONFIRMATION' && q.managerReviewDeadline) {
+                    if (new Date(q.managerReviewDeadline) < now) {
+                        const expiryDays = q.issueType === 'STORE' ? RESOLVED_EXPIRY_STORE : (q.issueType === 'INTERNAL' ? RESOLVED_EXPIRY_INTERNAL : RESOLVED_EXPIRY_EXTERNAL);
+                        q.status = 'RESOLVED';
+                        q.resolvedByManager = 'SYSTEM (auto)';
+                        q.resolvedAt = now.toISOString();
+                        q.resolvedExpiryDate = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000).toISOString();
+                        q.autoConfirmed = true;
+                        if (!q.statusHistory) q.statusHistory = [];
+                        q.statusHistory.push({ status: 'AUTO_CONFIRMED', timestamp: now.toISOString(), changedBy: 'SYSTEM', note: `Auto-confirmed after ${PENDING_EXPIRY_HOURS}h` });
+                        changed = true;
+                    }
+                }
+                return q;
+            });
+            if (changed) { localStorage.setItem('queries', JSON.stringify(queries)); await saveToGist(); if (isManager()) { loadQueries(); updateStats(); } }
         }
-        
+
+        async function cleanExpiredResolved() {
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            let changed = false;
+            const now = new Date();
+            queries = queries.filter(q => {
+                if (q.status === 'RESOLVED' && q.resolvedExpiryDate) {
+                    if (new Date(q.resolvedExpiryDate) < now) { changed = true; return false; }
+                }
+                return true;
+            });
+            if (changed) { localStorage.setItem('queries', JSON.stringify(queries)); await saveToGist(); if (isManager()) { loadQueries(); updateStats(); } }
+        }
+
+        // ===== URL CHECK =====
         function checkForBranchInUrl() {
             const hash = window.location.hash.substring(1);
             if (hash.startsWith('branch=')) {
-                const branch = decodeURIComponent(hash.replace('branch=', ''));
-                setTimeout(() => viewBranchQueries(branch), 500);
+                const b = decodeURIComponent(hash.replace('branch=', ''));
+                setTimeout(() => viewBranchQueries(b), 500);
             }
         }
-        
-        function closeModal() {
-            document.getElementById('branchModal').style.display = 'none';
-        }
-        
-        // ========== INIT ==========
+
+        // ===== RADIO TOGGLE =====
+        document.querySelectorAll('.radio-label').forEach(el => {
+            el.addEventListener('click', function() {
+                document.querySelectorAll('.radio-label').forEach(x => x.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+
+        // ===== INIT =====
         window.onload = async function() {
-            // Check initial online status
-            if (!navigator.onLine) {
-                showOfflineBanner(true);
-                return;
-            }
-            
+            if (!navigator.onLine) { document.getElementById('offlineBanner').style.display = 'block'; return; }
             await loadFromGist();
-            
             loadBranches();
             generateBranchQRCodes();
             checkForBranchInUrl();
-            
-            // Auto processes
             setInterval(loadFromGist, 5 * 60 * 1000);
             setInterval(autoConfirmStaleResolutions, 60 * 60 * 1000);
-            setInterval(cleanExpiredResolvedNotams, 60 * 60 * 1000);
-            setInterval(generateBranchQRCodes, 60 * 60 * 1000);
-            
-            // Run cleanup on startup
+            setInterval(cleanExpiredResolved, 60 * 60 * 1000);
             setTimeout(autoConfirmStaleResolutions, 5000);
-            setTimeout(cleanExpiredResolvedNotams, 10000);
+            setTimeout(cleanExpiredResolved, 10000);
         };
-        
-        window.onclick = function(event) {
-            const modal = document.getElementById('workerNameModal');
-            if (event.target === modal) closeWorkerNameModal();
-            
-            const branchModal = document.getElementById('branchModal');
-            if (event.target === branchModal) closeModal();
+
+        window.onclick = function(e) {
+            const m = document.getElementById('workerNameModal');
+            if (e.target === m) closeWorkerNameModal();
         };
     </script>
 </body>
