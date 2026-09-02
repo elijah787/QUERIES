@@ -69,7 +69,6 @@
         .legend-dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; }
         .legend-label { font-size: 11px; color: white; font-family: 'Space Mono', monospace; }
         .legend-desc { font-size: 9px; color: #8b9bb5; display: block; }
-
         .legend-title { font-family: 'Space Mono', monospace; color: #ffd700; font-size: 14px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 6px; margin-bottom: 8px; }
 
         /* === CARDS === */
@@ -87,7 +86,6 @@
         .notam-card::before { content: '✈︎ NOTAM FORM'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
         .queries-card::before { content: '📋 ACTIVE NOTAMS'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
         .report-card::before { content: '📊 WEEKLY SUMMARY'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
-
         .section-title { font-family: 'Space Mono', monospace; color: #ffd700; font-size: 16px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 6px; }
 
         /* === FORMS === */
@@ -97,18 +95,18 @@
         .form-control:disabled { opacity: 0.5; background: rgba(0,0,0,0.3); }
         select.form-control { background: #0b1a2f; color: #ffd700; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ffd700' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 35px; }
         textarea.form-control { min-height: 80px; resize: vertical; }
-
         .radio-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
         .radio-label { display: flex; align-items: center; gap: 6px; color: white; font-size: 13px; cursor: pointer; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px solid transparent; }
         .radio-label input[type="radio"] { accent-color: #ffd700; width: 16px; height: 16px; }
         .radio-label.selected { border-color: #ffd700; background: rgba(255,215,0,0.1); }
-
         .btn-gold { background: #ffd700; border: none; border-radius: 6px; padding: 10px 16px; font-family: 'Space Mono', monospace; font-weight: 600; color: #001529; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s; border: 1px solid #ffd700; width: auto; min-width: 80px; touch-action: manipulation; }
         .btn-gold:hover { background: transparent; color: #ffd700; }
         .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; background: #8b9bb5; border-color: #8b9bb5; }
         .btn-outline { background: transparent; border: 1px solid #ffd700; border-radius: 6px; padding: 8px 12px; font-family: 'Space Mono', monospace; color: #ffd700; font-size: 11px; cursor: pointer; transition: all 0.3s; width: auto; touch-action: manipulation; }
         .btn-outline:disabled { opacity: 0.5; cursor: not-allowed; border-color: #8b9bb5; color: #8b9bb5; }
         .btn-save { background: transparent; border: 1px solid #4caf50; border-radius: 4px; padding: 4px 8px; color: #4caf50; font-size: 9px; cursor: pointer; font-family: 'Space Mono', monospace; touch-action: manipulation; }
+        .btn-capture { background: rgba(54,162,235,0.15); color: #36A2EB; border: 1px solid rgba(54,162,235,0.2); padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 9px; font-family: 'Space Mono', monospace; touch-action: manipulation; }
+        .btn-capture:hover { background: rgba(54,162,235,0.25); }
 
         /* === BRANCH TAGS === */
         .branches-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -123,7 +121,6 @@
         .query-title { color: #ffd700; font-size: 14px; font-weight: 700; margin-bottom: 6px; word-break: break-word; }
         .query-content { color: white; font-size: 12px; line-height: 1.4; margin-bottom: 8px; word-break: break-word; }
         .query-footer { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; color: #8b9bb5; font-size: 9px; }
-
         .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 9px; font-weight: 700; }
 
         /* === QR === */
@@ -144,13 +141,10 @@
         .sync-status { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(255,215,0,0.1); border-radius: 30px; font-size: 10px; color: #8b9bb5; margin-bottom: 8px; }
         .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #4caf50; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
         .offline-banner { background: #ff6b6b; color: white; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px; font-weight: bold; display: none; }
-
         .toast { position: fixed; top: 15px; right: 15px; left: 15px; background: #ffd700; color: #001529; padding: 12px; border-radius: 8px; font-family: 'Space Mono', monospace; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 1000; animation: slideIn 0.3s ease; text-align: center; font-size: 13px; }
         @media (min-width: 480px) { .toast { left: auto; width: auto; min-width: 250px; } }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; padding: 10px; }
         .modal-content { max-width: 100%; margin: 15px auto; background: #0b1a2f; border: 2px solid #ffd700; border-radius: 12px; padding: 18px; }
         @media (min-width: 768px) { .modal-content { max-width: 700px; } }
@@ -170,25 +164,24 @@
         .password-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
         @media (min-width: 480px) { .password-form { flex-direction: row; } }
         .password-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,215,0,0.3); border-radius: 8px; padding: 10px 12px; font-family: 'Inter', sans-serif; color: white; font-size: 14px; width: 100%; }
-
         .main-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 12px 0; }
         @media (min-width: 1024px) { .main-grid { grid-template-columns: 1.2fr 0.8fr; } }
-
         .branch-management { display: none; }
         .branch-management.visible { display: block; }
         .branch-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
         @media (min-width: 480px) { .branch-form { flex-direction: row; } }
         .branch-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,215,0,0.3); border-radius: 8px; padding: 10px 12px; font-family: 'Inter', sans-serif; color: white; font-size: 14px; width: 100%; }
-
         #branchViewContainer { display: none; }
         .branch-view h2 { color: #ffd700; font-family: 'Space Mono', monospace; font-size: 18px; margin-bottom: 15px; text-align: center; }
-
         .filter-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
         .filter-row .form-control { flex: 1; min-width: 120px; }
         .filter-check { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px; }
         .filter-check label { color: white; display: flex; align-items: center; gap: 5px; font-size: 12px; }
-
         .hold-info { background: rgba(255,215,0,0.05); border-radius: 4px; padding: 6px 10px; font-size: 11px; color: #ffd700; margin-top: 4px; }
+        
+        /* Session Timer Style */
+        #sessionTimerDisplay { color: rgba(255,255,255,0.4); font-size: 12px; padding: 4px 12px; background: rgba(255,255,255,0.05); border-radius: 20px; display: inline-block; margin: 0 10px; white-space: nowrap; }
+        @media (max-width: 480px) { #sessionTimerDisplay { font-size: 9px; padding: 2px 8px; margin: 0 5px; } }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
@@ -249,17 +242,14 @@
         <div class="main-grid">
             <div class="notam-card">
                 <div class="section-title">📝 FILE NOTAM</div>
-
                 <div class="form-group">
                     <label class="form-label">👤 YOUR NAME</label>
                     <input type="text" id="staffName" class="form-control" placeholder="e.g., OKELLO JOHN">
                 </div>
-
                 <div class="form-group">
                     <label class="form-label">🏢 BRANCH</label>
                     <select id="branchSelect" class="form-control"><option value="">-- SELECT BRANCH --</option></select>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label">📋 ISSUE TYPE</label>
                     <div class="radio-group" id="issueTypeGroup">
@@ -268,17 +258,14 @@
                         <label class="radio-label" id="typeExternal"><input type="radio" name="issueType" value="EXTERNAL"> 🧑‍🤝‍🧑 EXTERNAL</label>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label">📌 TITLE</label>
                     <input type="text" id="queryTitle" class="form-control" placeholder="e.g., DEBTOR ALERT">
                 </div>
-
                 <div class="form-group">
                     <label class="form-label">📝 DETAILS</label>
                     <textarea id="queryDetails" class="form-control" placeholder="Describe the issue..."></textarea>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label">🚨 URGENCY</label>
                     <select id="queryUrgency" class="form-control">
@@ -288,13 +275,11 @@
                         <option value="CRITICAL">CRITICAL</option>
                     </select>
                 </div>
-
                 <div class="form-group" id="holdDateGroup">
                     <label class="form-label">📅 HOLD UNTIL DATE (Optional — for store ops)</label>
                     <input type="date" id="holdUntil" class="form-control">
                     <div class="hold-info">⏳ If customer doesn't pick up by this date, item releases.</div>
                 </div>
-
                 <button onclick="submitQuery()" class="btn-gold" style="width:100%;" id="fileNotamBtn">📤 FILE NOTAM</button>
                 <div style="margin-top:6px; font-size:9px; color:#8b9bb5;">⚠️ Your name will be visible to everyone. No anonymous reports.</div>
             </div>
@@ -381,6 +366,34 @@
         </div>
     </div>
 
+    <!-- SESSION TIMEOUT MODAL -->
+    <div id="sessionTimeoutModal" class="modal" style="display:none;">
+        <div class="modal-content" style="max-width:420px; text-align:center; background:rgba(20,20,35,0.98); border:2px solid #ffd700;">
+            <div class="modal-header" style="justify-content:center; border-bottom:1px solid rgba(255,215,0,0.2);">
+                <h2 style="color:#ffd700;">⏰ Session Expiring</h2>
+            </div>
+            <div style="padding:20px;">
+                <p style="color:rgba(255,255,255,0.6); font-size:14px; margin-bottom:10px;">
+                    Your session will expire in:
+                </p>
+                <div id="sessionCountdown" style="font-size:56px; color:#ffd700; font-family:'Space Mono',monospace; font-weight:700; padding:15px; background:rgba(255,215,0,0.05); border-radius:12px; border:1px solid rgba(255,215,0,0.1);">
+                    60s
+                </div>
+                <p style="color:rgba(255,255,255,0.3); font-size:11px; margin-top:12px;">
+                    Click "Stay Logged In" to continue working.
+                </p>
+                <div style="display:flex; gap:12px; justify-content:center; margin-top:18px;">
+                    <button onclick="resetSessionTimer()" class="btn-gold" style="padding:12px 32px; font-size:14px;">
+                        ✅ Stay Logged In
+                    </button>
+                    <button onclick="forceLogout()" class="btn-outline" style="padding:12px 24px; border-color:#e94560; color:#e94560;">
+                        Logout Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ===== CONFIG =====
         const WORKER_URL = 'https://jeans-club-proxy.amanyakeith418.workers.dev';
@@ -388,14 +401,25 @@
         const SYNC_VERSION = '4.0';
         
         // ===== TIME LIMITS =====
-        const ACTIVE_EXPIRY_DAYS = 12;          // All active statuses = 12 days
-        const RESOLVED_EXPIRY_DAYS = 1;          // Resolved = 1 day
-        const PENDING_EXPIRY_HOURS = 48;         // Pending = 48 hours (then auto-confirm)
-        const AWAITING_RESPONSE_HOURS = 24;      // Awaiting Response = 24 hours
+        const ACTIVE_EXPIRY_DAYS = 12;
+        const RESOLVED_EXPIRY_DAYS = 1;
+        const PENDING_EXPIRY_HOURS = 48;
+        const AWAITING_RESPONSE_HOURS = 24;
+
+        // ===== SESSION & LOCATION CONFIG =====
+        const SESSION_DURATION = 15 * 60 * 1000; // 15 minutes
+        const WARNING_TIME = 60 * 1000; // 1 minute warning
+        const LOCATION_BUFFER_METERS = 150; // 150 meters buffer zone
 
         let isOnline = navigator.onLine;
         let currentBranch = null;
         let pendingResolveId = null;
+        let sessionTimer = null;
+        let warningTimer = null;
+        let sessionCountdownInterval = null;
+        let isSessionActive = true;
+        let sessionStartTime = Date.now();
+        let lastLocationCheck = null;
 
         // ===== UTILITY =====
         function showToast(msg) {
@@ -418,14 +442,227 @@
             const map = { ACTIVE:'🟢', AWAITING_CONFIRMATION:'⏳', REOPENED:'🟠', RESOLVED:'✅', REPORTED:'🟣', INVESTIGATING:'🔵', AWAITING_RESPONSE:'🟡', ESCALATED:'🔴' };
             return map[s] || '⚪';
         }
-
-        function getIssueTypeLabel(t) {
-            return { STORE:'🔧 STORE OPS', INTERNAL:'👥 INTERNAL', EXTERNAL:'🧑‍🤝‍🧑 EXTERNAL' }[t] || t;
+        function getIssueTypeLabel(t) { return { STORE:'🔧 STORE OPS', INTERNAL:'👥 INTERNAL', EXTERNAL:'🧑‍🤝‍🧑 EXTERNAL' }[t] || t; }
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371e3;
+            const φ1 = lat1 * Math.PI / 180;
+            const φ2 = lat2 * Math.PI / 180;
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
         }
 
-        // ===== CONNECTION =====
-        window.addEventListener('online', function() { isOnline = true; document.getElementById('offlineBanner').style.display = 'none'; showToast('📶 Online — refreshing'); setTimeout(() => location.reload(), 1500); });
-        window.addEventListener('offline', function() { isOnline = false; document.getElementById('offlineBanner').style.display = 'block'; showToast('❌ Offline'); });
+        // ===== SESSION TIMEOUT SYSTEM =====
+        function startSessionTimer() {
+            clearTimeout(sessionTimer);
+            clearTimeout(warningTimer);
+            clearInterval(sessionCountdownInterval);
+            isSessionActive = true;
+            document.getElementById('sessionTimeoutModal').style.display = 'none';
+            
+            warningTimer = setTimeout(function() {
+                if (isSessionActive) showSessionWarning();
+            }, SESSION_DURATION - WARNING_TIME);
+            
+            sessionTimer = setTimeout(function() {
+                if (isSessionActive) expireSession();
+            }, SESSION_DURATION);
+            
+            updateSessionDisplay();
+        }
+
+        function showSessionWarning() {
+            if (!isSessionActive) return;
+            const modal = document.getElementById('sessionTimeoutModal');
+            modal.style.display = 'block';
+            let countdown = 60;
+            const countdownEl = document.getElementById('sessionCountdown');
+            clearInterval(sessionCountdownInterval);
+            sessionCountdownInterval = setInterval(function() {
+                countdown--;
+                countdownEl.textContent = countdown + 's';
+                countdownEl.style.color = countdown <= 10 ? '#e94560' : '#ffd700';
+                if (countdown <= 0) { clearInterval(sessionCountdownInterval); expireSession(); }
+            }, 1000);
+            
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.frequency.value = 800;
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(audioCtx.currentTime);
+                osc.stop(audioCtx.currentTime + 0.3);
+            } catch (e) {}
+        }
+
+        function resetSessionTimer() {
+            document.getElementById('sessionTimeoutModal').style.display = 'none';
+            clearInterval(sessionCountdownInterval);
+            showToast('✅ Session extended for another 15 minutes');
+            startSessionTimer();
+        }
+
+        function expireSession() {
+            if (!isSessionActive) return;
+            isSessionActive = false;
+            clearInterval(sessionCountdownInterval);
+            document.getElementById('sessionTimeoutModal').style.display = 'none';
+            showToast('🔒 Session expired due to inactivity');
+            setTimeout(function() {
+                alert('🔒 Your session has expired. Please log in again.');
+                handleLogout();
+            }, 500);
+        }
+
+        function forceLogout() {
+            clearInterval(sessionCountdownInterval);
+            document.getElementById('sessionTimeoutModal').style.display = 'none';
+            handleLogout();
+        }
+
+        function updateSessionDisplay() {
+            const timerEl = document.getElementById('sessionTimerDisplay');
+            if (!timerEl) return;
+            clearInterval(window.sessionDisplayInterval);
+            window.sessionDisplayInterval = setInterval(function() {
+                if (!isSessionActive) { clearInterval(window.sessionDisplayInterval); timerEl.textContent = '⏰ 0s'; return; }
+                const elapsed = Date.now() - sessionStartTime;
+                const remaining = Math.max(0, SESSION_DURATION - elapsed);
+                if (remaining < 60000) {
+                    const seconds = Math.floor(remaining / 1000);
+                    timerEl.textContent = `⏰ ${seconds}s`;
+                    timerEl.style.color = remaining < 30000 ? '#e94560' : '#ffd700';
+                } else {
+                    const minutes = Math.floor(remaining / 60000);
+                    const seconds = Math.floor((remaining % 60000) / 1000);
+                    timerEl.textContent = `⏰ ${minutes}m ${seconds}s`;
+                    timerEl.style.color = remaining < 120000 ? '#d4a574' : 'rgba(255,255,255,0.4)';
+                }
+            }, 1000);
+        }
+
+        // ===== LOCATION VERIFICATION =====
+        function getPreciseLocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject(new Error('Geolocation is not supported by this browser.'));
+                    return;
+                }
+                const locationStatus = document.getElementById('loginLocationStatus');
+                if (locationStatus) {
+                    locationStatus.style.display = 'block';
+                    locationStatus.innerHTML = '📍 Detecting your location...';
+                }
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const location = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                            accuracy: position.coords.accuracy || 10,
+                            timestamp: position.timestamp
+                        };
+                        lastLocationCheck = location;
+                        resolve(location);
+                    },
+                    (error) => {
+                        let message = 'Could not get location.';
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                message = '❌ Location permission denied. Please enable location services.';
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                message = '❌ Location information unavailable.';
+                                break;
+                            case error.TIMEOUT:
+                                message = '❌ Location request timed out. Please try again.';
+                                break;
+                        }
+                        reject(new Error(message));
+                    },
+                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 30000 }
+                );
+            });
+        }
+
+        async function verifyLocationWithBranches(location) {
+            try {
+                // Get all active branches with locations
+                const { data: branches, error } = await _supabase
+                    .from('branches')
+                    .select('id, name, latitude, longitude')
+                    .eq('is_active', true);
+
+                if (error || !branches || branches.length === 0) {
+                    return {
+                        verified: false,
+                        message: '❌ No branches found with location data.',
+                        nearestBranch: null,
+                        distance: null,
+                        isWithinBuffer: false
+                    };
+                }
+
+                let nearestBranch = null;
+                let nearestDistance = Infinity;
+
+                for (const branch of branches) {
+                    if (!branch.latitude || !branch.longitude) continue;
+                    const distance = calculateDistance(location.lat, location.lng, branch.latitude, branch.longitude);
+                    if (distance < nearestDistance) {
+                        nearestDistance = distance;
+                        nearestBranch = branch;
+                    }
+                }
+
+                const isWithinBuffer = nearestDistance <= LOCATION_BUFFER_METERS;
+                const locationStatus = document.getElementById('loginLocationStatus');
+                if (locationStatus) {
+                    if (isWithinBuffer) {
+                        locationStatus.style.color = '#7bcfa6';
+                        locationStatus.innerHTML = `
+                            ✅ Location Verified<br>
+                            📍 ${nearestDistance.toFixed(0)}m from ${nearestBranch.name} branch<br>
+                            ✅ Within buffer zone (${LOCATION_BUFFER_METERS}m)
+                        `;
+                    } else {
+                        locationStatus.style.color = '#e94560';
+                        locationStatus.innerHTML = `
+                            ❌ Location Verification Failed<br>
+                            📍 ${nearestDistance.toFixed(0)}m from ${nearestBranch.name} branch<br>
+                            ❌ Outside buffer zone (${LOCATION_BUFFER_METERS}m)<br>
+                            ⚠️ You must be within ${LOCATION_BUFFER_METERS}m of a branch to log in.
+                        `;
+                    }
+                }
+
+                return {
+                    verified: isWithinBuffer,
+                    nearestBranch: nearestBranch,
+                    distance: nearestDistance,
+                    isWithinBuffer: isWithinBuffer,
+                    message: isWithinBuffer 
+                        ? `✅ Verified at ${nearestBranch.name} (${nearestDistance.toFixed(0)}m)`
+                        : `❌ Too far from ${nearestBranch.name} (${nearestDistance.toFixed(0)}m)`
+                };
+
+            } catch (error) {
+                console.error('Error verifying location:', error);
+                return {
+                    verified: false,
+                    message: '❌ Error verifying location: ' + error.message,
+                    nearestBranch: null,
+                    distance: null,
+                    isWithinBuffer: false
+                };
+            }
+        }
 
         // ===== CLOUD SYNC =====
         async function loadFromGist() {
@@ -847,8 +1084,6 @@
             }
             
             document.getElementById('weeklyReportContent').innerHTML = html;
-            
-            // Stats at the top
             document.getElementById('reportStats').innerHTML = `
                 <div class="stat-box"><div class="stat-number">${weekly.length}</div><div>TOTAL</div></div>
                 <div class="stat-box"><div class="stat-number">${weekly.filter(q => q.urgency === 'CRITICAL').length}</div><div>CRITICAL</div></div>
@@ -890,52 +1125,113 @@
             if (changed) { localStorage.setItem('queries', JSON.stringify(queries)); await saveToGist(); if (isManager()) { loadQueries(); updateStats(); } }
         }
 
-        // ===== CLEANUP: Delete expired NOTAMs (all statuses) =====
         async function cleanExpiredNotams() {
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
             let changed = false;
             const now = new Date();
 
             queries = queries.filter(q => {
-                // RESOLVED: 1 day
                 if (q.status === 'RESOLVED' && q.resolvedExpiryDate) {
-                    if (new Date(q.resolvedExpiryDate) < now) {
-                        changed = true;
-                        return false;
-                    }
+                    if (new Date(q.resolvedExpiryDate) < now) { changed = true; return false; }
                     return true;
                 }
-
-                // AWAITING_RESPONSE: 24 hours
                 if (q.status === 'AWAITING_RESPONSE') {
                     const createdAt = new Date(q.createdAt);
                     const hoursSinceCreation = (now - createdAt) / (1000 * 60 * 60);
-                    if (hoursSinceCreation > AWAITING_RESPONSE_HOURS) {
-                        changed = true;
-                        return false;
-                    }
+                    if (hoursSinceCreation > AWAITING_RESPONSE_HOURS) { changed = true; return false; }
                     return true;
                 }
-
-                // ALL OTHER STATUSES: 12 days (ACTIVE, REOPENED, REPORTED, INVESTIGATING, ESCALATED)
                 const createdAt = new Date(q.createdAt);
                 const ageInDays = (now - createdAt) / (1000 * 60 * 60 * 24);
-                if (ageInDays > ACTIVE_EXPIRY_DAYS) {
-                    changed = true;
-                    return false;
-                }
-
+                if (ageInDays > ACTIVE_EXPIRY_DAYS) { changed = true; return false; }
                 return true;
             });
 
             if (changed) {
                 localStorage.setItem('queries', JSON.stringify(queries));
                 await saveToGist();
-                if (isManager()) {
-                    loadQueries();
-                    updateStats();
-                }
+                if (isManager()) { loadQueries(); updateStats(); }
                 showToast('🧹 Cleaned up expired NOTAMs');
+            }
+        }
+
+        // ===== MANAGER: CAPTURE BRANCH LOCATION =====
+        async function captureBranchLocation(buttonElement) {
+            if (!isManager()) {
+                showToast('⚠️ Only managers can capture locations');
+                return;
+            }
+
+            const branchCard = buttonElement.closest('.branch-tag') || buttonElement.closest('.branch-card') || buttonElement.parentElement;
+            const branchName = branchCard.querySelector('span')?.textContent?.trim() || 'Unknown';
+            
+            // Find branch ID from the branch tag
+            let branchId = null;
+            const allBranches = JSON.parse(localStorage.getItem('branches')) || [];
+            const branch = allBranches.find(b => b === branchName);
+            if (branch) {
+                // We need the actual branch ID from the database
+                const { data: branchData, error } = await _supabase
+                    .from('branches')
+                    .select('id')
+                    .eq('name', branch)
+                    .maybeSingle();
+                if (error) {
+                    showToast('❌ Error finding branch: ' + error.message);
+                    return;
+                }
+                if (branchData) branchId = branchData.id;
+            }
+
+            if (!branchId) {
+                showToast('❌ Branch not found. Please refresh and try again.');
+                return;
+            }
+
+            buttonElement.disabled = true;
+            buttonElement.textContent = '📍 Getting location...';
+
+            try {
+                const location = await getPreciseLocation();
+                
+                // Save location to branch_locations table
+                const { error: upsertError } = await _supabase
+                    .from('branch_locations')
+                    .upsert({
+                        branch_id: branchId,
+                        latitude: location.lat,
+                        longitude: location.lng,
+                        accuracy: location.accuracy || 10,
+                        buffer_radius: LOCATION_BUFFER_METERS,
+                        captured_by: currentUser?.id || null,
+                        captured_at: new Date().toISOString(),
+                        is_active: true
+                    }, { onConflict: 'branch_id' });
+
+                if (upsertError) {
+                    showToast('❌ Error saving location: ' + upsertError.message);
+                    buttonElement.disabled = false;
+                    buttonElement.textContent = '📡 Capture';
+                    return;
+                }
+
+                // Update branch table with coordinates
+                await _supabase
+                    .from('branches')
+                    .update({ latitude: location.lat, longitude: location.lng })
+                    .eq('id', branchId);
+
+                showToast(`✅ Location captured for ${branchName}! (${location.lat.toFixed(6)}, ${location.lng.toFixed(6)})`);
+                buttonElement.disabled = false;
+                buttonElement.textContent = '✅ Captured';
+                buttonElement.style.background = 'rgba(123,207,166,0.2)';
+                buttonElement.style.color = '#7bcfa6';
+                buttonElement.style.borderColor = 'rgba(123,207,166,0.3)';
+
+            } catch (error) {
+                showToast('❌ Error: ' + error.message);
+                buttonElement.disabled = false;
+                buttonElement.textContent = '📡 Capture';
             }
         }
 
@@ -957,165 +1253,337 @@
             });
         });
 
-        // ===== INIT =====
+        // ===== OVERRIDE: showDashboard with Session Timer =====
+        const originalShowDashboard = window.showDashboard || function() {};
+        window.showDashboard = function() {
+            if (typeof originalShowDashboard === 'function') originalShowDashboard();
+            if (currentUser) {
+                sessionStartTime = Date.now();
+                startSessionTimer();
+                const headerUser = document.querySelector('.header-user');
+                if (headerUser && !document.getElementById('sessionTimerDisplay')) {
+                    const timerEl = document.createElement('span');
+                    timerEl.id = 'sessionTimerDisplay';
+                    timerEl.textContent = '⏰ 15m 0s';
+                    headerUser.insertBefore(timerEl, headerUser.querySelector('.btn-logout'));
+                }
+            }
+        };
+
+        // Reset session on activity
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('#sessionTimeoutModal')) return;
+            if (isSessionActive) startSessionTimer();
+        });
+        document.addEventListener('keypress', function() {
+            if (isSessionActive) startSessionTimer();
+        });
+
+        // ===== OVERRIDE: handleLogin with Location Check =====
+        const originalHandleLogin = window.handleLogin || function() {};
+        window.handleLogin = async function() {
+            const emailOrName = document.getElementById('loginEmailOrName').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const errorEl = document.getElementById('loginError');
+
+            errorEl.style.display = 'none';
+            errorEl.textContent = '';
+
+            if (!emailOrName || !password) {
+                errorEl.textContent = 'Please enter your credentials.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                const loginBtn = document.getElementById('loginBtn');
+                loginBtn.disabled = true;
+                loginBtn.textContent = '📍 Getting location...';
+
+                // Get location
+                let location;
+                try {
+                    location = await getPreciseLocation();
+                } catch (locError) {
+                    errorEl.textContent = locError.message;
+                    errorEl.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                    return;
+                }
+
+                loginBtn.textContent = '📍 Verifying location...';
+                const locationCheck = await verifyLocationWithBranches(location);
+
+                if (!locationCheck.verified) {
+                    errorEl.textContent = locationCheck.message;
+                    errorEl.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                    return;
+                }
+
+                // Manager hardcoded login (bypass location for manager)
+                if (password === 'J' && emailOrName.toLowerCase() === 'manager') {
+                    currentUser = {
+                        id: '11111111-1111-1111-1111-111111111111',
+                        role: 'manager',
+                        name: 'Manager',
+                        email: 'admin@jeansclub.com',
+                        avatar_url: '',
+                        isAtBranch: true,
+                        accessLevel: 'full',
+                        branch: locationCheck.nearestBranch,
+                        distance: locationCheck.distance,
+                        locationVerified: true
+                    };
+                    document.getElementById('loginPassword').value = '';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                    
+                    // Show dashboard
+                    if (typeof showDashboard === 'function') {
+                        showDashboard();
+                    } else {
+                        document.getElementById('loginScreen').style.display = 'none';
+                        document.getElementById('dashboard').style.display = 'block';
+                        // Update user name in header
+                        document.getElementById('userNameDisplay').textContent = 'Manager';
+                        document.getElementById('userRoleDisplay').textContent = 'Manager';
+                    }
+                    
+                    alert(`✅ Welcome Manager!\n📍 At ${locationCheck.nearestBranch.name} (${locationCheck.distance.toFixed(0)}m)\n⏰ Session: 15 minutes`);
+                    return;
+                }
+
+                // Regular user login
+                loginBtn.textContent = '🔍 Authenticating...';
+                const { data: user, error: userError } = await _supabase
+                    .from('workers')
+                    .select('*')
+                    .ilike('full_name', emailOrName)
+                    .eq('is_active', true)
+                    .maybeSingle();
+
+                if (userError || !user) {
+                    errorEl.textContent = 'Invalid credentials. User not found or inactive.';
+                    errorEl.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                    return;
+                }
+
+                if (user.password_hash !== password) {
+                    errorEl.textContent = 'Invalid credentials. Wrong password.';
+                    errorEl.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                    return;
+                }
+
+                const { data: userRole } = await _supabase
+                    .from('users')
+                    .select('role')
+                    .eq('id', user.id)
+                    .maybeSingle();
+
+                const role = userRole?.role || 'worker';
+
+                if (role === 'worker' && !locationCheck.isWithinBuffer) {
+                    errorEl.textContent = `❌ Workers must be within ${LOCATION_BUFFER_METERS}m of a branch to log in.`;
+                    errorEl.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                    return;
+                }
+
+                currentUser = {
+                    id: user.id,
+                    name: user.full_name,
+                    jc_id: user.jc_id,
+                    role: role,
+                    email: user.email,
+                    avatar_url: user.avatar_url || '',
+                    isAtBranch: locationCheck.isWithinBuffer,
+                    accessLevel: 'full',
+                    branch: locationCheck.nearestBranch,
+                    distance: locationCheck.distance,
+                    locationVerified: true
+                };
+
+                document.getElementById('loginPassword').value = '';
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+
+                if (typeof showDashboard === 'function') {
+                    showDashboard();
+                } else {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    document.getElementById('userNameDisplay').textContent = currentUser.name;
+                    document.getElementById('userRoleDisplay').textContent = currentUser.role;
+                }
+
+                alert(`✅ Welcome ${currentUser.name}!\n📍 At ${locationCheck.nearestBranch.name} (${locationCheck.distance.toFixed(0)}m)\n⏰ Session: 15 minutes`);
+
+            } catch (error) {
+                const errorEl = document.getElementById('loginError');
+                errorEl.textContent = error.message || 'Login failed. Please try again.';
+                errorEl.style.display = 'block';
+                document.getElementById('loginBtn').disabled = false;
+                document.getElementById('loginBtn').textContent = 'Sign In';
+            }
+        };
+
+        // ===== ORIGINAL INIT =====
         window.onload = async function() {
+            // Add location status to login form if not present
+            const loginForm = document.querySelector('.login-container');
+            if (loginForm && !document.getElementById('loginLocationStatus')) {
+                const statusDiv = document.createElement('div');
+                statusDiv.id = 'loginLocationStatus';
+                statusDiv.style.cssText = 'text-align: center; font-size: 13px; color: rgba(255,255,255,0.5); margin: 10px 0; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; display: none; line-height: 1.6;';
+                statusDiv.innerHTML = '📍 Detecting location...';
+                const loginBtn = document.getElementById('loginBtn');
+                if (loginBtn) {
+                    loginBtn.parentNode.insertBefore(statusDiv, loginBtn);
+                }
+            }
+
             if (!navigator.onLine) { document.getElementById('offlineBanner').style.display = 'block'; return; }
             await loadFromGist();
             loadBranches();
             generateBranchQRCodes();
             checkForBranchInUrl();
             
-            // Auto-sync every 5 minutes
             setInterval(loadFromGist, 5 * 60 * 1000);
-            
-            // Auto-cleanup tasks (every hour)
             setInterval(autoConfirmStaleResolutions, 60 * 60 * 1000);
             setInterval(cleanExpiredNotams, 60 * 60 * 1000);
             
-            // Run on startup
             setTimeout(autoConfirmStaleResolutions, 5000);
             setTimeout(cleanExpiredNotams, 10000);
+
+            // Re-attach login handler
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.onclick = function(e) {
+                    e.preventDefault();
+                    window.handleLogin();
+                };
+            }
         };
 
         window.onclick = function(e) {
             const m = document.getElementById('workerNameModal');
             if (e.target === m) closeWorkerNameModal();
-        };
-   
-   </script>
-<!-- ============================================================ -->
-<!-- 📱 FLOATING DOWNLOAD BAR + INSTALLATION POPUP                 -->
-<!-- ============================================================ -->
-
-<!-- Floating Download Bar -->
-<div id="floatingDownloadBar" style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,215,0,0.3); padding: 12px 20px; z-index: 9999; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-    <div style="display: flex; align-items: center; gap: 12px;">
-        <div>
-            <span style="color: #FFD700; font-weight: bold; font-size: 18px;"> JEANS CLUB</span>
-            <span style="color: #888; font-size: 10px; margin-top: 4px; display: block;">NOTAM System • Est. 2000</span>
-        </div>
-    </div>
-    
-    <div style="display: flex; gap: 15px; align-items: center;">
-        <a href="https://raw.githubusercontent.com/elijah787/QUERIES/main/build_45f78a3c-2083-4da6-b4e2-82e9003e3da4.apk"
-           id="downloadAppLink"
-           style="background: #FFD700; color: #0a0a0a; padding: 8px 24px; border-radius: 40px; text-decoration: none; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 8px;">
-             Download App
-        </a>
-        <button id="closeBarBtn" style="background: none; border: none; color: #888; font-size: 20px; cursor: pointer; padding: 0 8px;" title="Close">✕</button>
-    </div>
-</div>
-
-<!-- Installation Popup -->
-<div id="installPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 20000; justify-content: center; align-items: center; text-align: center;">
-    <div style="background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%); padding: 40px 30px; border-radius: 20px; max-width: 350px; width: 90%; margin: 20px; border: 2px solid #FFD700; box-shadow: 0 0 50px rgba(255,215,0,0.3);">
-        <div style="font-size: 60px; margin-bottom: 20px;">📲</div>
-        <h2 style="color: #FFD700; margin-bottom: 15px; font-size: 24px;">Finish Installation</h2>
-        <p style="color: white; font-size: 16px; line-height: 1.6;">
-            Please open the downloaded file and tap INSTALL to complete setup.
-        </p>
-        <div style="margin-top: 20px;">
-            <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid #FFD700; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-        </div>
-    </div>
-</div>
-
-<style>
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-</style>
-
-<script>
-// ===========================================
-// APK DOWNLOAD HANDLING
-// ===========================================
-
-function isAppInstalled() {
-    var ua = navigator.userAgent || navigator.vendor || window.opera;
-    var isInWebView = (ua.indexOf('wv') > -1) || (ua.indexOf('WebView') > -1);
-    
-    if (isInWebView) {
-        localStorage.setItem('jeansClubAppInstalled', 'true');
-        localStorage.removeItem('downloadStarted');
-        return true;
-    }
-    return localStorage.getItem('jeansClubAppInstalled') === 'true';
-}
-
-function checkAndHidePopup() {
-    var popup = document.getElementById('installPopup');
-    if (!popup) return false;
-    
-    if (isAppInstalled()) {
-        popup.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        localStorage.removeItem('downloadStarted');
-        return true;
-    }
-    return false;
-}
-
-function showInstallPopup() {
-    var downloadStarted = localStorage.getItem('downloadStarted') === 'true';
-    
-    if (isAppInstalled() || !downloadStarted) return;
-    
-    var popup = document.getElementById('installPopup');
-    if (popup) {
-        popup.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-        
-        var checkInterval = setInterval(function() {
-            if (checkAndHidePopup()) {
-                clearInterval(checkInterval);
+            const sessionModal = document.getElementById('sessionTimeoutModal');
+            if (e.target === sessionModal) {
+                // Don't close on background click, user must choose
             }
-        }, 2000);
-    }
-}
+        };
+    </script>
 
-document.addEventListener('DOMContentLoaded', function() {
-    var downloadLink = document.getElementById('downloadAppLink');
-    if (downloadLink) {
-        downloadLink.addEventListener('click', function(e) {
-            localStorage.setItem('downloadStarted', 'true');
-            
-            var bar = document.getElementById('floatingDownloadBar');
-            if (bar) bar.style.display = 'none';
-            
-            setTimeout(function() {
-                showInstallPopup();
-            }, 2000);
+    <!-- ===== FLOATING DOWNLOAD BAR ===== -->
+    <div id="floatingDownloadBar" style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,215,0,0.3); padding: 12px 20px; z-index: 9999; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div>
+                <span style="color: #FFD700; font-weight: bold; font-size: 18px;">👖 JEANS CLUB</span>
+                <span style="color: #888; font-size: 10px; margin-top: 4px; display: block;">NOTAM System • Est. 2000</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="https://raw.githubusercontent.com/elijah787/QUERIES/main/build_45f78a3c-2083-4da6-b4e2-82e9003e3da4.apk" id="downloadAppLink" style="background: #FFD700; color: #0a0a0a; padding: 8px 24px; border-radius: 40px; text-decoration: none; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 8px;">📲 Download App</a>
+            <button id="closeBarBtn" style="background: none; border: none; color: #888; font-size: 20px; cursor: pointer; padding: 0 8px;" title="Close">✕</button>
+        </div>
+    </div>
+
+    <!-- ===== INSTALLATION POPUP ===== -->
+    <div id="installPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 20000; justify-content: center; align-items: center; text-align: center;">
+        <div style="background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%); padding: 40px 30px; border-radius: 20px; max-width: 350px; width: 90%; margin: 20px; border: 2px solid #FFD700; box-shadow: 0 0 50px rgba(255,215,0,0.3);">
+            <div style="font-size: 60px; margin-bottom: 20px;">📲</div>
+            <h2 style="color: #FFD700; margin-bottom: 15px; font-size: 24px;">Finish Installation</h2>
+            <p style="color: white; font-size: 16px; line-height: 1.6;">Please open the downloaded file and tap INSTALL to complete setup.</p>
+            <div style="margin-top: 20px;">
+                <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid #FFD700; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+
+    <script>
+        // APK Download Handling
+        function isAppInstalled() {
+            var ua = navigator.userAgent || navigator.vendor || window.opera;
+            var isInWebView = (ua.indexOf('wv') > -1) || (ua.indexOf('WebView') > -1);
+            if (isInWebView) {
+                localStorage.setItem('jeansClubAppInstalled', 'true');
+                localStorage.removeItem('downloadStarted');
+                return true;
+            }
+            return localStorage.getItem('jeansClubAppInstalled') === 'true';
+        }
+
+        function checkAndHidePopup() {
+            var popup = document.getElementById('installPopup');
+            if (!popup) return false;
+            if (isAppInstalled()) {
+                popup.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                localStorage.removeItem('downloadStarted');
+                return true;
+            }
+            return false;
+        }
+
+        function showInstallPopup() {
+            var downloadStarted = localStorage.getItem('downloadStarted') === 'true';
+            if (isAppInstalled() || !downloadStarted) return;
+            var popup = document.getElementById('installPopup');
+            if (popup) {
+                popup.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                var checkInterval = setInterval(function() {
+                    if (checkAndHidePopup()) {
+                        clearInterval(checkInterval);
+                    }
+                }, 2000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var downloadLink = document.getElementById('downloadAppLink');
+            if (downloadLink) {
+                downloadLink.addEventListener('click', function(e) {
+                    localStorage.setItem('downloadStarted', 'true');
+                    var bar = document.getElementById('floatingDownloadBar');
+                    if (bar) bar.style.display = 'none';
+                    setTimeout(function() { showInstallPopup(); }, 2000);
+                });
+            }
+            var closeBtn = document.getElementById('closeBarBtn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    localStorage.setItem('downloadBarClosed', 'true');
+                    var bar = document.getElementById('floatingDownloadBar');
+                    if (bar) bar.style.display = 'none';
+                });
+            }
         });
-    }
-    
-    var closeBtn = document.getElementById('closeBarBtn');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            localStorage.setItem('downloadBarClosed', 'true');
-            var bar = document.getElementById('floatingDownloadBar');
-            if (bar) bar.style.display = 'none';
+
+        window.addEventListener('load', function() {
+            if (isAppInstalled()) {
+                var bar = document.getElementById('floatingDownloadBar');
+                if (bar) bar.style.display = 'none';
+                localStorage.removeItem('downloadStarted');
+            }
         });
-    }
-});
 
-window.addEventListener('load', function() {
-    if (isAppInstalled()) {
-        var bar = document.getElementById('floatingDownloadBar');
-        if (bar) bar.style.display = 'none';
-        localStorage.removeItem('downloadStarted');
-        return;
-    }
-});
-
-document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) {
-        checkAndHidePopup();
-    }
-});
-</script>
-<!-- ============================================================ -->
-<!-- END APK DOWNLOAD FEATURE                                      -->
-<!-- ============================================================ -->
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) { checkAndHidePopup(); }
+        });
+    </script>
 </body>
 </html>
