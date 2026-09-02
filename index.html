@@ -981,6 +981,141 @@
             const m = document.getElementById('workerNameModal');
             if (e.target === m) closeWorkerNameModal();
         };
-    </script>
+   
+   </script>
+<!-- ============================================================ -->
+<!-- 📱 FLOATING DOWNLOAD BAR + INSTALLATION POPUP                 -->
+<!-- ============================================================ -->
+
+<!-- Floating Download Bar -->
+<div id="floatingDownloadBar" style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,215,0,0.3); padding: 12px 20px; z-index: 9999; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <div>
+            <span style="color: #FFD700; font-weight: bold; font-size: 18px;"> JEANS CLUB</span>
+            <span style="color: #888; font-size: 10px; margin-top: 4px; display: block;">NOTAM System • Est. 2000</span>
+        </div>
+    </div>
+    
+    <div style="display: flex; gap: 15px; align-items: center;">
+        <a href="https://elijah787.github.io/QUERIES/jeans_club_queries.apk"
+           id="downloadAppLink"
+           style="background: #FFD700; color: #0a0a0a; padding: 8px 24px; border-radius: 40px; text-decoration: none; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+             Download App
+        </a>
+        <button id="closeBarBtn" style="background: none; border: none; color: #888; font-size: 20px; cursor: pointer; padding: 0 8px;" title="Close">✕</button>
+    </div>
+</div>
+
+<!-- Installation Popup -->
+<div id="installPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 20000; justify-content: center; align-items: center; text-align: center;">
+    <div style="background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%); padding: 40px 30px; border-radius: 20px; max-width: 350px; width: 90%; margin: 20px; border: 2px solid #FFD700; box-shadow: 0 0 50px rgba(255,215,0,0.3);">
+        <div style="font-size: 60px; margin-bottom: 20px;">📲</div>
+        <h2 style="color: #FFD700; margin-bottom: 15px; font-size: 24px;">Finish Installation</h2>
+        <p style="color: white; font-size: 16px; line-height: 1.6;">
+            Please open the downloaded file and tap INSTALL to complete setup.
+        </p>
+        <div style="margin-top: 20px;">
+            <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid #FFD700; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+// ===========================================
+// APK DOWNLOAD HANDLING
+// ===========================================
+
+function isAppInstalled() {
+    var ua = navigator.userAgent || navigator.vendor || window.opera;
+    var isInWebView = (ua.indexOf('wv') > -1) || (ua.indexOf('WebView') > -1);
+    
+    if (isInWebView) {
+        localStorage.setItem('jeansClubAppInstalled', 'true');
+        localStorage.removeItem('downloadStarted');
+        return true;
+    }
+    return localStorage.getItem('jeansClubAppInstalled') === 'true';
+}
+
+function checkAndHidePopup() {
+    var popup = document.getElementById('installPopup');
+    if (!popup) return false;
+    
+    if (isAppInstalled()) {
+        popup.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        localStorage.removeItem('downloadStarted');
+        return true;
+    }
+    return false;
+}
+
+function showInstallPopup() {
+    var downloadStarted = localStorage.getItem('downloadStarted') === 'true';
+    
+    if (isAppInstalled() || !downloadStarted) return;
+    
+    var popup = document.getElementById('installPopup');
+    if (popup) {
+        popup.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        var checkInterval = setInterval(function() {
+            if (checkAndHidePopup()) {
+                clearInterval(checkInterval);
+            }
+        }, 2000);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var downloadLink = document.getElementById('downloadAppLink');
+    if (downloadLink) {
+        downloadLink.addEventListener('click', function(e) {
+            localStorage.setItem('downloadStarted', 'true');
+            
+            var bar = document.getElementById('floatingDownloadBar');
+            if (bar) bar.style.display = 'none';
+            
+            setTimeout(function() {
+                showInstallPopup();
+            }, 2000);
+        });
+    }
+    
+    var closeBtn = document.getElementById('closeBarBtn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            localStorage.setItem('downloadBarClosed', 'true');
+            var bar = document.getElementById('floatingDownloadBar');
+            if (bar) bar.style.display = 'none';
+        });
+    }
+});
+
+window.addEventListener('load', function() {
+    if (isAppInstalled()) {
+        var bar = document.getElementById('floatingDownloadBar');
+        if (bar) bar.style.display = 'none';
+        localStorage.removeItem('downloadStarted');
+        return;
+    }
+});
+
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        checkAndHidePopup();
+    }
+});
+</script>
+<!-- ============================================================ -->
+<!-- END APK DOWNLOAD FEATURE                                      -->
+<!-- ============================================================ -->
 </body>
 </html>
