@@ -386,13 +386,12 @@
         const WORKER_URL = 'https://jeans-club-proxy.amanyakeith418.workers.dev';
         const SYNC_KEY = 'jeans_club_global_data';
         const SYNC_VERSION = '4.0';
-        const RESOLVED_EXPIRY_STORE = 1;   // days
-        const RESOLVED_EXPIRY_INTERNAL = 1;
-        const RESOLVED_EXPIRY_EXTERNAL = 1;
-        const PENDING_EXPIRY_HOURS = 48;
-        const REPORTED_REVIEW_HOURS = 24;
-        const AWAITING_RESPONSE_INTERNAL = 48; // hours
-        const AWAITING_RESPONSE_EXTERNAL = 72;
+        
+        // ===== TIME LIMITS =====
+        const ACTIVE_EXPIRY_DAYS = 12;          // All active statuses = 12 days
+        const RESOLVED_EXPIRY_DAYS = 1;          // Resolved = 1 day
+        const PENDING_EXPIRY_HOURS = 48;         // Pending = 48 hours (then auto-confirm)
+        const AWAITING_RESPONSE_HOURS = 24;      // Awaiting Response = 24 hours
 
         let isOnline = navigator.onLine;
         let currentBranch = null;
@@ -614,17 +613,16 @@
             const idx = queries.findIndex(q => q.id === id);
             if (idx === -1) return;
             const q = queries[idx];
-            const expiryDays = q.issueType === 'STORE' ? RESOLVED_EXPIRY_STORE : (q.issueType === 'INTERNAL' ? RESOLVED_EXPIRY_INTERNAL : RESOLVED_EXPIRY_EXTERNAL);
             q.status = 'RESOLVED';
             q.resolvedByManager = 'MANAGER';
             q.resolvedAt = new Date().toISOString();
-            q.resolvedExpiryDate = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000).toISOString();
+            q.resolvedExpiryDate = new Date(Date.now() + RESOLVED_EXPIRY_DAYS * 24 * 60 * 60 * 1000).toISOString();
             if (!q.statusHistory) q.statusHistory = [];
-            q.statusHistory.push({ status: 'RESOLVED', timestamp: new Date().toISOString(), changedBy: 'MANAGER', note: `Confirmed — auto-deletes in ${expiryDays} days` });
+            q.statusHistory.push({ status: 'RESOLVED', timestamp: new Date().toISOString(), changedBy: 'MANAGER', note: `Confirmed — auto-deletes in ${RESOLVED_EXPIRY_DAYS} day` });
             localStorage.setItem('queries', JSON.stringify(queries));
             await saveToGist();
             loadQueries(); updateStats();
-            showToast(`✅ Resolved — auto-deletes in ${expiryDays} days`);
+            showToast(`✅ Resolved — auto-deletes in ${RESOLVED_EXPIRY_DAYS} day`);
         }
 
         async function reopenNotam(id) {
@@ -814,50 +812,49 @@
             document.getElementById('latestNotam').textContent = latest ? latest.title.substring(0,25)+'...' : 'None';
         }
 
-      function generateWeeklyReport() {
-    let queries = JSON.parse(localStorage.getItem('queries')) || [];
-    const oneWeekAgo = new Date(); 
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-    const weekly = queries.filter(q => new Date(q.createdAt) >= oneWeekAgo);
-    
-    document.getElementById('reportPeriod').textContent = `${oneWeekAgo.toLocaleDateString()} - ${new Date().toLocaleDateString()}`;
-    
-    let html = '';
-    if (!weekly.length) {
-        html = '<div style="text-align:center; padding:20px; color:#8b9bb5;">📭 NO NOTAMS THIS WEEK</div>';
-    } else {
-        const byBranch = {};
-        weekly.forEach(q => {
-            if (!byBranch[q.branch]) byBranch[q.branch] = [];
-            byBranch[q.branch].push(q);
-        });
-        
-        for (const [branch, items] of Object.entries(byBranch)) {
-            html += `<div style="margin-bottom:12px; border-bottom:1px solid rgba(255,215,0,0.1); padding-bottom:8px;">
-                <span style="color:#ffd700; font-weight:bold; font-size:12px;">✈︎ ${branch}</span> 
-                <span style="color:#8b9bb5; font-size:10px;">(${items.length})</span><br>`;
+        function generateWeeklyReport() {
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const oneWeekAgo = new Date(); 
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            const weekly = queries.filter(q => new Date(q.createdAt) >= oneWeekAgo);
             
-            items.forEach(q => {
-                // FIXED: Show full title, no cutting
-                html += `<div style="margin-left:12px; font-size:11px; color:white; padding:2px 0;">
-                    • ${q.title} 
-                    <span style="color:${statusColor(q.status)}; font-size:10px;">${statusIcon(q.status)} ${statusLabel(q.status)}</span>
-                    <span style="color:#8b9bb5; font-size:9px; margin-left:5px;">(${q.notamNumber})</span>
-                </div>`;
-            });
-            html += '</div>';
+            document.getElementById('reportPeriod').textContent = `${oneWeekAgo.toLocaleDateString()} - ${new Date().toLocaleDateString()}`;
+            
+            let html = '';
+            if (!weekly.length) {
+                html = '<div style="text-align:center; padding:20px; color:#8b9bb5;">📭 NO NOTAMS THIS WEEK</div>';
+            } else {
+                const byBranch = {};
+                weekly.forEach(q => {
+                    if (!byBranch[q.branch]) byBranch[q.branch] = [];
+                    byBranch[q.branch].push(q);
+                });
+                
+                for (const [branch, items] of Object.entries(byBranch)) {
+                    html += `<div style="margin-bottom:12px; border-bottom:1px solid rgba(255,215,0,0.1); padding-bottom:8px;">
+                        <span style="color:#ffd700; font-weight:bold; font-size:12px;">✈︎ ${branch}</span> 
+                        <span style="color:#8b9bb5; font-size:10px;">(${items.length})</span><br>`;
+                    
+                    items.forEach(q => {
+                        html += `<div style="margin-left:12px; font-size:11px; color:white; padding:2px 0;">
+                            • ${q.title} 
+                            <span style="color:${statusColor(q.status)}; font-size:10px;">${statusIcon(q.status)} ${statusLabel(q.status)}</span>
+                            <span style="color:#8b9bb5; font-size:9px; margin-left:5px;">(${q.notamNumber})</span>
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+            }
+            
+            document.getElementById('weeklyReportContent').innerHTML = html;
+            
+            // Stats at the top
+            document.getElementById('reportStats').innerHTML = `
+                <div class="stat-box"><div class="stat-number">${weekly.length}</div><div>TOTAL</div></div>
+                <div class="stat-box"><div class="stat-number">${weekly.filter(q => q.urgency === 'CRITICAL').length}</div><div>CRITICAL</div></div>
+                <div class="stat-box"><div class="stat-number">${new Set(weekly.map(q => q.branch)).size}</div><div>BRANCHES</div></div>
+            `;
         }
-    }
-    
-    document.getElementById('weeklyReportContent').innerHTML = html;
-    
-    // Stats at the top
-    document.getElementById('reportStats').innerHTML = `
-        <div class="stat-box"><div class="stat-number">${weekly.length}</div><div>TOTAL</div></div>
-        <div class="stat-box"><div class="stat-number">${weekly.filter(q => q.urgency === 'CRITICAL').length}</div><div>CRITICAL</div></div>
-        <div class="stat-box"><div class="stat-number">${new Set(weekly.map(q => q.branch)).size}</div><div>BRANCHES</div></div>
-    `;
-}
 
         function shareViaWhatsApp() {
             const text = document.getElementById('weeklyReportContent').innerText;
@@ -878,11 +875,10 @@
             queries = queries.map(q => {
                 if (q.status === 'AWAITING_CONFIRMATION' && q.managerReviewDeadline) {
                     if (new Date(q.managerReviewDeadline) < now) {
-                        const expiryDays = q.issueType === 'STORE' ? RESOLVED_EXPIRY_STORE : (q.issueType === 'INTERNAL' ? RESOLVED_EXPIRY_INTERNAL : RESOLVED_EXPIRY_EXTERNAL);
                         q.status = 'RESOLVED';
                         q.resolvedByManager = 'SYSTEM (auto)';
                         q.resolvedAt = now.toISOString();
-                        q.resolvedExpiryDate = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000).toISOString();
+                        q.resolvedExpiryDate = new Date(Date.now() + RESOLVED_EXPIRY_DAYS * 24 * 60 * 60 * 1000).toISOString();
                         q.autoConfirmed = true;
                         if (!q.statusHistory) q.statusHistory = [];
                         q.statusHistory.push({ status: 'AUTO_CONFIRMED', timestamp: now.toISOString(), changedBy: 'SYSTEM', note: `Auto-confirmed after ${PENDING_EXPIRY_HOURS}h` });
@@ -894,17 +890,53 @@
             if (changed) { localStorage.setItem('queries', JSON.stringify(queries)); await saveToGist(); if (isManager()) { loadQueries(); updateStats(); } }
         }
 
-        async function cleanExpiredResolved() {
+        // ===== CLEANUP: Delete expired NOTAMs (all statuses) =====
+        async function cleanExpiredNotams() {
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
             let changed = false;
             const now = new Date();
+
             queries = queries.filter(q => {
+                // RESOLVED: 1 day
                 if (q.status === 'RESOLVED' && q.resolvedExpiryDate) {
-                    if (new Date(q.resolvedExpiryDate) < now) { changed = true; return false; }
+                    if (new Date(q.resolvedExpiryDate) < now) {
+                        changed = true;
+                        return false;
+                    }
+                    return true;
                 }
+
+                // AWAITING_RESPONSE: 24 hours
+                if (q.status === 'AWAITING_RESPONSE') {
+                    const createdAt = new Date(q.createdAt);
+                    const hoursSinceCreation = (now - createdAt) / (1000 * 60 * 60);
+                    if (hoursSinceCreation > AWAITING_RESPONSE_HOURS) {
+                        changed = true;
+                        return false;
+                    }
+                    return true;
+                }
+
+                // ALL OTHER STATUSES: 12 days (ACTIVE, REOPENED, REPORTED, INVESTIGATING, ESCALATED)
+                const createdAt = new Date(q.createdAt);
+                const ageInDays = (now - createdAt) / (1000 * 60 * 60 * 24);
+                if (ageInDays > ACTIVE_EXPIRY_DAYS) {
+                    changed = true;
+                    return false;
+                }
+
                 return true;
             });
-            if (changed) { localStorage.setItem('queries', JSON.stringify(queries)); await saveToGist(); if (isManager()) { loadQueries(); updateStats(); } }
+
+            if (changed) {
+                localStorage.setItem('queries', JSON.stringify(queries));
+                await saveToGist();
+                if (isManager()) {
+                    loadQueries();
+                    updateStats();
+                }
+                showToast('🧹 Cleaned up expired NOTAMs');
+            }
         }
 
         // ===== URL CHECK =====
@@ -932,11 +964,17 @@
             loadBranches();
             generateBranchQRCodes();
             checkForBranchInUrl();
+            
+            // Auto-sync every 5 minutes
             setInterval(loadFromGist, 5 * 60 * 1000);
+            
+            // Auto-cleanup tasks (every hour)
             setInterval(autoConfirmStaleResolutions, 60 * 60 * 1000);
-            setInterval(cleanExpiredResolved, 60 * 60 * 1000);
+            setInterval(cleanExpiredNotams, 60 * 60 * 1000);
+            
+            // Run on startup
             setTimeout(autoConfirmStaleResolutions, 5000);
-            setTimeout(cleanExpiredResolved, 10000);
+            setTimeout(cleanExpiredNotams, 10000);
         };
 
         window.onclick = function(e) {
