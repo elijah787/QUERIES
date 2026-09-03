@@ -36,11 +36,38 @@
             letter-spacing: 1px;
             white-space: nowrap;
         }
-        .header-content { display: flex; flex-direction: row; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .header-content { display: flex; flex-direction: row; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+        .club-title { display: flex; flex-direction: column; }
         .club-name { font-size: 20px; font-weight: 700; color: #ffd700; letter-spacing: 1px; text-transform: uppercase; font-family: 'Space Mono', monospace; line-height: 1.2; }
         .club-tagline { font-size: 9px; color: #8b9bb5; font-family: 'Space Mono', monospace; margin-top: 2px; }
-        .notam-code { background: rgba(255,215,0,0.1); border: 1px solid #ffd700; padding: 6px 12px; border-radius: 40px; font-family: 'Space Mono', monospace; color: #ffd700; font-size: 12px; font-weight: 700; align-self: flex-start; }
+        .header-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .notam-code { background: rgba(255,215,0,0.1); border: 1px solid #ffd700; padding: 6px 12px; border-radius: 40px; font-family: 'Space Mono', monospace; color: #ffd700; font-size: 12px; font-weight: 700; }
         .notam-code span { color: #8b9bb5; font-size: 10px; margin-right: 5px; }
+        .logout-btn { 
+            background: rgba(255,215,0,0.1); 
+            border: 1px solid #ff6b6b; 
+            color: #ff6b6b; 
+            padding: 6px 14px; 
+            border-radius: 40px; 
+            font-family: 'Space Mono', monospace; 
+            font-size: 10px; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            display: none;
+        }
+        .logout-btn:hover { background: #ff6b6b; color: #001529; }
+        .logout-btn.visible { display: inline-block; }
+        .manager-badge { 
+            background: #ffd700; 
+            color: #001529; 
+            padding: 3px 10px; 
+            border-radius: 20px; 
+            font-family: 'Space Mono', monospace; 
+            font-size: 9px; 
+            font-weight: 700;
+            display: none;
+        }
+        .manager-badge.visible { display: inline-block; }
 
         /* === COLOR LEGEND === */
         .legend {
@@ -72,7 +99,7 @@
         .legend-title { font-family: 'Space Mono', monospace; color: #ffd700; font-size: 14px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 6px; margin-bottom: 8px; }
 
         /* === CARDS === */
-        .branch-card, .notam-card, .queries-card, .report-card, .branch-view {
+        .login-card, .queries-card, .report-card, .branch-card, .notam-card {
             background: rgba(0,30,50,0.95);
             border: 1px solid #ffd700;
             border-radius: 12px;
@@ -82,10 +109,11 @@
             position: relative;
             margin: 12px 0;
         }
-        .branch-card::before { content: '⚡ MANAGER ACCESS'; position: absolute; top: -10px; right: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; }
-        .notam-card::before { content: '✈︎ NOTAM FORM'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
-        .queries-card::before { content: '📋 ACTIVE NOTAMS'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
+        .login-card::before { content: '🔐 MANAGER LOGIN'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
+        .queries-card::before { content: '📋 ALL NOTAMS'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
         .report-card::before { content: '📊 WEEKLY SUMMARY'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
+        .branch-card::before { content: '⚡ BRANCH CONTROL'; position: absolute; top: -10px; right: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; }
+        .notam-card::before { content: '✈︎ NOTAM FORM'; position: absolute; top: -10px; left: 15px; background: #ffd700; color: #001529; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
         .section-title { font-family: 'Space Mono', monospace; color: #ffd700; font-size: 16px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 6px; }
 
         /* === FORMS === */
@@ -105,6 +133,9 @@
         .btn-outline { background: transparent; border: 1px solid #ffd700; border-radius: 6px; padding: 8px 12px; font-family: 'Space Mono', monospace; color: #ffd700; font-size: 11px; cursor: pointer; transition: all 0.3s; width: auto; touch-action: manipulation; }
         .btn-outline:disabled { opacity: 0.5; cursor: not-allowed; border-color: #8b9bb5; color: #8b9bb5; }
         .btn-save { background: transparent; border: 1px solid #4caf50; border-radius: 4px; padding: 4px 8px; color: #4caf50; font-size: 9px; cursor: pointer; font-family: 'Space Mono', monospace; touch-action: manipulation; }
+        .btn-solve { background: #4caf50; border: none; border-radius: 4px; padding: 6px 12px; color: white; font-size: 10px; cursor: pointer; font-family: 'Space Mono', monospace; touch-action: manipulation; font-weight: bold; transition: all 0.3s; }
+        .btn-solve:hover { background: #45a049; transform: scale(1.02); }
+        .btn-solve:disabled { opacity: 0.5; cursor: not-allowed; background: #8b9bb5; }
 
         /* === BRANCH TAGS === */
         .branches-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -119,7 +150,7 @@
         .query-title { color: #ffd700; font-size: 14px; font-weight: 700; margin-bottom: 6px; word-break: break-word; }
         .query-content { color: white; font-size: 12px; line-height: 1.4; margin-bottom: 8px; word-break: break-word; }
         .query-footer { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; color: #8b9bb5; font-size: 9px; }
-        .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 9px; font-weight: 700; }
+        .action-buttons { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
 
         /* === QR === */
         .qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin: 12px 0; }
@@ -176,10 +207,74 @@
         .filter-check { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px; }
         .filter-check label { color: white; display: flex; align-items: center; gap: 5px; font-size: 12px; }
         .hold-info { background: rgba(255,215,0,0.05); border-radius: 4px; padding: 6px 10px; font-size: 11px; color: #ffd700; margin-top: 4px; }
+        
+        /* === OFFLINE OVERLAY === */
+        .offline-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 30px;
+            text-align: center;
+        }
+        .offline-overlay.show { display: flex; }
+        .offline-overlay h1 { color: #ffd700; font-size: 28px; margin-bottom: 20px; font-family: 'Space Mono', monospace; }
+        .offline-overlay p { color: white; font-size: 16px; margin-bottom: 10px; }
+        .offline-overlay .big-icon { font-size: 80px; margin-bottom: 20px; }
+        .offline-overlay .retry-btn { background: #ffd700; border: none; padding: 15px 40px; border-radius: 40px; font-size: 18px; font-weight: bold; color: #001529; cursor: pointer; margin-top: 20px; }
+        
+        /* === TIME RULES LEGEND === */
+        .time-rules {
+            background: rgba(0,30,50,0.95);
+            border: 1px solid #ffd700;
+            border-radius: 12px;
+            padding: 15px 12px;
+            margin: 12px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .time-rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 12px;
+            margin-top: 8px;
+        }
+        .time-rule-item {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            font-size: 11px;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,215,0,0.1);
+        }
+        .time-rule-item .status-label { color: #ffd700; font-family: 'Space Mono', monospace; font-size: 10px; }
+        .time-rule-item .time-value { color: #8b9bb5; font-family: 'Space Mono', monospace; font-size: 10px; }
+        .time-rules-title { font-family: 'Space Mono', monospace; color: #ffd700; font-size: 14px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 6px; margin-bottom: 8px; }
+
+        /* === HIDE/SHOW CONTENT === */
+        .worker-content { display: block; }
+        .worker-content.hidden { display: none; }
+        .manager-content { display: none; }
+        .manager-content.visible { display: block; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
 <body>
+    <!-- OFFLINE OVERLAY -->
+    <div id="offlineOverlay" class="offline-overlay">
+        <div class="big-icon">📡</div>
+        <h1>NO INTERNET</h1>
+        <p>This system requires an active internet connection.</p>
+        <p style="color:#8b9bb5; font-size:13px;">Please connect and refresh the page.</p>
+        <button class="retry-btn" onclick="location.reload()">↻ RETRY</button>
+    </div>
+
     <div class="container">
         <!-- SYNC STATUS -->
         <div class="sync-status" id="syncStatus">
@@ -195,34 +290,146 @@
                     <div class="club-name">JEANS CLUB UGANDA</div>
                     <div class="club-tagline">EST. 2000 • SINCE 2000</div>
                 </div>
-                <div class="notam-code" id="headerNotamCode"><span>NOTAM</span> JCU-A0001</div>
+                <div class="header-right">
+                    <div class="notam-code" id="headerNotamCode"><span>NOTAM</span> JCU-A0001</div>
+                    <span id="managerBadge" class="manager-badge">👔 MANAGER</span>
+                    <button id="logoutBtn" class="logout-btn" onclick="logoutManager()">🚪 LOGOUT</button>
+                </div>
             </div>
         </div>
 
-        <!-- ===== COLOR LEGEND ===== -->
-        <div class="legend">
-            <div class="legend-title">🎨 STATUS COLORS — What They Mean</div>
-            <div class="legend-grid">
-                <div class="legend-item"><span class="legend-dot" style="background:#4caf50;"></span><span class="legend-label">🟢 ACTIVE</span><span class="legend-desc">Fix it now! Problem is happening.</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#ffd700;"></span><span class="legend-label">⏳ PENDING</span><span class="legend-desc">Staff says fixed — manager check.</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#ff9800;"></span><span class="legend-label">🟠 REOPENED</span><span class="legend-desc">We thought it was fixed, but not.</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#8b9bb5;"></span><span class="legend-label">✅ RESOLVED</span><span class="legend-desc">Done! Auto‑deletes after time.</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#9c27b0;"></span><span class="legend-label">🟣 REPORTED</span><span class="legend-desc">New issue — manager review soon.</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#2196f3;"></span><span class="legend-label">🔵 INVESTIGATING</span><span class="legend-desc">Manager looking into it.</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#ffc107;"></span><span class="legend-label">🟡 AWAITING RESPONSE</span><span class="legend-desc">Waiting for staff/customer reply.</span></div>
-                <div class="legend-item"><span class="legend-dot" style="background:#f44336;"></span><span class="legend-label">🔴 ESCALATED</span><span class="legend-desc">Needs owner/HR — manager can't solve.</span></div>
+        <!-- ===== WORKER CONTENT (Visible when NOT logged in as manager) ===== -->
+        <div id="workerContent" class="worker-content">
+
+            <!-- TIME RULES -->
+            <div class="time-rules">
+                <div class="time-rules-title">⏱️ AUTO-DELETE RULES</div>
+                <div class="time-rules-grid">
+                    <div class="time-rule-item"><span class="status-label">🟣 REPORTED</span><span class="time-value">24 hours</span></div>
+                    <div class="time-rule-item"><span class="status-label">🔵 INVESTIGATING</span><span class="time-value">24 hours</span></div>
+                    <div class="time-rule-item"><span class="status-label">🟠 REOPENED</span><span class="time-value">24 hours</span></div>
+                    <div class="time-rule-item"><span class="status-label">🔴 ESCALATED</span><span class="time-value">24 hours</span></div>
+                    <div class="time-rule-item"><span class="status-label">🟢 ACTIVE</span><span class="time-value">7 days</span></div>
+                    <div class="time-rule-item"><span class="status-label">🟡 AWAITING RESPONSE</span><span class="time-value">24 hours</span></div>
+                    <div class="time-rule-item"><span class="status-label">⏳ PENDING</span><span class="time-value">48h → RESOLVED → 24h</span></div>
+                    <div class="time-rule-item"><span class="status-label">✅ RESOLVED</span><span class="time-value">24 hours</span></div>
+                </div>
+                <div style="margin-top:8px; font-size:9px; color:#8b9bb5; border-top:1px solid rgba(255,215,0,0.2); padding-top:6px;">📌 Weekly summary shows NOTAMs from the last 7 days only</div>
             </div>
-            <div style="margin-top:10px; font-size:10px; color:#8b9bb5; border-top:1px solid rgba(255,215,0,0.2); padding-top:8px;">⚠️ ALL ISSUES SHOW REPORTER'S NAME. No anonymous reporting — transparency builds trust.</div>
+
+            <!-- COLOR LEGEND -->
+            <div class="legend">
+                <div class="legend-title">🎨 STATUS COLORS — What They Mean</div>
+                <div class="legend-grid">
+                    <div class="legend-item"><span class="legend-dot" style="background:#4caf50;"></span><span class="legend-label">🟢 ACTIVE</span><span class="legend-desc">Fix it now! Problem is happening.</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#ffd700;"></span><span class="legend-label">⏳ PENDING</span><span class="legend-desc">Staff says fixed — manager check.</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#ff9800;"></span><span class="legend-label">🟠 REOPENED</span><span class="legend-desc">We thought it was fixed, but not.</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#8b9bb5;"></span><span class="legend-label">✅ RESOLVED</span><span class="legend-desc">Done! Auto‑deletes after time.</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#9c27b0;"></span><span class="legend-label">🟣 REPORTED</span><span class="legend-desc">New issue — manager review soon.</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#2196f3;"></span><span class="legend-label">🔵 INVESTIGATING</span><span class="legend-desc">Manager looking into it.</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#ffc107;"></span><span class="legend-label">🟡 AWAITING RESPONSE</span><span class="legend-desc">Waiting for staff/customer reply.</span></div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#f44336;"></span><span class="legend-label">🔴 ESCALATED</span><span class="legend-desc">Needs owner/HR — manager can't solve.</span></div>
+                </div>
+                <div style="margin-top:10px; font-size:10px; color:#8b9bb5; border-top:1px solid rgba(255,215,0,0.2); padding-top:8px;">⚠️ ALL ISSUES SHOW REPORTER'S NAME. No anonymous reporting — transparency builds trust.</div>
+            </div>
+
+            <!-- MANAGER LOGIN -->
+            <div class="login-card">
+                <div class="section-title">🔐 MANAGER LOGIN</div>
+                <div class="password-form">
+                    <input type="password" id="managerPassword" class="password-input" placeholder="Enter manager password">
+                    <button onclick="verifyManager()" class="btn-gold" id="unlockBtn">UNLOCK DASHBOARD</button>
+                </div>
+                <p style="color:#8b9bb5; font-size:10px; margin-top:8px;">⚠️ Manager access required to view and resolve issues</p>
+            </div>
+
+            <!-- NOTAM FORM - WORKERS USE THIS -->
+            <div class="main-grid">
+                <div class="notam-card">
+                    <div class="section-title">📝 FILE NOTAM</div>
+                    <div class="form-group">
+                        <label class="form-label">👤 YOUR NAME</label>
+                        <input type="text" id="staffName" class="form-control" placeholder="e.g., OKELLO JOHN">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">🏢 BRANCH</label>
+                        <select id="branchSelect" class="form-control"><option value="">-- SELECT BRANCH --</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📋 ISSUE TYPE</label>
+                        <div class="radio-group" id="issueTypeGroup">
+                            <label class="radio-label selected" id="typeStore"><input type="radio" name="issueType" value="STORE" checked> 🔧 STORE OPS</label>
+                            <label class="radio-label" id="typeInternal"><input type="radio" name="issueType" value="INTERNAL"> 👥 INTERNAL</label>
+                            <label class="radio-label" id="typeExternal"><input type="radio" name="issueType" value="EXTERNAL"> 🧑‍🤝‍🧑 EXTERNAL</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📌 TITLE</label>
+                        <input type="text" id="queryTitle" class="form-control" placeholder="e.g., DEBTOR ALERT">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📝 DETAILS</label>
+                        <textarea id="queryDetails" class="form-control" placeholder="Describe the issue..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">🚨 URGENCY</label>
+                        <select id="queryUrgency" class="form-control">
+                            <option value="LOW">LOW</option>
+                            <option value="MEDIUM" selected>MEDIUM</option>
+                            <option value="HIGH">HIGH</option>
+                            <option value="CRITICAL">CRITICAL</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="holdDateGroup">
+                        <label class="form-label">📅 HOLD UNTIL DATE (Optional — for store ops)</label>
+                        <input type="date" id="holdUntil" class="form-control">
+                        <div class="hold-info">⏳ If customer doesn't pick up by this date, item releases.</div>
+                    </div>
+                    <button onclick="submitQuery()" class="btn-gold" style="width:100%;" id="fileNotamBtn">📤 FILE NOTAM</button>
+                    <div style="margin-top:6px; font-size:9px; color:#8b9bb5;">⚠️ Your name will be visible to everyone. No anonymous reports.</div>
+                </div>
+
+                <div class="notam-card">
+                    <div class="section-title">📊 SUMMARY</div>
+                    <div style="margin-bottom:15px; text-align:center;">
+                        <div style="color:#8b9bb5; font-size:11px;">ACTIVE NOTAMS</div>
+                        <div id="activeNotamsCount" style="font-size:36px; color:#ffd700; font-family:'Space Mono';">0</div>
+                    </div>
+                    <div style="margin-bottom:15px; text-align:center;">
+                        <div style="color:#8b9bb5; font-size:11px;">BRANCHES</div>
+                        <div id="branchesCount" style="font-size:20px; color:white; font-family:'Space Mono';">0</div>
+                    </div>
+                    <div id="statusBreakdown" style="margin:15px 0; padding:10px; background:rgba(255,215,0,0.1); border-radius:5px;">
+                        <div style="display:flex; justify-content:space-around; color:white; font-size:11px; flex-wrap:wrap;">
+                            <div><span style="color:#4caf50;">🟢</span> Active: <span id="activeCount">0</span></div>
+                            <div><span style="color:#ffd700;">⏳</span> Pending: <span id="pendingCount">0</span></div>
+                            <div><span style="color:#8b9bb5;">✅</span> Resolved: <span id="resolvedCount">0</span></div>
+                            <div><span style="color:#9c27b0;">🟣</span> Reported: <span id="reportedCount">0</span></div>
+                        </div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="color:#8b9bb5; font-size:11px;">LATEST NOTAM</div>
+                        <div id="latestNotam" style="color:white; font-size:12px; background:rgba(255,215,0,0.1); padding:8px; border-radius:5px;">None</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QR CODES -->
+            <div class="queries-card">
+                <div class="section-title">📱 BRANCH QR CODES</div>
+                <div id="qrGrid" class="qr-grid"><div style="color:#8b9bb5; text-align:center; padding:20px;">No branches yet. Manager must add branches first.</div></div>
+            </div>
+
+            <!-- BRANCH VIEW -->
+            <div id="branchViewContainer" style="display:none;"></div>
         </div>
 
-        <!-- BRANCH CONTROL -->
-        <div class="branch-card">
-            <div class="section-title">✈︎ BRANCH CONTROL</div>
-            <div class="password-form">
-                <input type="password" id="managerPassword" class="password-input" placeholder="Manager password">
-                <button onclick="verifyManager()" class="btn-gold" id="unlockBtn">UNLOCK</button>
-            </div>
-            <div id="branchManagement" class="branch-management">
+        <!-- ===== MANAGER CONTENT (Shown after login) ===== -->
+        <div id="managerContent" class="manager-content">
+
+            <!-- BRANCH CONTROL -->
+            <div class="branch-card">
+                <div class="section-title">✈︎ BRANCH CONTROL</div>
                 <div class="branch-form">
                     <input type="text" id="newBranchName" class="branch-input" placeholder="New branch name (e.g., KAMPALA ROAD)">
                     <button onclick="addBranch()" class="btn-gold" id="addBranchBtn">ADD BRANCH</button>
@@ -230,95 +437,16 @@
                 <div id="branchesList" class="branches-list"></div>
                 <p style="color:#8b9bb5; font-size:10px; margin-top:10px;">⚠️ Only managers can add/delete branches</p>
             </div>
-        </div>
 
-        <!-- MAIN GRID: FORM + SUMMARY -->
-        <div class="main-grid">
-            <div class="notam-card">
-                <div class="section-title">📝 FILE NOTAM</div>
-                <div class="form-group">
-                    <label class="form-label">👤 YOUR NAME</label>
-                    <input type="text" id="staffName" class="form-control" placeholder="e.g., OKELLO JOHN">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">🏢 BRANCH</label>
-                    <select id="branchSelect" class="form-control"><option value="">-- SELECT BRANCH --</option></select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">📋 ISSUE TYPE</label>
-                    <div class="radio-group" id="issueTypeGroup">
-                        <label class="radio-label selected" id="typeStore"><input type="radio" name="issueType" value="STORE" checked> 🔧 STORE OPS</label>
-                        <label class="radio-label" id="typeInternal"><input type="radio" name="issueType" value="INTERNAL"> 👥 INTERNAL</label>
-                        <label class="radio-label" id="typeExternal"><input type="radio" name="issueType" value="EXTERNAL"> 🧑‍🤝‍🧑 EXTERNAL</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">📌 TITLE</label>
-                    <input type="text" id="queryTitle" class="form-control" placeholder="e.g., DEBTOR ALERT">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">📝 DETAILS</label>
-                    <textarea id="queryDetails" class="form-control" placeholder="Describe the issue..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">🚨 URGENCY</label>
-                    <select id="queryUrgency" class="form-control">
-                        <option value="LOW">LOW</option>
-                        <option value="MEDIUM" selected>MEDIUM</option>
-                        <option value="HIGH">HIGH</option>
-                        <option value="CRITICAL">CRITICAL</option>
-                    </select>
-                </div>
-                <div class="form-group" id="holdDateGroup">
-                    <label class="form-label">📅 HOLD UNTIL DATE (Optional — for store ops)</label>
-                    <input type="date" id="holdUntil" class="form-control">
-                    <div class="hold-info">⏳ If customer doesn't pick up by this date, item releases.</div>
-                </div>
-                <button onclick="submitQuery()" class="btn-gold" style="width:100%;" id="fileNotamBtn">📤 FILE NOTAM</button>
-                <div style="margin-top:6px; font-size:9px; color:#8b9bb5;">⚠️ Your name will be visible to everyone. No anonymous reports.</div>
-            </div>
-
-            <div class="notam-card">
-                <div class="section-title">📊 SUMMARY</div>
-                <div style="margin-bottom:15px; text-align:center;">
-                    <div style="color:#8b9bb5; font-size:11px;">ACTIVE NOTAMS</div>
-                    <div id="activeNotamsCount" style="font-size:36px; color:#ffd700; font-family:'Space Mono';">0</div>
-                </div>
-                <div style="margin-bottom:15px; text-align:center;">
-                    <div style="color:#8b9bb5; font-size:11px;">BRANCHES</div>
-                    <div id="branchesCount" style="font-size:20px; color:white; font-family:'Space Mono';">0</div>
-                </div>
-                <div id="statusBreakdown" style="margin:15px 0; padding:10px; background:rgba(255,215,0,0.1); border-radius:5px;">
-                    <div style="display:flex; justify-content:space-around; color:white; font-size:11px; flex-wrap:wrap;">
-                        <div><span style="color:#4caf50;">🟢</span> Active: <span id="activeCount">0</span></div>
-                        <div><span style="color:#ffd700;">⏳</span> Pending: <span id="pendingCount">0</span></div>
-                        <div><span style="color:#8b9bb5;">✅</span> Resolved: <span id="resolvedCount">0</span></div>
-                        <div><span style="color:#9c27b0;">🟣</span> Reported: <span id="reportedCount">0</span></div>
-                    </div>
-                </div>
-                <div style="text-align:center;">
-                    <div style="color:#8b9bb5; font-size:11px;">LATEST NOTAM</div>
-                    <div id="latestNotam" style="color:white; font-size:12px; background:rgba(255,215,0,0.1); padding:8px; border-radius:5px;">None</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- QR CODES -->
-        <div class="queries-card">
-            <div class="section-title">📱 BRANCH QR CODES</div>
-            <div id="qrGrid" class="qr-grid"><div style="color:#8b9bb5; text-align:center; padding:20px;">No branches yet. Manager must add branches first.</div></div>
-        </div>
-
-        <!-- MANAGER VIEW -->
-        <div id="managerView" style="display:none;">
+            <!-- MANAGER NOTAMS -->
             <div class="queries-card">
-                <div class="section-title">✈︎ MANAGER NOTAMS</div>
+                <div class="section-title">✈︎ ALL NOTAMS</div>
                 <div class="filter-bar">
                     <div class="filter-row">
-                        <input type="text" id="searchNotams" placeholder="🔍 Search..." class="form-control">
-                        <select id="filterBranch" class="form-control"><option value="">ALL BRANCHES</option></select>
-                        <select id="filterUrgency" class="form-control"><option value="">ALL URGENCY</option><option value="LOW">LOW</option><option value="MEDIUM">MEDIUM</option><option value="HIGH">HIGH</option><option value="CRITICAL">CRITICAL</option></select>
-                        <select id="filterType" class="form-control"><option value="">ALL TYPES</option><option value="STORE">STORE OPS</option><option value="INTERNAL">INTERNAL</option><option value="EXTERNAL">EXTERNAL</option></select>
+                        <input type="text" id="searchNotams" placeholder="🔍 Search..." class="form-control" oninput="loadQueries()">
+                        <select id="filterBranch" class="form-control" onchange="loadQueries()"><option value="">ALL BRANCHES</option></select>
+                        <select id="filterUrgency" class="form-control" onchange="loadQueries()"><option value="">ALL URGENCY</option><option value="LOW">LOW</option><option value="MEDIUM">MEDIUM</option><option value="HIGH">HIGH</option><option value="CRITICAL">CRITICAL</option></select>
+                        <select id="filterType" class="form-control" onchange="loadQueries()"><option value="">ALL TYPES</option><option value="STORE">STORE OPS</option><option value="INTERNAL">INTERNAL</option><option value="EXTERNAL">EXTERNAL</option></select>
                     </div>
                     <div class="filter-check">
                         <label><input type="checkbox" id="showResolved" onchange="loadQueries()"> <span>Show Resolved</span></label>
@@ -331,6 +459,7 @@
                 <div id="queriesList"></div>
             </div>
 
+            <!-- WEEKLY SUMMARY -->
             <div class="report-card">
                 <div class="report-header" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; margin-bottom:15px;">
                     <div class="report-title">📊 WEEKLY SUMMARY</div>
@@ -344,9 +473,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- WORKER BRANCH VIEW -->
-        <div id="branchViewContainer" style="display:none;"></div>
     </div>
 
     <!-- WORKER NAME MODAL -->
@@ -360,6 +486,22 @@
         </div>
     </div>
 
+    <!-- STATUS CHANGE MODAL -->
+    <div id="statusChangeModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header"><h2>Change Status</h2><span class="close-modal" onclick="closeStatusModal()">&times;</span></div>
+            <div style="padding:20px;">
+                <p style="color:white; margin-bottom:15px;">Select new status for <strong id="statusChangeNotam" style="color:#ffd700;">NOTAM</strong></p>
+                <div id="statusOptions" style="display:flex; flex-direction:column; gap:10px; margin-bottom:15px;">
+                    <button onclick="applyStatusChange('AWAITING_RESPONSE')" class="btn-outline" style="width:100%; padding:12px; text-align:left;">🟡 AWAITING RESPONSE — Waiting for reply</button>
+                    <button onclick="applyStatusChange('INVESTIGATING')" class="btn-outline" style="width:100%; padding:12px; text-align:left;">🔵 INVESTIGATING — Manager looking into it</button>
+                    <button onclick="applyStatusChange('REPORTED')" class="btn-outline" style="width:100%; padding:12px; text-align:left;">🟣 REPORTED — New issue, review soon</button>
+                </div>
+                <button onclick="closeStatusModal()" class="btn-gold" style="width:100%;">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ===== CONFIG =====
         const WORKER_URL = 'https://jeans-club-proxy.amanyakeith418.workers.dev';
@@ -367,14 +509,28 @@
         const SYNC_VERSION = '4.0';
         
         // ===== TIME LIMITS =====
-        const ACTIVE_EXPIRY_DAYS = 12;
+        const ACTIVE_EXPIRY_DAYS = 7;
         const RESOLVED_EXPIRY_DAYS = 1;
         const PENDING_EXPIRY_HOURS = 48;
         const AWAITING_RESPONSE_HOURS = 24;
+        const QUICK_EXPIRY_HOURS = 24;
 
         let isOnline = navigator.onLine;
         let currentBranch = null;
         let pendingResolveId = null;
+        let pendingStatusChangeId = null;
+
+        // ===== OFFLINE OVERLAY =====
+        function checkOnlineAndBlock() {
+            if (!navigator.onLine) {
+                document.getElementById('offlineOverlay').classList.add('show');
+                document.querySelector('.container').style.display = 'none';
+                return false;
+            }
+            document.getElementById('offlineOverlay').classList.remove('show');
+            document.querySelector('.container').style.display = 'block';
+            return true;
+        }
 
         // ===== UTILITY =====
         function showToast(msg) {
@@ -382,7 +538,13 @@
             document.body.appendChild(t);
             setTimeout(() => t.remove(), 3000);
         }
-        function requireOnline() { if (!navigator.onLine) { showToast('❌ Internet required'); return false; } return true; }
+        function requireOnline() { 
+            if (!navigator.onLine) { 
+                showToast('❌ Internet required — system unusable offline');
+                return false; 
+            } 
+            return true; 
+        }
         function isManager() { return sessionStorage.getItem('isManager') === 'true'; }
         function urgencyColor(u) { return { LOW:'#4caf50', MEDIUM:'#ffc107', HIGH:'#ff9800', CRITICAL:'#f44336' }[u] || '#ffd700'; }
         function statusColor(s) {
@@ -400,12 +562,25 @@
         function getIssueTypeLabel(t) { return { STORE:'🔧 STORE OPS', INTERNAL:'👥 INTERNAL', EXTERNAL:'🧑‍🤝‍🧑 EXTERNAL' }[t] || t; }
 
         // ===== CONNECTION =====
-        window.addEventListener('online', function() { isOnline = true; document.getElementById('offlineBanner').style.display = 'none'; showToast('📶 Online — refreshing'); setTimeout(() => location.reload(), 1500); });
-        window.addEventListener('offline', function() { isOnline = false; document.getElementById('offlineBanner').style.display = 'block'; showToast('❌ Offline'); });
+        window.addEventListener('online', function() { 
+            isOnline = true; 
+            document.getElementById('offlineOverlay').classList.remove('show');
+            document.querySelector('.container').style.display = 'block';
+            document.getElementById('offlineBanner').style.display = 'none'; 
+            showToast('📶 Online — refreshing'); 
+            setTimeout(() => location.reload(), 1500); 
+        });
+        window.addEventListener('offline', function() { 
+            isOnline = false; 
+            document.getElementById('offlineOverlay').classList.add('show');
+            document.querySelector('.container').style.display = 'none';
+            document.getElementById('offlineBanner').style.display = 'block'; 
+            showToast('❌ Offline — system locked'); 
+        });
 
         // ===== CLOUD SYNC =====
         async function loadFromGist() {
-            if (!requireOnline()) return;
+            if (!requireOnline()) { document.getElementById('offlineOverlay').classList.add('show'); return; }
             try {
                 document.getElementById('syncText').textContent = 'Loading...';
                 const resp = await fetch(WORKER_URL);
@@ -421,11 +596,15 @@
                 generateBranchQRCodes();
                 document.getElementById('syncText').textContent = 'ONLINE • Connected';
                 document.getElementById('syncText').style.color = '#4caf50';
+                document.getElementById('offlineOverlay').classList.remove('show');
+                document.querySelector('.container').style.display = 'block';
             } catch (e) {
                 console.error(e);
                 document.getElementById('syncText').textContent = '❌ Connection failed';
                 document.getElementById('syncText').style.color = '#ff6b6b';
                 document.getElementById('offlineBanner').style.display = 'block';
+                document.getElementById('offlineOverlay').classList.add('show');
+                document.querySelector('.container').style.display = 'none';
             }
         }
 
@@ -459,7 +638,7 @@
             else {
                 branches.forEach(b => {
                     const tag = document.createElement('div'); tag.className = 'branch-tag';
-                    tag.innerHTML = `<span>✈︎ ${b}</span>${isManager() ? `<button class="delete-branch" onclick="deleteBranch('${b}')">✕</button>` : ''}`;
+                    tag.innerHTML = `<span>✈︎ ${b}</span><button class="delete-branch" onclick="deleteBranch('${b}')">✕</button>`;
                     list.appendChild(tag);
                     const opt = document.createElement('option'); opt.value = b; opt.textContent = b;
                     sel.appendChild(opt.cloneNode(true));
@@ -512,7 +691,6 @@
         function viewBranchQueries(branch) {
             if (!requireOnline()) return;
             currentBranch = branch;
-            document.getElementById('managerView').style.display = 'none';
             const container = document.getElementById('branchViewContainer');
             container.style.display = 'block';
             container.innerHTML = `<div class="branch-view"><h2>✈︎ ${branch} NOTAMS</h2><div id="branchQueriesList"></div></div>`;
@@ -570,17 +748,93 @@
             showToast('✅ Marked solved — manager has 48h');
         }
 
+        // ===== STATUS CHANGE MODAL =====
+        function showStatusModal(id) {
+            if (!requireOnline() || !isManager()) return;
+            pendingStatusChangeId = id;
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const q = queries.find(x => x.id === id);
+            if (!q) return;
+            document.getElementById('statusChangeNotam').textContent = q.notamNumber;
+            document.getElementById('statusChangeModal').style.display = 'block';
+        }
+        function closeStatusModal() { document.getElementById('statusChangeModal').style.display = 'none'; pendingStatusChangeId = null; }
+
+        async function applyStatusChange(newStatus) {
+            if (!requireOnline() || !isManager()) return;
+            if (!pendingStatusChangeId) return;
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const idx = queries.findIndex(q => q.id === pendingStatusChangeId);
+            if (idx === -1) return;
+            queries[idx].status = newStatus;
+            if (!queries[idx].statusHistory) queries[idx].statusHistory = [];
+            queries[idx].statusHistory.push({ status: newStatus, timestamp: new Date().toISOString(), changedBy: 'MANAGER', note: `Status changed to ${newStatus}` });
+            localStorage.setItem('queries', JSON.stringify(queries));
+            await saveToGist();
+            closeStatusModal();
+            loadQueries(); updateStats();
+            showToast(`✅ Status changed to ${statusLabel(newStatus)}`);
+        }
+
         // ===== MANAGER ACTIONS =====
         function verifyManager() {
             if (!requireOnline()) return;
             if (document.getElementById('managerPassword').value === 'jeansclub2024') {
                 sessionStorage.setItem('isManager', 'true');
-                document.getElementById('branchManagement').classList.add('visible');
-                document.getElementById('managerView').style.display = 'block';
+                document.getElementById('workerContent').classList.add('hidden');
+                document.getElementById('managerContent').classList.add('visible');
                 document.getElementById('managerPassword').value = '';
-                showToast('✅ Manager access granted');
+                document.getElementById('logoutBtn').classList.add('visible');
+                document.getElementById('managerBadge').classList.add('visible');
+                showToast('👔 Manager dashboard unlocked');
                 loadBranches(); loadQueries(); updateStats(); generateWeeklyReport();
             } else showToast('⚠️ Wrong password');
+        }
+
+        function logoutManager() {
+            sessionStorage.removeItem('isManager');
+            document.getElementById('workerContent').classList.remove('hidden');
+            document.getElementById('managerContent').classList.remove('visible');
+            document.getElementById('logoutBtn').classList.remove('visible');
+            document.getElementById('managerBadge').classList.remove('visible');
+            showToast('👋 Logged out');
+            // Reload to reset view
+            setTimeout(() => location.reload(), 500);
+        }
+
+        // ===== ISSUE SOLVED BUTTON - Direct resolve by manager =====
+        async function managerSolveIssue(id) {
+            if (!requireOnline() || !isManager()) return;
+            
+            if (!confirm('Mark this issue as SOLVED? This will resolve it permanently.')) return;
+            
+            let queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const idx = queries.findIndex(q => q.id === id);
+            if (idx === -1) return showToast('❌ Issue not found');
+            
+            const q = queries[idx];
+            const now = new Date();
+            
+            q.status = 'RESOLVED';
+            q.resolvedByManager = 'MANAGER';
+            q.resolvedAt = now.toISOString();
+            q.resolvedExpiryDate = new Date(Date.now() + RESOLVED_EXPIRY_DAYS * 24 * 60 * 60 * 1000).toISOString();
+            
+            if (!q.statusHistory) q.statusHistory = [];
+            q.statusHistory.push({ 
+                status: 'RESOLVED', 
+                timestamp: now.toISOString(), 
+                changedBy: 'MANAGER', 
+                note: '✅ ISSUE SOLVED by manager' 
+            });
+            
+            localStorage.setItem('queries', JSON.stringify(queries));
+            await saveToGist();
+            
+            loadQueries();
+            updateStats();
+            generateWeeklyReport();
+            showToast(`✅ Issue ${q.notamNumber} marked as SOLVED!`);
         }
 
         async function managerConfirm(id) {
@@ -670,10 +924,10 @@
                 details,
                 urgency,
                 issueType,
-                status: 'ACTIVE',
+                status: 'REPORTED',
                 holdUntil: holdUntil || null,
                 createdAt: date.toISOString(),
-                statusHistory: [{ status: 'ACTIVE', timestamp: date.toISOString(), changedBy: staffName, note: 'NOTAM filed' }]
+                statusHistory: [{ status: 'REPORTED', timestamp: date.toISOString(), changedBy: staffName, note: 'NOTAM filed — awaiting manager review' }]
             };
 
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
@@ -687,7 +941,7 @@
             document.getElementById('queryUrgency').value = 'MEDIUM';
             document.getElementById('holdUntil').value = '';
             if (isManager()) { loadQueries(); updateStats(); generateWeeklyReport(); }
-            showToast(`✅ NOTAM filed: ${notamNumber}`);
+            showToast(`✅ NOTAM filed: ${notamNumber} (REPORTED — manager review)`);
         }
 
         // ===== LOAD QUERIES (MANAGER) =====
@@ -743,6 +997,16 @@
                     expiryHtml = `<span style="color:#8b9bb5; font-size:9px;">🗑️ auto-delete in ${days}d</span>`;
                 }
 
+                let statusActions = '';
+                if (q.status === 'REPORTED' || q.status === 'ACTIVE' || q.status === 'REOPENED') {
+                    statusActions += `<button onclick="showStatusModal(${q.id})" class="btn-save" style="border-color:#2196f3; color:#2196f3;">🔄 CHANGE</button>`;
+                }
+
+                let solveButton = '';
+                if (q.status !== 'RESOLVED') {
+                    solveButton = `<button onclick="managerSolveIssue(${q.id})" class="btn-solve">✅ SOLVE</button>`;
+                }
+
                 list.innerHTML += `<div class="query-item" style="border-left:4px solid ${st};">
                     <div class="query-header"><div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;"><span class="query-badge">${q.notamNumber}</span><span style="color:${st}; font-size:10px;">${icon} ${label}</span>${timeLeftHtml}${expiryHtml}</div>
                     <div style="display:flex; gap:6px; flex-wrap:wrap;"><span style="font-size:9px; color:#8b9bb5;">${typeLabel}</span><span style="color:${urgCol}; font-size:10px;">● ${q.urgency}</span></div></div>
@@ -750,14 +1014,16 @@
                     <div class="query-content">${q.details}</div>
                     ${holdHtml}
                     <div class="query-footer"><span>✈︎ ${q.branch} • 👤 ${q.staffName}</span>
-                    <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                    <div class="action-buttons">
+                        ${solveButton}
                         <button onclick="saveQueryToDevice(${q.id})" class="btn-save">💾 SAVE</button>
-                        ${q.status === 'AWAITING_CONFIRMATION' ? `<button onclick="managerConfirm(${q.id})" class="btn-save" style="border-color:#4caf50; color:#4caf50;">✅ ISSUE FIXED</button>` : ''}
+                        ${q.status === 'AWAITING_CONFIRMATION' ? `<button onclick="managerConfirm(${q.id})" class="btn-save" style="border-color:#4caf50; color:#4caf50;">✅ FIXED</button>` : ''}
                         ${q.status === 'RESOLVED' || q.status === 'REOPENED' ? `<button onclick="reopenNotam(${q.id})" class="btn-save" style="border-color:#ff9800; color:#ff9800;">🔄 REOPEN</button>` : ''}
-                        ${q.status !== 'ESCALATED' ? `<button onclick="escalateNotam(${q.id})" class="btn-save" style="border-color:#f44336; color:#f44336;">🔴 ESCALATE</button>` : ''}
+                        ${q.status !== 'ESCALATED' && q.status !== 'RESOLVED' ? `<button onclick="escalateNotam(${q.id})" class="btn-save" style="border-color:#f44336; color:#f44336;">🔴 ESCALATE</button>` : ''}
+                        ${statusActions}
                         <button onclick="deleteNotam(${q.id})" class="btn-save" style="border-color:#ff6b6b; color:#ff6b6b;">🗑️ DELETE</button>
                     </div></div>
-                    ${q.resolvedByStaff ? `<div style="margin-top:8px; font-size:9px; color:#8b9bb5; border-top:1px dashed #333; padding-top:5px;">✅ Staff marked: ${new Date(q.resolvedAtBranch).toLocaleString()} by ${q.resolvedByStaff}${q.resolvedByManager ? `<br>👔 Manager confirmed: ${new Date(q.resolvedAt).toLocaleString()}` : ''}</div>` : ''}
+                    ${q.resolvedByStaff ? `<div style="margin-top:8px; font-size:9px; color:#8b9bb5; border-top:1px dashed #333; padding-top:5px;">✅ Staff marked: ${new Date(q.resolvedAtBranch).toLocaleString()} by ${q.resolvedByStaff}${q.resolvedByManager ? `<br>👔 Manager resolved: ${new Date(q.resolvedAt).toLocaleString()}` : ''}</div>` : ''}
                 </div>`;
             });
         }
@@ -784,7 +1050,7 @@
             document.getElementById('pendingCount').textContent = pending;
             document.getElementById('resolvedCount').textContent = resolved;
             document.getElementById('reportedCount').textContent = reported;
-            const latest = queries.find(q => q.status === 'ACTIVE');
+            const latest = queries.find(q => q.status === 'ACTIVE' || q.status === 'REPORTED');
             document.getElementById('latestNotam').textContent = latest ? latest.title.substring(0,25)+'...' : 'None';
         }
 
@@ -813,9 +1079,10 @@
                     
                     items.forEach(q => {
                         html += `<div style="margin-left:12px; font-size:11px; color:white; padding:2px 0;">
-                            • ${q.title} 
+                            • <strong>${q.title}</strong> 
                             <span style="color:${statusColor(q.status)}; font-size:10px;">${statusIcon(q.status)} ${statusLabel(q.status)}</span>
                             <span style="color:#8b9bb5; font-size:9px; margin-left:5px;">(${q.notamNumber})</span>
+                            <span style="color:#8b9bb5; font-size:9px; display:block; margin-left:10px;">👤 ${q.staffName} • ${q.branch}</span>
                         </div>`;
                     });
                     html += '</div>';
@@ -830,19 +1097,70 @@
             `;
         }
 
-        function shareViaWhatsApp() {
-            const text = document.getElementById('weeklyReportContent').innerText;
-            const period = document.getElementById('reportPeriod').innerText;
-            window.open(`https://wa.me/?text=${encodeURIComponent('JEANS CLUB REPORT\n' + period + '\n' + text)}`);
+        // ===== SHARE FUNCTIONS =====
+        function getFullReportText() {
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            const oneWeekAgo = new Date(); 
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            const weekly = queries.filter(q => new Date(q.createdAt) >= oneWeekAgo);
+            
+            let text = '📊 JEANS CLUB UGANDA - WEEKLY NOTAM REPORT\n';
+            text += `📅 ${oneWeekAgo.toLocaleDateString()} - ${new Date().toLocaleDateString()}\n`;
+            text += '═══════════════════════════════\n\n';
+            
+            if (!weekly.length) {
+                text += '📭 NO NOTAMS REPORTED THIS WEEK\n';
+            } else {
+                const byBranch = {};
+                weekly.forEach(q => {
+                    if (!byBranch[q.branch]) byBranch[q.branch] = [];
+                    byBranch[q.branch].push(q);
+                });
+                
+                for (const [branch, items] of Object.entries(byBranch)) {
+                    text += `✈︎ ${branch} (${items.length} NOTAMS)\n`;
+                    text += '───────────────────────────\n';
+                    items.forEach(q => {
+                        text += `  • ${q.title}\n`;
+                        text += `    NOTAM: ${q.notamNumber}\n`;
+                        text += `    Status: ${statusLabel(q.status)} ${statusIcon(q.status)}\n`;
+                        text += `    Urgency: ${q.urgency}\n`;
+                        text += `    Staff: ${q.staffName}\n`;
+                        text += `    Date: ${new Date(q.createdAt).toLocaleDateString()}\n`;
+                        text += `    Details: ${q.details.substring(0, 100)}${q.details.length > 100 ? '...' : ''}\n`;
+                        if (q.holdUntil) {
+                            text += `    Hold until: ${new Date(q.holdUntil).toLocaleDateString()}\n`;
+                        }
+                        text += '\n';
+                    });
+                }
+            }
+            
+            text += '═══════════════════════════════\n';
+            text += `Total NOTAMS: ${weekly.length}\n`;
+            text += `Critical: ${weekly.filter(q => q.urgency === 'CRITICAL').length}\n`;
+            text += `Branches: ${new Set(weekly.map(q => q.branch)).size}\n`;
+            text += '═══════════════════════════════\n';
+            text += 'JEANS CLUB UGANDA • Est. 2000';
+            
+            return text;
         }
+
+        function shareViaWhatsApp() {
+            if (!requireOnline()) return;
+            const text = getFullReportText();
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
+        }
+        
         function shareViaEmail() {
-            const text = document.getElementById('weeklyReportContent').innerText;
-            const period = document.getElementById('reportPeriod').innerText;
-            window.location.href = `mailto:?subject=JEANS CLUB REPORT&body=${encodeURIComponent(period + '\n' + text)}`;
+            if (!requireOnline()) return;
+            const text = getFullReportText();
+            window.location.href = `mailto:?subject=JEANS CLUB NOTAM REPORT&body=${encodeURIComponent(text)}`;
         }
 
         // ===== AUTO PROCESSES =====
         async function autoConfirmStaleResolutions() {
+            if (!requireOnline()) return;
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
             let changed = false;
             const now = new Date();
@@ -865,6 +1183,7 @@
         }
 
         async function cleanExpiredNotams() {
+            if (!requireOnline()) return;
             let queries = JSON.parse(localStorage.getItem('queries')) || [];
             let changed = false;
             const now = new Date();
@@ -880,9 +1199,18 @@
                     if (hoursSinceCreation > AWAITING_RESPONSE_HOURS) { changed = true; return false; }
                     return true;
                 }
-                const createdAt = new Date(q.createdAt);
-                const ageInDays = (now - createdAt) / (1000 * 60 * 60 * 24);
-                if (ageInDays > ACTIVE_EXPIRY_DAYS) { changed = true; return false; }
+                if (q.status === 'REPORTED' || q.status === 'INVESTIGATING' || q.status === 'REOPENED' || q.status === 'ESCALATED') {
+                    const createdAt = new Date(q.createdAt);
+                    const hoursSinceCreation = (now - createdAt) / (1000 * 60 * 60);
+                    if (hoursSinceCreation > QUICK_EXPIRY_HOURS) { changed = true; return false; }
+                    return true;
+                }
+                if (q.status === 'ACTIVE') {
+                    const createdAt = new Date(q.createdAt);
+                    const ageInDays = (now - createdAt) / (1000 * 60 * 60 * 24);
+                    if (ageInDays > ACTIVE_EXPIRY_DAYS) { changed = true; return false; }
+                    return true;
+                }
                 return true;
             });
 
@@ -914,23 +1242,42 @@
 
         // ===== INIT =====
         window.onload = async function() {
-            if (!navigator.onLine) { document.getElementById('offlineBanner').style.display = 'block'; return; }
+            if (!navigator.onLine) {
+                document.getElementById('offlineOverlay').classList.add('show');
+                document.querySelector('.container').style.display = 'none';
+                document.getElementById('offlineBanner').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('offlineOverlay').classList.remove('show');
+            document.querySelector('.container').style.display = 'block';
+            
+            // Check if manager is already logged in
+            if (isManager()) {
+                document.getElementById('workerContent').classList.add('hidden');
+                document.getElementById('managerContent').classList.add('visible');
+                document.getElementById('logoutBtn').classList.add('visible');
+                document.getElementById('managerBadge').classList.add('visible');
+            }
+            
             await loadFromGist();
             loadBranches();
             generateBranchQRCodes();
             checkForBranchInUrl();
             
             setInterval(loadFromGist, 5 * 60 * 1000);
-            setInterval(autoConfirmStaleResolutions, 60 * 60 * 1000);
-            setInterval(cleanExpiredNotams, 60 * 60 * 1000);
+            setInterval(autoConfirmStaleResolutions, 15 * 60 * 1000);
+            setInterval(cleanExpiredNotams, 15 * 60 * 1000);
             
             setTimeout(autoConfirmStaleResolutions, 5000);
             setTimeout(cleanExpiredNotams, 10000);
         };
 
         window.onclick = function(e) {
-            const m = document.getElementById('workerNameModal');
-            if (e.target === m) closeWorkerNameModal();
+            const m1 = document.getElementById('workerNameModal');
+            if (e.target === m1) closeWorkerNameModal();
+            const m2 = document.getElementById('statusChangeModal');
+            if (e.target === m2) closeStatusModal();
         };
     </script>
 
